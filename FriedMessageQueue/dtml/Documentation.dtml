@@ -1,0 +1,45 @@
+<dtml-var manage_page_header>
+<dtml-with "_(management_view='Management')">
+<dtml-var manage_tabs>
+</dtml-with>
+<dtml-if Principia-Version>
+<p> <em>You are currently working in version 
+  <dtml-var Principia-Version>
+  </em> </p>
+</dtml-if Principia-Version>
+
+<p>If you want to use this Message Queue to send email instead of sending them directly,
+you have to call this method:</p>
+<pre>
+sendEmail(self, msg, to, fr, subject,
+                  mcc=None, mbcc=None, subtype='plain', charset='us-ascii',              
+                  swallowerrors=False, debug=None)
+</pre>
+
+<p>To send all the queued messages, visit
+<code><a href="<dtml-var absolute_url>/sendAll"><dtml-var absolute_url>/sendAll</a></code>
+</p>
+<p>When <code>sendAll()</code> is called, any error is surpressed. If you instead used
+<code><a href="<dtml-var absolute_url>/sendAll?onerror_stop=True">sendAll?onerror_stop=True</a></code> 
+any error message will be raised.
+</p>
+
+<hr />
+
+<p>
+There are currently <b><dtml-var countAllMessages></b> messages waiting to be sent. 
+Of these, <b><dtml-var "countAllMessages()-countUniqueMessages()"></b> messages will be
+grouped/merged together in digested form because they have the same destination.
+</p>
+
+<dtml-if "getLastSendall()">
+<p><b>LOG</b><br />
+Last <code>sendAll()</code> was on <b><dtml-var getLastSendall></b>:
+<pre><dtml-var getLastLog>
+</pre>
+<dtml-else>
+<p>The <code>sendAll()</code> function has not yet been called.</p>
+</dtml-if>
+
+<br>&nbsp;
+<dtml-var manage_page_footer>

@@ -1,0 +1,86 @@
+<html metal:use-macro="here/getManagementHeader">
+
+<script tal:condition="here/TinyManagement|nothing"
+        tal:replace="structure here/TinyManagement"
+        metal:fill-slot="extrajs" />
+
+<div metal:fill-slot="body"
+     tal:define="visible_only python: test(request.get('visible_only',None),True,False);
+                 comments     python: here.getFlatComments(visible_only=visible_only)">
+
+  <div class="toprightbox" tal:define="containers here/manage_findBlogContainers">
+    <a href=".">Back</a>
+  </div>
+  <h2> Comments for <i tal:content="here/title"/></h2>
+  <form action="manage_addComment" method="post"
+        tal:define="comment_path request/comment_path|nothing">
+  
+    <div tal:condition="comment_path" tal:omit-tag="">
+      <h3 tal:define="comment python: here.manage_getComment(comment_path)">
+        Add reply to <i tal:content="comment/title"/>
+      </h3>
+      <a tal:attributes="href string:${template/absolute_url}">Back to top level comments</a>
+    </div>
+    <h3 tal:condition="not: comment_path">Add new comment </h3>
+  
+    <input type="hidden" name="comment_path"
+           tal:attributes="value comment_path"/>
+    <dl>
+      <dt>Title</dt>
+      <dd><input type="text" name="title" size="50"
+                 tal:attributes="value request/title|nothing"/></dd>
+      <dt>Email</dt>
+      <dd><input type="text" name="email" size="50"
+                 tal:attributes="value request/email|nothing"/></dd>
+      <dt>Text</dt>
+      <dd><textarea name="body" cols="80" rows="6"
+           tal:content="request/body|nothing"></textarea></dd>
+      <dt>Website</dt>
+      <dd><input type="text" name="website" size="50"
+           tal:attributes="value request/website|nothing"/></dd>
+    </dl>
+    <input type="submit" value="Add"/>
+  </form>
+
+  <h3>Comments</h3>
+  <a tal:attributes="href string:${template/absolute_url}?visible_only=1"
+     tal:condition="not: visible_only">Show only visible comments</a>
+  <a tal:attributes="href string:${template/absolute_url}"
+     tal:condition="visible_only">Show all comments</a>
+  <span style="color:green;"
+       tal:condition="here/isCommentingAvailable">Comments are enabled</span>
+  <span style="color:red;"
+       tal:condition="not: here/isCommentingAvailable">Comments are disabled</span>
+
+  <div tal:condition="comments" tal:omit-tag="">
+    <div tal:repeat="comment comments">
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td tal:content="structure python: (3*comment['level'])*'&nbsp;'"/>
+          <td>
+            <b tal:content="comment/title"/>
+            <div tal:replace="python: str(comment['date'])[:19]"/>
+            <div tal:condition="comment/visible" tal:omit-tag="">
+              <span style="color:green;">Visible</span>
+              <a tal:attributes="href string:${here/absolute_url}/manage_changeVisibility?change_path=${comment/path}&visible=0">Hide</a>
+            </div>
+            <div tal:condition="not: comment/visible" tal:omit-tag="">
+              <span style="color:red;">Hidden</span>
+              <a tal:attributes="href string:${here/absolute_url}/manage_changeVisibility?change_path=${comment/path}&visible=1">Show</a>
+            </div>
+            | <a tal:attributes="href string:${template/absolute_url}?comment_path=${comment/path}&title=Re: ${comment/title}">
+            Add reply</a> |
+            <a tal:attributes="href string:${here/absolute_url}/manage_deleteComment?delete_path=${comment/path}">
+              Delete</a><br/>
+            <div tal:replace="comment/body"/>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  
+  <div tal:condition="not: comments">
+    No comments.
+  </div>
+</div>
+</html>

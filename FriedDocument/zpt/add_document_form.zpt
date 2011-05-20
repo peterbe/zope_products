@@ -1,0 +1,55 @@
+<form metal:define-macro="widget" action="addFriedDocumentSimple" onsubmit="return checkAddDocumentForm(this)">
+
+<table class="fd-metadata" tal:define="blank string:">
+  <tr>
+    <td><label for="title">Name:</label></td>
+    <td><input name="title:latin1:ustring" id="title" tal:attributes="value request/title|blank" size="35"
+          /></td>
+  </tr>
+  <tr>
+    <td><label for="id">Id:</label> (<abbr title="If left blank the system will generate one automatically">optional</abbr>)</td>
+    <td><input name="id" id="id" tal:attributes="value request/id|blank" size="35" />
+        <a href="#" onclick="suggestId(id$('title'), id$('id'));return false"
+        ><img src="/misc_/FriedDocument/suggest.gif" border="0" alt="Suggest Id" /></a>
+    </td>
+  </tr>
+  <tr tal:condition="not:here/always_metalmacro|nothing">
+    <td><label for="metalmacro">Metalmacro:</label></td>
+    <td><input name="metalmacro" id="metalmacro" tal:attributes="value request/metalmacro|blank" size="35" /></td>  
+  </tr>
+  <tr tal:condition="not:here/always_belike|nothing">
+    <td><label for="belike">Settings like...:</label></td>
+    <td>
+      <select name="belike_path">
+        <option value="">Copy settings and behaviour from...</option>
+        <option tal:repeat="belike here/manage_addProduct/FriedDocument/manage_findBeLikeDocuments"
+                tal:attributes="value belike/path"
+                tal:content="string:${belike/title_or_id} (${belike/object/absolute_url_path})"></option>
+      </select>
+    </td>
+  </tr>
+  
+  <tr>
+    <td><label for="sin">Include in nav:</label></td>
+    <td>
+      <input type="checkbox" name="show_in_nav:boolean" value="1" checked="checked" />
+    </td>
+  </tr>
+    
+  <tr>
+    <td>&nbsp;</td>
+    <td><input type="submit" value="Create document" /></td>
+  </tr>
+</table>
+
+<input type="hidden" name="belike_path" 
+ tal:condition="here/always_belike|nothing"
+ tal:attributes="value here/always_belike"
+ >
+ 
+<input type="hidden" name="metalmacro"
+ tal:condition="here/always_metalmacro|nothing"
+ tal:attributes="value here/always_metalmacro"
+ > 
+  
+</form>

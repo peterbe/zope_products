@@ -1,0 +1,149 @@
+0.2.11
+     
+     - Fixed a bug where the product directory was guessed
+     incorrectly. Affected when running unittests only.
+
+0.2.10
+     
+     - Fixed a bug which made it impossible to include templates that
+       already had an extension like 'screen.css.dtml'
+
+0.2.9
+     
+     - Templates specified without an extension are assumed to be .zpt
+       in the end for ZPT.
+     
+0.2.8
+     
+     - Important bugfix, keyword arguments passed to checked out
+     templates did not reach the template code. 
+     
+0.2.7
+     
+     - showCheckoutableTemplates is not XHTML Transitional compliant.
+     
+     - No "diff" link on checked out templates that aren't different. 
+     
+     - Excessive LOG() messages removed (unless in CT_DEBUG mode)
+     
+     - Corrected sourcecode to use 4 spaces for tabs ONLY.
+     
+0.2.6
+
+     - Exit link in showCheckoutableTemplates.
+     
+     - Made it Python2.1 compatible again after a Python2.>1 feature
+     was introduced. See CTFiles.py/dict_popper()
+     
+     - Differ feature greatly improved thanks to MoinMoin project.
+     
+0.2.5
+
+     - _write2config() now prevents duplicates in the pickle file useful
+     to have when you upgrade to this latest version.
+
+     - Draft of differ for checked out templates in showCheckoutableTemplates
+     
+0.2.4
+
+     - marshal module used in CTFiles.py caused a memory leak in one
+     of my Gentoo Linux servers so to be on the safe side I resided
+     back to using cPickle.
+       
+0.2.3
+
+     - write2config() greatly optimized. (see 
+       http://www.peterbe.com/plog/python-optimization-anecdote)
+       
+     - PUT_REQUEST_NOTE constant for 'DebugFilterCTFilesPH' in REQUEST
+     
+     - _generateIdentifier() optimized to generate more unique
+       identifiers faster.
+		 
+0.2.2
+
+     - slimmer.py thrown out. It was too different and slimmer.py
+       is now going to become a standalone Open Source package.
+
+0.2.1
+
+     - Executing CTDTML instances did not use Zope acquisition.
+       CTPageTemplates did. (Thanks Ria Marinussen)
+
+0.2.0
+
+     - Fixed bug the way CheckoutableTemplates finds the Products directory.
+       Now no extra configuration settings necessary for Zope2.7.x on win32.
+
+     - Fixed a bug recently introduced in html_slimmer() that
+       was related to unquoted attributes.
+
+     - Improved (x)html_slimmer() to not strip excess whitespace in
+       tags like this: <a alt="    wow!    ">
+       
+     - Major speed improvement in (x)html_slimmer(). Sometimes three
+       times faster.
+
+0.1.9
+
+     - Fixed bug in (x)html_slimmer() that tried to slimmer inline
+       JavaScript.
+       
+     - Rewrote some of the tests.
+
+     - Fixed bug in css_slimmer() with line breaks and selectors starting
+       with '#'.
+
+     - Improved css_slimmer() to replace '#FFCCFF' to '#FCF'
+     
+     - Fixed bug in css_slimmer() when using IE hacks.
+
+     - Tweak slimmer.py css_slimmer() to replace ': 10px' to ':10px'.
+
+0.1.8
+
+     - Prepared for public release to the Zope community by deleting 
+       unnecessary files, silly comments and improved README.txt
+
+0.1.7
+
+     - Fixed a bug that added duplicates when a product using CT
+       refreshes a template.
+
+0.1.6
+
+     - Added some basic unittesting cases for slimmer module.
+
+0.1.5
+
+     - Added basic support for HTML and CSS optimization. To use, 
+       add a keyword argument to the constructor or CTPageTemplateFile
+       and CTDTMLFile like this optimize='CSS' or optimize='HTML'.
+
+0.1.4
+
+     - Fixed security bug that allowed Anonymous access to 
+       showCheckoutableTemplates
+
+     - Improved identifier checks in showCheckoutableTemplates
+
+     - Beautified showCheckoutableTemplates. If SilverCity is importable,
+       showing source is done with nice XML stylesheets.
+
+0.1.3
+
+     - Changed use of os.stat to be backcompatible with python 2.1
+
+0.1.2
+
+    - Removed all XML storage facilities. Nice to look at but too slow
+	
+	- Changed the "checker" from length-of-document to modification time os.stat()
+
+0.1.1
+
+     	First release to Zope.org
+
+0.1.0 
+
+	First release zipped up.

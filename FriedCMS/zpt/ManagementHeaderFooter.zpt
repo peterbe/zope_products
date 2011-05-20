@@ -1,0 +1,197 @@
+<metal:block define-macro="standard"><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ tal:define="root here/getRoot;root_relative_url root/getRootURLRelative">
+<head >
+
+<title tal:content="string:${root/getTitle} Management">Management</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="start" href="/" tal:attributes="href string:$root_relative_url/Management" title="Home" />
+<link rel="stylesheet" type="text/css" href="/misc_/FriedCMS/management-screen.css" />
+<script type="text/javascript" src="/misc_/FriedCMS/core.js"></script>
+<script type="text/javascript" src="/misc_/FriedCMS/tw-sack.js"></script>
+
+<style metal:define-slot="extracss" tal:omit-tag=""></style>
+<script metal:define-slot="extrajs" tal:omit-tag=""></script>
+
+</head>
+
+<body>
+
+<div id="header">
+    
+    <span id="signin">
+    <tal:comment replace="nothing">
+    &nbsp;&nbsp;<img src="/misc_/FriedCMS/advanced_settings.gif" width="16" height="14" alt="Advanced" />&nbsp;
+    <a tal:attributes="href string:${here/getRootURLRelative}/manage_AdvancedManagement">Advanced settings</a>&nbsp;&nbsp;|
+    </tal:comment>
+    
+    
+    <img src="/misc_/FriedCMS/exit_icon.gif"
+    width="18" height="17" alt="Exit" />&nbsp;<a href="" tal:attributes="href string:${here/getRootURLRelative}/" name="signOut">Exit</a></span>
+
+    <h1 tal:content="string:${root/getTitle} Management"> Management</h1>
+        
+
+      
+    <br class="spacer" />
+        
+    <ul
+      tal:define="modules  here/getFriedModules;
+                  on_home  python:here.thisInURLEnding(['/Management', 'manage_AdvancedManagement','DocumentManagementHome'], homepage=1);
+                  on_news  python:here.thisInURLEnding(['NewsManagementHome', 'NewsManagement', 'addNewsItemForm','editNewsItemForm']);
+                  on_files python:here.thisInURLEnding(['FileManagementHome', 'FileManagement', 'addFileItemForm','editFileItemForm']);
+                  on_blogs python:here.thisInURLEnding(['BlogManagementHome', 'BlogManagement', 'addBlogItemForm','editBlogItemForm','addBlogContainerForm']);
+                  on_users python:here.thisInURLEnding(['viewUsers', 'editUserForm', 'viewUserForm','addUserForm']);
+                  on_pages python:here.thisInURLEnding(['PagesManagementHome', 'PageManagement', 'addPageForm','editPageForm','deletePageForm']);
+                  on_faqs  python:here.thisInURLEnding(['FAQManagementHome', 'FAQManagement', 'addFAQForm','editFAQForm','deleteFAQForm']);
+                  rooturl  here/getRootURLRelative">
+      
+      <li tal:attributes="class python:test(on_home, 'on')">
+        <a href="" tal:attributes="href string:${rooturl}/Management" name="home">Home</a>
+        <ul tal:condition="on_home">
+          <li><a tal:attributes="href string:${rooturl}/Management">Home</a></li>
+          <li tal:condition="here/Document-Pan|nothing"><a 
+              tal:attributes="href string:${rooturl}/DocumentManagementHome">Documents</a></li>
+          <li><a tal:attributes="href string:${rooturl}/manage_AdvancedManagement">Advanced settings</a></li>
+        </ul>
+      </li>
+      
+      <li tal:condition="python:'News' in modules"
+          tal:attributes="class python:test(on_news, 'on')">
+        <a class="core" tal:attributes="href string:${rooturl}/NewsManagementHome" name="news">News</a>
+        <ul tal:condition="on_news">
+          <li tal:repeat="container here/manage_findNewsContainers">
+            <a href="" tal:attributes="href string:${container/absolute_url_path}/NewsManagement;
+                                       title container/getTitle"
+                       tal:content="string:${container/getId} (${container/countNewsItems})">Home</a></li>
+            
+          <li><a href="" 
+                 tal:attributes="href string:manage_addProduct/${here/ProjectName}/addNewsContainerForm?goto_after=${request/URL}">Add News container</a></li>
+        </ul>      
+      </li>
+      
+      <li tal:condition="python:'Files' in modules"
+          tal:attributes="class python:test(on_files, 'on')">
+        <a class="core" tal:attributes="href string:${rooturl}/FileManagementHome" name="jobs">Files</a>
+        <ul tal:condition="on_files">
+          <li tal:repeat="container here/manage_findFileContainers">
+            <a href="" tal:attributes="href string:${container/absolute_url_path}/FileManagement;
+                                       title container/getTitle"
+                       tal:content="string:${container/getId} (${container/countFiles})">Home</a></li>
+            
+          <li><a href="" 
+                 tal:attributes="href string:manage_addProduct/${here/ProjectName}/addFilesContainerForm?goto_after=${request/URL}">Add Files container</a></li>
+        </ul>        
+      </li>
+      
+      <li tal:condition="python:'Blogs' in modules"
+          tal:attributes="class python:test(on_blogs, 'on')">
+        <a class="core" tal:attributes="href string:${rooturl}/BlogManagementHome" name="blogs">Blogs</a>
+        <ul tal:condition="on_blogs">
+          <li tal:repeat="container here/manage_findBlogContainers">
+            <a href="" tal:attributes="href string:${container/absolute_url_path}/BlogManagement;
+                                       title container/getTitle"
+                       tal:content="string:${container/getId} (${container/countBlogs})">Home</a></li>
+            
+          <li><a href="" 
+                 tal:attributes="href string:manage_addProduct/${here/ProjectName}/addBlogContainerForm?goto_after=${request/URL}">Add Blog container</a></li>
+        </ul>      
+      </li>
+      
+      <li tal:condition="python:'Users' in modules"
+          tal:attributes="class python:test(on_users, 'on')">
+        <a class="core" tal:attributes="href string:${rooturl}/acl_users/viewUsers">Users</a>
+        <ul tal:condition="on_users">
+          <li tal:define="count here/countUsers">
+            <a href="viewUsers">View users (<br tal:replace="count" />)</a>
+          </li>
+          <li>
+            <a href="addUserForm">Add user</a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li tal:condition="python:'Pages' in modules"
+          tal:attributes="class python:test(on_pages, 'on')">
+        <a class="core" tal:attributes="href string:${rooturl}/PagesManagementHome" name="pages">Pages</a>
+        <ul tal:condition="on_pages">
+          <li>
+            <a href="">Pages (<span tal:replace="here/countPages"/>)</a>
+          </li>
+          <li>
+           <a tal:attributes="href string:manage_addProduct/${here/ProjectName}/addPageForm">
+             Add Page</a></li>
+        </ul>
+      </li>
+      
+      <li tal:condition="python:'FAQs' in modules"
+          tal:attributes="class python:test(on_faqs, 'on')">
+        <a class="core" tal:attributes="href string:${rooturl}/FAQManagementHome" name="faqs">FAQs</a>
+        <ul tal:condition="on_faqs">
+          <li tal:repeat="container here/manage_findFAQContainers">
+            <a href="" tal:attributes="href string:${container/absolute_url_path}/FAQManagement;
+                                       title container/getTitle"
+                       tal:content="string:${container/getId} (${container/countFAQ})">Home</a></li>
+
+          <li><a href=""
+                 tal:attributes="href string:manage_addProduct/${here/ProjectName}/addFAQContainerForm?goto_after=${request/URL}">Add FAQ container</a></li>
+        </ul>      
+      </li>
+
+      <li tal:repeat="module python:here.getExtraModules(containers=True)"
+          tal:attributes="class python:test(module.inURL(), 'on')">
+        <a class="core" 
+           tal:attributes="href module/getHomeURL"
+           tal:content="module/getName"
+           >Files</a>
+        <ul tal:condition="module/inURL">
+          <li tal:repeat="container module/findModuleObjects">
+            <a href="" tal:attributes="href string:${container/absolute_url_path}/${module/management_home_page};
+                                       title container/getTitle"
+                       tal:define="title container/getTitle; id container/getId"
+                       tal:content="module/getName"
+            ><span tal:condition="python:title and id and title != id"
+                   tal:content="string:$id ($title)"></span>
+             <span tal:condition="not:python:title and id and title != id"
+                   tal:content="container/title_or_id"></span></a></li>
+            
+          <li><a href="" 
+                 tal:attributes="href string:manage_addProduct/${module/product_name}/${module/adder_page}?goto_after=${request/URL}">Add
+                 <br tal:replace="module/getNiceMetaTypeName" />
+                 </a></li>
+        </ul>        
+      </li>
+      
+    </ul>
+    <div id="subnav">&nbsp;</div>
+      
+  </div>
+  
+
+<div class="errorbox clearfix"
+  tal:define="msg python:request.get('msg', request.get('manage_tabs_message',''))"
+  tal:condition="msg"
+>
+<div id="hdrsuccess"><p
+  tal:content="structure msg"></p>
+</div>
+</div>
+
+<div id="main">
+<div metal:define-slot="body">
+</div>
+
+</div>
+
+<div id="footer" class="area" align="center">
+  <a tal:attributes="href string:${here/getRootURLRelative}/Management">Management home</a> |
+  <a tal:attributes="href string:${here/getRootURLRelative}/"
+     tal:content="python:here.getRoot().getTitle()"></a>
+</div>
+
+</body>
+</html>
+
+</metal:block>

@@ -1,0 +1,28 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body">
+
+<h2>Add News Container</h2>
+<form action="manage_addNewsContainer">
+
+<dl>
+
+  <dt><label for="id">Id:</label></dt>
+  <dd><input name="id" size="30" value="" /></dd>
+
+  <dt><label for="title">Title:</label></dt>
+  <dd><input name="title" size="30" value="" /></dd>
+
+</dl>
+
+<input type="hidden" name="goto_after" 
+ tal:condition="request/goto_after|nothing"
+ tal:attributes="value request/goto_after" />
+ 
+<br />
+<input type="submit" value="Add News Container" 
+ onclick="this.value='Please wait...'" />
+</form> 
+
+</div>
+</html> 
+

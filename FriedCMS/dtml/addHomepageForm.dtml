@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Add form created by FriedZopeProductCreator 0.3 -->
+<head>
+  <title>Add Homepage</title>
+  <link rel="stylesheet" type="text/css" href="/manage_page_style.css" />
+  <style type="text/css">
+    label { font-weight:bold; font-family:sans-serif,Arial; }
+  </style>
+  <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+</head>
+<body>
+<h2>Add Homepage</h2>
+<form action="manage_addHomepage">
+
+<dl>
+
+  <dt><label for="id">Id:</label></dt>
+  <dd><input name="id" size="30" value="" /></dd>
+
+  <dt><label for="title">Title:</label></dt>
+  <dd><input name="title" size="30" value="" /></dd>
+
+</dl>
+<br />
+<input type="submit" value=" Add " />
+<input type="submit" name="addandedit" value="Add and Edit" />
+</form> 
+
+</body>
+</html> 
+

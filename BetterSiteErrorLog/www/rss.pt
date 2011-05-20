@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:syn="http://purl.org/rss/1.0/modules/syndication/"
+         xmlns="http://purl.org/rss/1.0/"
+         xmlns:tal="http://xml.zope.org/namespaces/tal"
+         tal:define="entries python:container.getLogEntries(q=request.get('q'))">
+                           
+                               
+                               
+<channel tal:attributes="rdf:about string:${here/absolute_url}/manage_rss_errorlog">
+  <title 
+         tal:define="parent_path python:here.absolute_url().replace('error_log','')"
+         tal:content="string:Site Error Log at ${parent_path}"></title>
+  <link tal:content="here/absolute_url"></link>
+  
+  <description tal:define="props container/getProperties">
+   Ignored exception types: <tal:item replace="python: ', '.join(props['ignored_exceptions'])" />
+  </description>
+  
+  <image tal:attributes="rdf:resource string:${request/BASE0}/misc_/SiteErrorLog/error.gif"/>
+  
+  <items>
+      <rdf:Seq>
+              
+           <rdf:li tal:repeat="entry entries" 
+                   tal:attributes="rdf:resource string:${here/absolute_url}/showEntry?id=${entry/id}"/>
+      </rdf:Seq>
+  </items>
+  
+</channel>
+
+    <item tal:repeat="entry entries"
+          tal:attributes="rdf:about string:${here/absolute_url}/showEntry?id=${entry/id}">
+        <title>
+            <span tal:replace="entry/type">AttributeError</span>:
+            <span tal:define="value entry/value"
+                  tal:replace="python: here.showValueShortened(value, 70)">
+                 Application object has no attribute "zzope"</span>
+        </title>
+        <link tal:content="string:${here/absolute_url}/showEntry?id=${entry/id}"></link>
+        <description tal:content="string:${entry/type}: ${entry/value}"></description>
+        <dc:publisher tal:content="string:${entry/username} (${entry/userid})"></dc:publisher>
+        <dc:type tal:content="entry/type"></dc:type>
+        <dc:date tal:define="t python:DateTime(entry['time'])" tal:content="t/ISO8601"></dc:date>
+    </item>
+
+</rdf:RDF>

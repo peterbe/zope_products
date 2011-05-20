@@ -1,0 +1,55 @@
+<table width="100%"
+ tal:define="today here/ZopeTime"
+ tal:condition="options/objects">
+  <tr tal:repeat="object options/objects"
+      tal:attributes="class python:test(path('repeat/object/even'), 'even','odd')">
+    <td><input type="checkbox" name="ids:list" tal:attributes="value object/id" /></td>
+    <td tal:define="has_tiny_display python:object.meta_type == 'Photo' and 'tiny' in object.displayIds();
+                    special_icon python:here.getSpecialListIcon(object)">
+    
+       <img tal:attributes="src object/icon; alt object/meta_type"
+            tal:condition="not:python:has_tiny_display or special_icon"
+            />
+
+       <img tal:attributes="src special_icon; alt object/meta_type"
+            tal:condition="special_icon"
+            />
+
+       <img tal:replace="structure python:object.tag(display='tiny')"
+            tal:condition="has_tiny_display"
+            />
+
+       <a tal:condition="python:object.meta_type==here.META_TYPE"
+          tal:attributes="href string:${object/absolute_url}/manageable;
+	                  title string:ID: ${object/getId}"
+          tal:content="python:here.showListObjectName(object)"></a>
+
+       <a tal:condition="python:object.meta_type=='Image'"
+          tal:attributes="href string:manageable?editid=${object/id}"
+          tal:content="python:here.showListObjectName(object)"></a>
+
+       <a tal:condition="python:object.meta_type=='File'"
+          tal:attributes="href string:manageable?editid=${object/id}"
+          tal:content="python:here.showListObjectName(object)"></a>
+
+       <a tal:condition="python:object.meta_type=='Photo'"
+          tal:attributes="href string:manageable?editid=${object/id}"
+          tal:content="python:here.showListObjectName(object)"></a>          
+
+       <input type="hidden" name="titleof" 
+         tal:attributes="name string:titleof-${object/id};
+                         value object/title" />
+                         
+    </td>
+    <td tal:define="d object/bobobase_modification_time; age python:today-d">
+      <small tal:replace="python:d.strftime('%d %b %H:%M')"></small>
+    </td>
+    <td tal:define="at_top repeat/object/start; at_bottom repeat/object/end">
+       <tal:space tal:condition="at_top">&nbsp;&nbsp;&nbsp;</tal:space>
+       <a href="up" tal:condition="not:at_top" onclick="return ajaxsortup(this.href.split('=')[1])"
+        tal:attributes="href string:?up=${object/id}"><img src="/misc_/FriedDocument/up_off.gif" alt="Up" border="0" onmouseover="_hL(this)" onmouseout="_uhL(this)" /></a>
+       <a href="down" tal:condition="not:at_bottom" onclick="return ajaxsortdown(this.href.split('=')[1])"
+        tal:attributes="href string:?down=${object/id}"><img src="/misc_/FriedDocument/down_off.gif" alt="Down" border="0" onmouseover="_hL(this)" onmouseout="_uhL(this)" /></a>
+    </td>
+  </tr>
+</table>

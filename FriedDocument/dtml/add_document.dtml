@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Add Fried Document</title>
+<link rel="stylesheet" type="text/css" href="/manage_page_style.css" />
+<style type="text/css">
+body { font-family:sans-serif,Arial; }
+label.optional { font-style:italic; }
+#belike {float:right; border:1px solid #ccc; width:400px; margin-right:50px}
+</style>
+<script type="text/javascript">
+function stripSpaces(x) {
+   return x.replace(/^\s+|\s+$/g,'');
+}   
+ 
+function setbelike(id, path, metalobjectid, css_url) {
+  document.add.metalmacro.value=metalobjectid;
+  document.add.css_url.value = css_url;
+  document.add.belike_path.value = path;
+  document.getElementById('belike_path_output').innerHTML = path;
+}
+
+function checkAddForm(f) {
+  var title = stripSpaces(f.title.value);
+  var id = stripSpaces(f.id.value);
+  var metalmacro = stripSpaces(f.metalmacro.value);
+  if (!title && !id) {
+    alert("Please enter an Id or Title");
+  } else if (!metalmacro) {
+    alert("Please enter the metalmacro");
+  } else return true;
+  return false
+}
+</script>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+</head>
+
+<body>
+
+<h3>Add Fried Document</h3>
+
+<form action="manage_addFriedDocument" method="post" name="add"
+ onsubmit="return checkAddForm(this)">
+
+<dl>
+<dt><label for="id" class="optional">Id</label></dt>
+<dd><input name="id" id="id" /></dd>
+
+<dt><label for="title">Title</label></dt>
+<dd><input name="title" size="30" id="title" /></dd>
+
+<dtml-let belike_documents="manage_findBeLikeDocuments()">
+<dtml-if belike_documents>
+<div id="belike">
+<b>Be like...</b> &nbsp;<span style="color:#999;font-size:70%">adjacent documents that you want this one to be like</span><br />
+<input type="hidden" name="belike_path" value="" />
+<span id="belike_path_output"></span>
+<p>
+<dtml-in belike_documents mapping>
+<dtml-let itemid="path.replace('/','__')">
+<input type="button" value="use" onclick="setbelike('<dtml-var itemid>','<dtml-var path>','<dtml-var "object.metalobjectid">','<dtml-var "object.css_url">')" />
+<span id="<dtml-var itemid>"><dtml-var "object.getTitle()"> (<dtml-var "object.absolute_url().replace(REQUEST.BASE0,'')">)<br /></span>
+</dtml-let>
+  <dtml-if sequence-end>
+    <input type="button" value="cancel" onclick="setbelike('','','','')" />
+  </dtml-if>
+</dtml-in>
+</p>
+
+</div>
+</dtml-if>
+</dtml-let>
+
+<dt><label for="mm">metalmacro</label></dt>
+<dd><input name="metalmacro" size="30" id="mm" /><br />
+
+<dtml-in "manage_findMetalPTs()">
+
+<dtml-if sequence-start>
+  <div style="font-size:0.8em;">
+  <b>Suggestions</b><br />
+</dtml-if>
+
+<input type="button" style="font-size:75%"
+onclick="document.add.metalmacro.value='<dtml-var sequence-item>';return false;"
+onkeypress="document.add.metalmacro.value='<dtml-var sequence-item>'; return false;"
+value="use" /> <dtml-var sequence-item><br />
+ 
+<dtml-if sequence-end>
+  </div>
+</dtml-if>
+</dtml-in>
+
+</dd>
+
+<dt><label for="sin" class="optional">Include in nav</label></dt>
+<dd><input type="checkbox" name="show_in_nav:boolean" value="1" id="sin" checked="checked" /></dd>
+
+<dt><label for="cu" class="optional">CSS URL</label></dt>
+<dd><input name="css_url" size="30" id="cu" /><br />
+
+
+<dtml-in "manage_findCSSUrlAlts()" mapping>
+
+<dtml-if sequence-start>
+  <div style="font-size:0.8em;">
+  <b>Suggestions</b><br />
+</dtml-if>
+
+<input type="button" style="font-size:75%"
+onclick="document.add.css_url.value='<dtml-var url>';return false;"
+onkeypress="document.add.css_url.value='<dtml-var url>'; return false;"
+value="use" /> <dtml-var url> (<dtml-var reason>)<br />
+ 
+<dtml-if sequence-end>
+  </div>
+</dtml-if>
+</dtml-in>
+
+</dd>
+
+</dl>
+
+<input type="submit" value=" Add " />
+<input type="submit" name="addandgoto" value="Add and go to" />
+
+
+</form>
+
+</body>
+</html>

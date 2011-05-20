@@ -1,0 +1,37 @@
+<dtml-let sizelimit="int(REQUEST.get('undo_size_limit', 20))"
+          revisioncount="countRevisionTimestamps(currentslotname)">
+<form action="manage_reinstateRevision" style="display:inline">
+  <dtml-unless no_hidden_slot_input>
+  <input type="hidden" name="slot" value="<dtml-var currentslotname>" />
+  </dtml-unless>
+  <select name="revision_timestamp" style="font-size:0.9em"
+   onchange="if(this.options[this.selectedIndex].value){this.form.submit()}">
+    <option value="">undo to...</option>
+    <dtml-let timestamps="getRevisionTimestamps(currentslotname, True)">
+      <dtml-comment>
+      <dtml-if "_.len(timestamps)>10">
+        <option value="moreoptions">more undo options</option>        
+      </dtml-if>
+      </dtml-comment>
+    <dtml-in "timestamps" mapping>
+      <option value="<dtml-var timestamp>"><dtml-var date></option>
+    </dtml-in>
+
+      <dtml-if "sizelimit<revisioncount">
+        <option value="increasesizelimit">show all <dtml-var revisioncount>...</option>
+      </dtml-if>
+
+
+    
+      
+      <dtml-comment>
+      <dtml-if "_.len(timestamps)<=10">
+        <option value="moreoptions">more undo options</option>
+      </dtml-if>
+      </dtml-comment>
+      
+    </dtml-let>
+  </select>
+</form>
+</dtml-let>
+

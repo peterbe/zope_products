@@ -1,0 +1,14 @@
+- 0.3
+
+  * Logic for what a "Today" date is changed and fixed
+  
+- 0.2
+
+  * RSS feed
+
+- 0.1
+
+  * Ability to search for errors
+  
+  * Show date on entries older than 1 day
+

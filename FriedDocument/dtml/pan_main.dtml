@@ -1,0 +1,32 @@
+<dtml-var manage_pan_header>
+
+
+<dtml-var manage_Pan_showall>
+
+
+
+<h3>Batch jobs</h3>
+
+<p><a href="manage_Pan_CSSURLs"><b>CSS URLs</b></a><br />
+Set which CSS URL all documents should use</p>
+
+<p><a href="manage_Pan_ExpiryHeaders"><b>Expiry Headers</b></a><br />
+Control the expiry headers of all or many documents</p>
+
+
+
+<h3>Actions</h3>
+
+
+<p><a href="manage_updateAll"><b>Update all documents</b></a><br />
+Finds all potentially new slots and cooks the document
+</p>
+
+<!--
+<p><a href="manage_cookAll"><b>Cook all documents</b></a><br />
+Prepares the template for rendering
+</p>
+-->
+
+
+<dtml-var manage_pan_footer>

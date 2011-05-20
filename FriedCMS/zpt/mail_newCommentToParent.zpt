@@ -1,0 +1,11 @@
+<div tal:define="url          options/url | nothing;
+                 title        options/title | nothing;
+                 parent_title options/parent_title | nothing"
+    tal:omit-tag="">
+New comment '<div tal:replace="title"/>' as a response to your '<div tal:replace="parent_title"/>' just have been added.
+
+Go to <div tal:replace="url"/> to see it.
+
+------------------------------
+Fry-IT Comments
+</div>

@@ -1,0 +1,10 @@
+<div tal:define="url      options/url | nothing;
+                 title    options/title | nothing"
+    tal:omit-tag="">
+New comment '<div tal:replace="title"/>' just have been added.
+
+Go to <div tal:replace="url"/> to see/approve it.
+
+------------------------------
+Fry-IT Comments
+</div>

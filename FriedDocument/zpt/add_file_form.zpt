@@ -1,0 +1,28 @@
+<form metal:define-macro="widget" action="addFileSimple" method="post" 
+enctype="multipart/form-data" onsubmit="action_pleasewait()">
+
+
+<table class="fd-metadata" tal:define="blank string:">
+  <tr>
+    <td><label for="file">File:</label></td>
+    <td><input type="file" name="file" id="file" size="35" /></td>
+  </tr>
+  <tr>
+    <td><label for="id">Id:</label> (<abbr title="If left blank the system will generate one automatically">optional</abbr>)</td>
+    <td><input name="id" id="id" tal:attributes="value request/id|blank" size="35" />
+        <a href="#" onclick="suggestId(id$('file'), id$('id'), true);return false"
+        ><img src="/misc_/FriedDocument/suggest.gif" border="0" alt="Suggest Id" /></a>
+    </td>
+  </tr>
+  <tr>
+    <td><label for="title">Title:</label> (<abbr title="Can be blank">optional</abbr>)</td>
+    <td><input name="title" id="title" tal:attributes="value request/title|blank" size="35"
+          /></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><input type="submit" value="Add file" /></td>
+  </tr>
+</table>
+  
+</form>

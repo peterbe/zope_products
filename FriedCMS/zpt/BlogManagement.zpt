@@ -1,0 +1,63 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body">
+
+<div class="toprightbox">
+  <a href="addBlogItemForm"
+   tal:attributes="href string:manage_addProduct/${here/ProjectName}/addBlogItemForm"
+   ><img tal:attributes="src string:/misc_/${here/ProjectName}/add_button.png" alt="Add" border="0" /></a>
+  <a href="addBlogItemForm"
+    tal:attributes="href string:manage_addProduct/${here/ProjectName}/addBlogItemForm"
+    >Add a new Blog item</a>
+</div>
+
+<h3>List of all Blog items</h3>
+
+
+<div tal:define="items python:here.getBlogItems(filter_publish_date=0, sort='create_date')">
+
+  <div tal:repeat="item items">
+     <b>Title: <span tal:replace="item/getTitle"></span></b>
+     [<a tal:attributes="href string:${item/absolute_url_path}/editBlogItemForm">edit</a> |
+      <a tal:attributes="href item/absolute_url_path">view</a> |
+      <a tal:attributes="href string:deleteBlogItemForm?id=${item/getId}">delete</a>
+      <div tal:condition="python: hasattr(item,'isCommentingAvailable')" tal:omit-tag="">
+        | <a tal:attributes="href string:${item/absolute_url_path}/editCommentsForm"
+            >comments</a>
+      </div>
+      ]
+     <br />
+       <span style="color:green" tal:condition="item/isPublished"
+         tal:content="string:Published ${item/showPublishDate}"></span>
+       <span style="color:red" tal:condition="not:item/isPublished"
+         tal:content="string:Not yet published ${item/showPublishDate}"></span>
+     <br />
+      URL: <small style="color:green" tal:content="item/absolute_url_path"></small>
+      
+     <br />
+     <i>Abstract: <span tal:replace="item/getAbstract"></span></i><br />
+     
+     <tal:block tal:define="body item/showBody; msize python:50">
+     
+       <div tal:condition="python:len(body)<msize or request.get('expand','')==item.getId()">
+         Body: <br tal:replace="structure body" />
+       </div>
+       <div tal:condition="not:python:len(body)<msize or request.get('expand','')==item.getId()">
+         Body: <br tal:replace="structure python:body[:msize]" />
+         <a align="right" tal:attributes="href string:?expand=${item/getId}"
+	  >Show the remaining <span tal:replace="python:len(body[msize:].split())"></span> words</a>
+       </div>
+       
+     </tal:block>
+     
+     <br />
+  
+  </div>
+  
+
+  <em tal:condition="not:items">None created yet</em>
+
+</div>
+
+
+</div>
+</html>

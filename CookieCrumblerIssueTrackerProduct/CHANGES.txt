@@ -1,0 +1,12 @@
+
+  - Made the "Remember me..." duration 2 months by default instead of
+    2 weeks
+    
+- 0.0.2
+
+  - Fixed so that cclogin can be shown with no issuetracker parent found
+    Real#0323
+  
+- 0.0.1
+
+  - Started project

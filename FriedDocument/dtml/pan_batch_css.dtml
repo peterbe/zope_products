@@ -1,0 +1,41 @@
+<dtml-var manage_page_header>
+<dtml-with "_(management_view='Document Pan')">
+<dtml-var manage_tabs>
+</dtml-with>
+<dtml-if Principia-Version>
+<p> <em>You are currently working in version 
+  <dtml-var Principia-Version>
+  </em> </p>
+</dtml-if Principia-Version>
+
+<style type="text/css">
+a { font-size:10pt; }
+</style>
+
+<p class="form-title">Set the CSS URL of all documents</p>
+
+<form action="manage_setAllCSSURLs" method="post">
+
+<div style="float:left">
+<label for="cu">CSS URL for all</label>
+<input name="css_url" id="cu" size="40" />
+</div>
+
+<dtml-let documentobjects="getDocumentObjects()">
+<select name="exception_document_paths" multiple="multiple" 
+ size="<dtml-var "_.min(20, len(documentobjects))">">
+   <dtml-in documentobjects>
+     <option value="...path..."><dtml-var id> (<dtml-var getCSSURL>)</option>
+   </dtml-in>
+</select>
+</dtml-let>
+
+
+
+</form>
+
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<dtml-var manage_page_footer>

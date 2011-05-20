@@ -1,0 +1,58 @@
+<form metal:define-macro="widget" 
+ action="editPictureSimple" method="post" enctype="multipart/form-data"
+ tal:define="obj python:getattr(here, request.get('editid'))">
+
+<input type="hidden" name="oldid" tal:attributes="value obj/getId" />
+
+<div class="fd-imagepreview" tal:define="height python:obj.height()">
+
+<a tal:attributes="href python:here.embedDisplayInURL(obj.absolute_url_path(), 'thumbnail')" title="Click to see in unchanged size"
+ ><img id="fd-imagepreview" class="fd-bigimagepreview" border="0"
+  tal:attributes="src string:${obj/absolute_url}?display=thumbnail"
+   /></a>
+     
+</div>
+
+<table class="fd-metadata" tal:define="blank string:">
+  <tr>
+    <td><label for="file">File:</label> (<abbr title="Use only to change image">optional</abbr>)</td>
+    <td><input type="file" name="file" id="file" size="35" /></td>
+  </tr>
+  <tr>
+    <td><label for="id">Id:</label></td>
+    <td><input name="id" id="id" tal:attributes="value request/id|obj/getId" size="35" />
+    </td>
+  </tr>
+  <tr>
+    <td><label for="title">Title:</label></td>
+    <td><input name="title" id="title" tal:attributes="value request/title|obj/title" size="35"
+          /></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><input type="submit" value="Save changes" /></td>
+  </tr>
+</table>
+
+<br />
+
+<p class="help-description">
+<strong>URL to picture:</strong>
+</p>
+<table>
+  <tr>
+    <td><a href="#" onclick="return changePreviewImage('')">Unchanged size</a>:</td>
+    <td><small style="color:green" tal:content="obj/absolute_url_path"></small></td>
+  </tr>
+  <tr>
+    <td><a href="#" onclick="return changePreviewImage('small')">Small</a>:</td>
+    <td><small style="color:green" tal:content="python:here.embedDisplayInURL(obj.absolute_url_path(), 'small')"></small></td>
+  </tr>
+  <tr>
+    <td><a href="#" onclick="return changePreviewImage('thumbnail')">Thumbnail</a>:</td>
+    <td><small style="color:green" tal:content="python:here.embedDisplayInURL(obj.absolute_url_path(), 'thumbnail')"></small></td>
+  </tr>  
+</table>  
+
+</form>
+

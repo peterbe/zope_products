@@ -1,0 +1,55 @@
+<html metal:use-macro="here/getManagementHeader">
+
+<script tal:condition="here/TinyManagement|nothing"
+        tal:replace="structure here/TinyManagement"
+        metal:fill-slot="extrajs" />
+
+<div metal:fill-slot="body">
+
+  <div class="toprightbox">
+    <a href=".">View</a>
+    <a tal:attributes="href string:${here/absolute_url_path}/FAQManagementHome">Cancel</a>
+  </div>
+  
+  <form action="editFAQ" method="post">
+    <dl>
+      <dt><label for="title">Title:</label></dt>
+      <dd><input name="title:ustring" id="title" size="50"
+           tal:attributes="value here/getTitle" /></dd>
+
+      <dt><label for="abstract">Question</label></dt>
+      <dd><textarea name="abstract:text" cols="55" rows="8" class="tinyeditor"
+             tal:content="here/getAbstract"></textarea><br />
+      </dd>
+
+      <dt><label for="body">Answer</label></dt>
+      <dd><textarea name="body:latin1:utext" cols="55" rows="15" class="tinyeditor"
+            tal:content="here/getBody"></textarea>
+      </dd>
+      
+      <tal:block condition="here/hasCategories">
+        <dt><label for="category" class="optional">Category</label></dt>
+        <dd>
+          <select name="category" 
+            tal:define="categories here/getCategories;
+                        selected   here/getCategory">
+            <option value=""
+              tal:attributes="selected python:test(selected,False,True)">None</option>
+            <option tal:repeat="category categories"
+              tal:attributes="value    category;
+                              selected python:test(selected==category,True,False)"
+              tal:content="category"/>
+         </select>
+       </dd>
+      </tal:block>
+
+      <dt><label for="publish_date">Publish date</label></dt>
+      <dd><input name="publish_date:date"
+             tal:attributes="value python:here.getPublishDate().strftime('%Y-%m-%d %H:%M')" /></dd>
+    </dl>
+    
+    <input type="submit" value="Save changes" onclick="this.value='Please wait...'" />
+  </form>
+
+</div>
+</html>

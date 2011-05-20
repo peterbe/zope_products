@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html>
+<head>
+<title>Compare difference between published version and current changes</title>
+</head>
+
+<frameset rows="77,*" scrolling="no" 
+ tal:define="blank string:;
+             compareslot request/compareslot|blank;
+             diffed python:int(request.get('diffed', 0));
+             ">
+  <frame scrolling="no"
+     tal:attributes="src string:manage_viewVersioningFrame?compareslot=${compareslot}&amp;diffed=${diffed}"  />
+  <frameset cols="50%,*" scrolling="auto" tal:condition="not:compareslot">
+    <frame src="view?SUPPRESS_VERSIONING=1" id="published" />
+    <frame src="view" id="versioning" />
+  </frameset>
+  
+  <frameset cols="50%,*" scrolling="auto" tal:condition="compareslot">
+    <tal:block define="view_method python:test(diffed, 'manage_viewSlotStraightDiffed','manage_viewSlotStraight')">
+    <frame src="manage_viewSlot?SUPPRESS_VERSIONING=1" id="published"
+     tal:attributes="src string:${view_method}?SUPPRESS_VERSIONING=1&amp;slot=${compareslot}" />
+    <frame src="manage_viewSlot?" id="versioning" 
+     tal:attributes="src string:${view_method}?slot=${compareslot}" />
+    </tal:block>
+  </frameset>  
+</frameset>
+<noframes>
+  <body>
+  Difference can't be viewed without Frames support.
+  </body>
+</noframes>
+</html>

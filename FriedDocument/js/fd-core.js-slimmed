@@ -1,0 +1,14 @@
+function html_quote(s){return s.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function $(){var elements=new Array();for(var i=0;i < arguments.length;i++){var element=arguments[i];if(typeof element == 'string')
+element=document.getElementById(element);if(arguments.length==1)
+return element;elements.push(element);}
+return elements;}
+function updateRevisionUndoer(slotname){if($('revisionundoer')) {var outer = $('revisionundoer');outer.style['display']='';
+var a=new sack('show_revision_undo_form');a.onCompletion=function(){if(a.response)
+outer.innerHTML=a.response;};
+a.runAJAX('currentslotname='+slotname);}}
+function reveal_validation_errors(){var ajax=new sack("getValidationError");ajax.AjaxFailedAlert=null;
+ajax.encodeURIString=false;ajax.onCompletion=function(){if(ajax.response){if($('validationerror')) {var ve = $('validationerror');ve.style['display']='';
+ve.style['border'] = '1px solid red';ve.style['background'] = '#fdd';ve.style['padding'] = '2px 6px';ve.innerHTML=html_quote(ajax.response);}else{alert("VALIDATION ERROR: " + ajax.response);}}else{if($('validationerror')) $('validationerror').style['display']='none';}};ajax.runAJAX(null);}
+function fadetext(id,hex){var o = $(id);if(arguments.length==1){o.style.color="rgb(0,0,0)";hex=0;}if(hex<255){o.style.color="rgb("+hex+","+hex+","+hex+")";setTimeout("fadetext('"+id+"',"+(hex+5)+")",20);} else
+o.style.color="rgb(255,255,255)";}

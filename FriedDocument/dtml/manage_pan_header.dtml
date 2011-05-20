@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+
+<meta http-equiv="content-type" content="text/html;charset=iso-8859-1" />
+
+<title>Document Pan</title>
+<link rel="stylesheet" type="text/css" href="/manage_page_style.css" />
+<style type="text/css">
+body { background-color:#fff; }
+a { font-size:10pt; }
+a.small { font-size:8pt; }
+a.small:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<dtml-with "_(manage_options=filtered_manage_options())">
+  <dtml-if manage_options>
+    <dtml-call "REQUEST.set('n_', _.len(manage_options)-1)">
+    <dtml-call "REQUEST.set('a_', 0)">
+    <dtml-in manage_options mapping>
+      <dtml-if expr="REQUEST.URL[-(_.len(action)):]==action or
+                REQUEST.URL[-17:]=='/manage_workspace' and _['sequence-start']">
+        <dtml-call "REQUEST.set('a_', _['sequence-index'])">
+      </dtml-if>
+      <dtml-if "_.has_key('management_view') and management_view==label">
+        <dtml-call "REQUEST.set('a_', _['sequence-index'])">
+      </dtml-if>
+    </dtml-in>
+  </dtml-if>
+
+<dtml-unless MANAGE_TABS_NO_BANNER>
+  <table width="100%" cellspacing="0" cellpadding="2" border="0">
+  <tr class="location-bar">
+    <td align="left" valign="top">
+    <div class="std-text">
+    <dtml-if icon>
+    <img src="&dtml-BASEPATH1;/&dtml-icon;" 
+         alt="&dtml-meta_type;" border="0" />
+    </dtml-if>
+    <strong>
+    <dtml-if meta_type>
+      <dtml-if class_manage_path>
+    <a href="&dtml-BASEPATH1;&dtml-class_manage_path;"
+       title="Manage the ZClass of this object">&dtml-meta_type;</a>
+      <dtml-else>
+    &dtml-meta_type;
+      </dtml-if>
+    <dtml-else>
+    Object
+    </dtml-if> 
+    at <dtml-var expr="tabs_path_default(REQUEST)">
+    </strong>
+    <dtml-if locked_in_version>
+      <dtml-if modified_in_version>
+        <img src="&dtml-BASEPATH1;/p_/locked"
+         alt="This item has been modified in this version" />
+      <dtml-else>
+        <img src="&dtml-BASEPATH1;/p_/lockedo"
+         alt="This item has been modified in another version" />
+              (<em>&dtml-locked_in_version;</em>)
+      </dtml-if>
+    </dtml-if>
+    <dtml-if wl_isLocked>
+     <img src="&dtml-BASEPATH1;/p_/davlocked"
+      alt="This item has been locked by WebDAV"
+      title="This item has been locked by WebDAV" />
+    </dtml-if wl_isLocked>
+    </div>
+    </td>
+  <dtml-if "_.has_key('help_topic') and _.has_key('help_product')">
+  <td align="right" valign="top">
+  <div class="std-text">
+  <dtml-var "HelpSys.helpLink(help_product, help_topic)">
+  </div>
+  </td>
+  <dtml-else>
+  <dtml-if manage_options>
+  <dtml-with "_(option=manage_options[a_])">
+  <dtml-if "option.has_key('help')">
+  <td align="right" valign="top">
+  <div class="std-text">
+  <dtml-var "HelpSys.helpLink(option['help'][0], option['help'][1])">
+  </div>
+  </td>
+  </dtml-if>
+  </dtml-with>
+  </dtml-if>
+  </dtml-if>
+  </tr>
+  </table>
+
+<dtml-if Zope-Version>
+<div class="system-msg">
+<em>You are currently working in version <a href="&dtml-SERVER_URL;&dtml-Zope-Version;/manage_main">&dtml-Zope-Version;</a></em>
+</div>
+</dtml-if>
+</dtml-unless>
+
+<dtml-if manage_tabs_message>
+<div class="system-msg">
+<dtml-var manage_tabs_message newline_to_br> 
+(<dtml-var ZopeTime fmt="%Y-%m-%d %H:%M">)
+</div>
+</dtml-if>
+
+</dtml-with>

@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Add form created by FriedZopeProductCreator 0.3 -->
+<head>
+  <title>Add Module</title>
+  <link rel="stylesheet" type="text/css" href="/manage_page_style.css" />
+  <style type="text/css">
+    label { font-weight:bold; font-family:sans-serif,Arial; }
+  </style>
+  <meta http-equiv="Content-Type" content="text/html; charset=latin-1" />
+</head>
+<body>
+<h2>Add Module</h2>
+<form action="manage_addModule">
+
+<dl>
+
+  <dt><label for="id">Id:</label></dt>
+  <dd><input name="id" size="30" value="SomethingSomethingModule" /></dd>
+
+  <dt><label for="title">Title:</label></dt>
+  <dd><input name="title:string" size="30" value="" /></dd>
+
+  <dt><label for="meta_type">meta_type:</label></dt>
+  <dd><input name="meta_type" size="30" value="" /></dd>
+
+  <dt><label for="product_name">Product name:</label></dt>
+  <dd><input name="product_name" size="30" value="" />
+     <small><em>eg. FriedCMS</em></small>
+  </dd>
+
+  <dt><label for="management_home_page">Management Home page:</label></dt>
+  <dd><input name="management_home_page" size="30" value="" />
+   <small><em>eg. NewsManagementHome</em> (outside the object)</small>
+  </dd>
+  
+  <dt><label for="management_page">Management page:</label></dt>
+  <dd><input name="management_page" size="30" value="" />
+   <small><em>eg. NewsManagement</em> (inside the object)</small>
+  </dd>
+
+  <dt><label for="adder_page">Adder page:</label></dt>
+  <dd><input name="adder_page" size="30" value="" />
+   <small><em>eg. addNewsItem</em></small>
+  </dd>
+  
+  <dt><label for="editor_page">Editor page:</label></dt>
+  <dd><input name="editor_page" size="30" value="" />
+   <small><em>eg. editNewsItem</em></small>
+  </dd>  
+
+  <dt><label for="is_cintainer">Containerish:</label></dt>
+  <dd><input type="checkbox" name="is_container:boolean" value="1" />
+  <small>for example. NewsFolder objects are containerish </small>
+  </dd>
+
+</dl>
+<br />
+<input type="submit" value=" Add " />
+<input type="submit" name="addandedit" value="Add and Edit" />
+</form> 
+
+</body>
+</html> 
+

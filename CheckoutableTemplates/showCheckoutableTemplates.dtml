@@ -1,0 +1,416 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+  <title>Show Checkoutable Templates</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  
+  <style type="text/css"><!--
+body {
+  font-family:arial, serif, verdana;
+  background-color: #ffffff;
+}
+
+#uncheckedout {
+}
+
+#checkedout {
+  float:right;
+}
+
+.clearer {clear: both; line-height: 0; height: 0;}
+.templates { width:45%; }
+.templates h2 {display:block; background-color:#ccc; padding:10px 2px; margin-top:0; }
+.templates tr.odd { background-color:#efefef; }
+.templates tr.even { background-color:#e1e1e1; }
+.templates thead { background-color:#ccc; }
+
+.zpt { background: transparent url(/misc_/PageTemplates/zpt.gif) no-repeat; padding-left:20px; }
+.dtml { background: transparent url(/misc_/OFSP/dtmlmethod.gif) no-repeat; padding-left:20px; margin-top:3px;}
+
+
+.small { font-size:80%; }
+p.error {
+  background-color:#FFCCCC;
+  border:1px dashed #999;
+  font-size:110%;
+  color:red;
+  margin:5px;
+  padding:15px;
+}
+.description {
+  font-size:80%;
+}
+.code_default {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10pt;
+  margin-left: 1px;
+  padding: 2px 2px 2px 2px;
+}
+  
+#exit {
+  float:right;
+  margin-right:35px;
+  padding:1px 7px;;
+  border-left:2px solid #ccc;
+  border-top:2px solid #ccc;
+  background-color:#efefef;
+  border-right:2px solid #666;
+  border-bottom:2px solid #666;
+}
+
+#exit a {
+  text-decoration:none;
+  color:black;
+}
+  
+/* diff (old system) */
+ins {background: #bfb} 
+del {background: #fcc} 
+ins,del {text-decoration: none}
+
+/* MoinMoin inspired */
+.diff {
+    width:99%;
+}
+.diff-title {
+    background-color: #C0C0C0;
+}
+
+.diff-added {
+    background-color: #E0FFE0;
+    vertical-align: sub;
+}
+
+.diff-removed {
+    background-color: #FFFFE0;
+    vertical-align: sub;
+}
+
+.diff-added span {
+    background-color: #80FF80;
+}
+
+.diff-removed span {
+    background-color: #FFFF80;
+}
+
+--></style>
+</head>
+<body>
+<div id="exit"><a href="./">Exit</a></div>
+
+
+<h1>Checkoutable Templates</h1>
+
+	
+	
+<dtml-if "REQUEST.get('difference') and REQUEST.get('identifier')">
+  <h3>Difference between source and checked out template</h3>
+  <dtml-if "CheckoutableTemplates.hasFileitemFromIdentifier(REQUEST['identifier'])">
+  <dtml-let fileitem="CheckoutableTemplates.getFileitemFromIdentifier(REQUEST['identifier'])">
+    <hr />
+    <dtml-var "CheckoutableTemplates.showDifference(this(), REQUEST['identifier'], REQUEST['difference'])">
+    <hr />
+      <a href="<dtml-var URL>#checkedout">Cancel</a>,
+      <a href="<dtml-var "REQUEST['difference']">/manage_main">Edit</a>
+    <br />&nbsp;
+  </dtml-let>
+  <dtml-else>
+    <p class="error"><strong>Error</strong><br />
+      Idenfifier expired.
+      <a href="<dtml-var URL1>/showCheckoutableTemplates">Please reload the page</a>
+    </p>  
+  </dtml-if>
+<dtml-elif "REQUEST.has_key('retractidentifiers') and REQUEST.has_key('WriteBack')">
+
+    <dtml-let objects_idents_writtenback="CheckoutableTemplates.doWriteback(this(), REQUEST['retractidentifiers'])">
+     <h3>Objects written back to file</h3>
+     <dtml-in objects_idents_writtenback>
+     <dtml-let object="_['sequence-item'][0]" identifier="_['sequence-item'][1]">
+        <dtml-if sequence-start><ul></dtml-if>
+        	<li>
+		<img src="<dtml-var "object.icon">"> <strong><dtml-var "object.getId()"></strong>
+		<a href="?retractidentifiers:lines=<dtml-var identifier>">Retract now</a>
+
+		</li>
+        <dtml-if sequence-end></ul></dtml-if>
+     
+     </dtml-let>
+     <dtml-else>
+	<p><em>None</em></p>
+     </dtml-in>
+    </dtml-let>
+	
+<dtml-elif "REQUEST.has_key('retractidentifiers')">
+     <dtml-let objectids_deleted="CheckoutableTemplates.doRetract(this(), REQUEST['retractidentifiers'])">
+      <table border=1 cellspacing=0 cellpadding=6 bgcolor="#CCCCCC"><tr><td>     
+        <h3>Objects retracted</h3>
+        <dtml-in objectids_deleted>
+        <dtml-if sequence-start><ul></dtml-if>
+          <li><dtml-var sequence-item></li>
+        <dtml-if sequence-end></ul></dtml-if>        
+        </dtml-in>
+      </td></tr></table><br>&nbsp;
+     </dtml-let>
+     
+<dtml-elif "REQUEST.has_key('checkoutidentifiers')">
+  <dtml-if "not CheckoutableTemplates.hasFileitemFromIdentifier(REQUEST['checkoutidentifiers'])">
+    <p class="error"><strong>Error</strong><br />
+      Idenfifier expired.
+      <a href="<dtml-var URL1>/showCheckoutableTemplates">Please reload the page</a>
+    </p>
+
+  <dtml-elif "CheckoutableTemplates.hasCheckedout(this(), REQUEST['checkoutidentifiers'])">
+    <p class="error"><strong>Error</strong><br />
+      Template could not be checked out again.
+      <a href="<dtml-var URL1>/showCheckoutableTemplates">Please reload the page</a>
+    </p>
+
+  <dtml-else>
+    <dtml-let objects_created="CheckoutableTemplates.doCheckout(this(),REQUEST['checkoutidentifiers'])">
+     <h3>Objects created!</h3>
+     <dtml-in objects_created>
+      <ul><li><img src="<dtml-var icon>"> <strong><dtml-var id></strong>
+      <a href="<dtml-var absolute_url>">View</a>
+      <a href="<dtml-var absolute_url>/manage_workspace">Edit</a></li></ul>
+     </dtml-in>
+    </td></tr></table><br>&nbsp;
+    </dtml-let>
+
+  </dtml-if>
+  
+    
+<dtml-elif "REQUEST.has_key('identifier')">
+<dtml-if "CheckoutableTemplates.hasFileitemFromIdentifier(REQUEST['identifier'])">
+<dtml-let fileitem="CheckoutableTemplates.getFileitemFromIdentifier(REQUEST['identifier'])">
+
+  <table bgcolor="#efefef" cellpadding="6">
+  <tr><td><h3>Source of <em><dtml-var "fileitem['fullpath']"></em></h3>
+      <a href="<dtml-var URL>">Cancel</a>, 
+      <a href="<dtml-var URL>?checkoutidentifiers:list=<dtml-var "REQUEST['identifier']">"
+       >Check out this template</a>
+  <hr>
+    <dtml-var "CheckoutableTemplates.showSourcecode(REQUEST['identifier'])">
+    
+    <hr>
+      <a href="<dtml-var URL>">Cancel</a>, 
+      <a href="<dtml-var URL>?checkoutidentifiers:list=<dtml-var "REQUEST['identifier']">"
+       >Check out this template</a>
+  </td></tr>
+  </table><br>&nbsp;
+</dtml-let>
+<dtml-else>
+<p class="error"><strong>Error</strong><br />
+Identifier has expired. <a href="<dtml-var URL1>/showCheckoutableTemplates">Please reload the page</a>
+</p>
+</dtml-if>
+
+</dtml-if>
+
+
+
+
+<div id="checkedout" class="templates">
+<a name="checkedout"></a>
+<h2>Templates <em>checked out</em></h2>
+
+<dtml-in "CheckoutableTemplates.getCTFiles(this(),filter='deployed')">
+
+<dtml-let sequence_item="_['sequence-item']">
+  <dtml-if sequence-start>
+    <form action="<dtml-var URL>" method="get">
+    
+    <table border="0" cellpadding="3" width="100%">
+      <thead>
+        <tr>
+          <th>Filetype</th>
+          <th>Object (Click to Edit)</th>
+          <th>Owner</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+  </dtml-if>
+
+  <tbody>
+  <tr class="<dtml-if sequence-odd>odd<dtml-else>even</dtml-if>">
+    <td valign="top"><span class="<dtml-var "sequence_item['filetype'].lower()">">
+	<dtml-var "sequence_item['filetype']"></span></td>
+    <td valign="top"
+	onmouseout="window.status='';return true;"
+	onmouseover="window.status='<dtml-var "sequence_item['objectid']">';return true;">
+	<dtml-if "_.len(sequence_item['objectid']) > 40">
+		<a href="<dtml-var "sequence_item['objectid']">/manage_main"
+         ><dtml-var "sequence_item['objectid'][:13]">&nbsp;[...]&nbsp;<dtml-var "sequence_item['objectid'][-27:]"></a>
+	<dtml-else>
+		<a href="<dtml-var "sequence_item['objectid']">/manage_main"
+         ><dtml-var "sequence_item['objectid']"></a>
+	</dtml-if> <dtml-if  "CheckoutableTemplates.showDifference(this(), sequence_item['identifier'], sequence_item['objectid'])=='No differences found!'">
+                      [<em class="small">No difference from source</em>]
+                   <dtml-else>
+                      [<a href="?difference=<dtml-var "sequence_item['objectid']">&amp;identifier=<dtml-var "sequence_item['identifier']">">diff</a>]
+                   </dtml-if>
+                  
+    <div class="description"><dtml-var "sequence_item['description']" null="&nbsp;" newline_to_br></div>
+	</td>
+    <td><dtml-try><dtml-with "_.getitem(sequence_item['objectid']).owner_info()" mapping><dtml-var id></dtml-with>
+    <dtml-except><em>no one</em></dtml-try></td>
+    <td valign="top"><input type="checkbox" name="retractidentifiers:list" 
+                      value="<dtml-var "sequence_item['identifier']">" /></td>
+
+  </tr>
+  </tbody>
+
+  <dtml-if sequence-end>
+    <tbody>
+    <tr>
+      <td align="right" colspan="5">
+	<dtml-if "CheckoutableTemplates.canWriteback()">
+		<input type="submit" name="WriteBack" value="Write back to file system" />
+	</dtml-if>
+	<input type="submit" value="Retract selected files" /></td>
+    </tr>
+    </tbody>
+  </table>
+  </form>
+  </dtml-if>
+
+</dtml-let>
+
+<dtml-else>
+
+   <em>No templates checked out</em>
+   
+</dtml-in>
+
+</div>
+
+
+
+<div id="uncheckedout" class="templates">
+<h2>Templates <em>not</em> checked out</h2>
+
+<dtml-in "CheckoutableTemplates.getCTFiles(this(),filter='undeployed')">
+
+<dtml-let sequence_item="_['sequence-item']">
+  <dtml-if sequence-start>
+    <form action="<dtml-var URL>" method="get">
+
+    <table border="0" cellpadding="3" width="100%">
+      <thead>
+        <tr>
+          <th>Filetype</th>
+          <th>Object (Click to View Source)</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+  </dtml-if>
+
+  <tbody>
+  <tr class="<dtml-if sequence-odd>odd<dtml-else>even</dtml-if>">
+    <td valign="top"><span class="<dtml-var "sequence_item['filetype'].lower()">">
+	<dtml-var "sequence_item['filetype']"></span></td>
+    <td valign="top" 
+	onmouseout="window.status='';return true;"
+	onmouseover="window.status='<dtml-var "sequence_item['objectid']">';return true;">
+	<dtml-if "_.len(sequence_item['objectid']) > 40">
+		<a href="?identifier=<dtml-var "sequence_item['identifier']" url_quote>"
+         ><dtml-var "sequence_item['objectid'][:13]">&nbsp;[...]&nbsp;<dtml-var "sequence_item['objectid'][-27:]"></a>
+	<dtml-else>
+		<a href="?identifier=<dtml-var "sequence_item['identifier']" url_quote>"
+         ><dtml-var "sequence_item['objectid']"></a>
+	</dtml-if>
+    <div class="description"><dtml-var "sequence_item['description']" null="&nbsp;" newline_to_br></div>
+
+    </td>
+    <td valign="top">
+    <input type="checkbox" name="checkoutidentifiers:list" value="<dtml-var "sequence_item['identifier']">" />
+    <a href="<dtml-var URL>?checkoutidentifiers:list=<dtml-var "sequence_item['identifier']">"
+     class="small">Check&nbsp;out</a>
+    &nbsp;
+    </td>
+
+  </tr>
+  </tbody>
+
+  <dtml-if sequence-end>
+    <tbody>
+    <tr>
+      <td align="right" colspan="5"><input type="submit" value="Check out selected files" /></td>
+    </tr>
+    </tbody>
+  </table>
+  </form>
+  </dtml-if>
+
+</dtml-let>
+
+<dtml-else>
+
+   <em>There are no templates that can be checked out</em>
+</dtml-in>
+
+</div>
+
+<div class="clearer"></div>
+
+
+
+<br />
+<h2>How it works</h2>
+
+<p>Checkoutable Templates are Python product templates that have been
+created by the <code>CTDTMLFile(DTMLFile)</code> and <br />
+<code>CTPageTemplateFile(PageTemplateFile)</code>
+classes.</p>
+
+<p>
+These templates belong to the Python products as templates run off
+the file system. Checkoutable Templates makes a<br />
+copy of these as Zope objects. <br />
+When it does so, it creates a Zope object (DTML Method or Page Template)
+based on the filesystem filename and<br />
+the default extension.
+So if your product uses a file called <code>manage_edi.tdtml</code>,
+then the object that is created<br />
+becomes <code>manage_edit.dtml</code>.
+</p>
+
+<p>Checkoutable Templates can not know what the name of the method
+is that the filesystem based template used for.<br />
+For example, if your Python product defines something like this:
+<br /><br />
+<code>
+class MyProduct:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;...<br />
+&nbsp;&nbsp;&nbsp;&nbsp;viewStatistics = CTDTMLFile('dtml/statistics', globals())<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d='Setting a description is optional')<br />
+&nbsp;&nbsp;&nbsp;&nbsp;...<br />
+&nbsp;&nbsp;&nbsp;&nbsp;updateStats = CTPageTemplateFile('zpt/updatestats', globals(),<br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d='Description of this template')<br />
+&nbsp;&nbsp;&nbsp;&nbsp;...<br />
+&nbsp;&nbsp;&nbsp;&nbsp;# Not necessary to set this attribute but<br />
+&nbsp;&nbsp;&nbsp;&nbsp;# with it set, the showCheckoutableTemplates shows<br />
+&nbsp;&nbsp;&nbsp;&nbsp;# only relevant files which is helpful if you<br />
+&nbsp;&nbsp;&nbsp;&nbsp;# have several products that use CheckoutableTemplates.<br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;this_package_home = package_home(globals())<br />
+&nbsp;&nbsp;&nbsp;&nbsp;...<br /></code>
+</p>
+
+<p>Then, that the method name becomes <code>viewStatistics</code> is 
+impossible to know.</p>
+
+<p>When these Checkoutable Templates are run, theres a quick check 
+if the template exists as a Zope object based on<br />
+its name. If so, run that instead. If not, run the filesystem based template 
+as normal.</p>
+
+
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<metal:block define-macro="standard"><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en">
+
+<head>
+
+<title>Login</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<style type="text/css">
+h1,h2,h3,h4 { font-family: "Trebuchet MS", Verdana, Arial, Sans-Serif;
+              margin-left:200px;
+            }
+body { font-family: Arial, Sans-Serif; background-color:#ccc; }
+#loginform {
+  margin:60px;
+  background-color:#fff;
+  border:1px solid #666;
+  height:400px;
+}
+#loginform p {
+  font-size:80%;
+  margin-left:200px;
+}
+label.remember {
+  font-size:10px;
+  color:#666;
+}
+/*
+#itp { text-align:right;
+  margin-top:185px;
+  padding-right:10px;  
+  font-size:10px;
+  color:#333;
+}
+*/
+#itp {
+  font-size:10px;
+  color:#333;
+  position:relative;
+  text-align:right;
+  top:-90px;
+  right:80px;
+}
+</style>
+</head>
+<body>
+<div id="loginform">
+  <metal:block metal:define-slot="body" tal:omit-tag="">
+
+  </metal:block>
+
+</div>
+  <div id="itp">
+    Login page by <a href="http://www.issuetrackerproduct.com">IssueTrackerProduct</a>
+  </div>
+  
+</body>
+</html>
+</metal:block>

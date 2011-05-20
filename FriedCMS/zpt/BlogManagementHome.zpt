@@ -1,0 +1,20 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body">
+
+
+
+<h3>Blog management home</h3>
+
+<ul tal:define="containers here/manage_findBlogContainers">
+  <li
+      tal:repeat="container containers">
+    <a tal:attributes="href string:${container/absolute_url_path}/BlogManagement"
+     tal:content="container/getTitle"></a>
+    </li>
+    
+</ul>
+
+
+
+</div>
+</html>

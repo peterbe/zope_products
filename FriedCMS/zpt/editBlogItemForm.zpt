@@ -1,0 +1,92 @@
+<html metal:use-macro="here/getManagementHeader">
+
+<script tal:condition="here/TinyManagement|nothing"
+        tal:replace="structure here/TinyManagement"
+        metal:fill-slot="extrajs" />
+
+<div metal:fill-slot="body">
+
+<div class="toprightbox" tal:define="containers here/manage_findBlogContainers">
+  <a href=".">View blog item</a>
+  <a tal:define="container python:containers[0]"
+     tal:attributes="href string:${container/absolute_url_path}/BlogManagement">
+    <span tal:condition="python:request.get('msg')">
+    Return to all Blog</span>
+    <span tal:condition="not:python:request.get('msg')">
+    Cancel</span>
+  </a>
+</div>
+
+
+<form action="editBlogItem" method="post">
+
+
+<dl>
+  <dt><label for="title">Title</label></dt>
+  <dd><input name="title" tal:attributes="value here/getTitle" size="50" maxlength="100" /></dd>
+  
+  <dt><label for="abstract">Abstract</label></dt>
+  <dd><textarea name="abstract:text" cols="80" rows="6"
+   tal:attributes="class python:test(here.getAbstractDisplayFormat()=='html','tinyeditor');
+                   rows python:test(here.getAbstractDisplayFormat()=='html','10','6')"
+   tal:content="here/getAbstract"></textarea><br />
+   Format: <select name="abstract_display_format" tal:define="preval here/getAbstractDisplayFormat">
+     <option value="plaintext" 
+      tal:attributes="selected python:test(preval=='plaintext')">Plain text</option>
+     <option value="html" 
+      tal:attributes="selected python:test(preval=='html')">HTML</option>
+     <option value="structuredtext" 
+      tal:attributes="selected python:test(preval=='structuredtext')">StructuredText</option>
+   </select>
+  </dd>
+  
+  <dt><label for="body">Body</label></dt>
+  <dd><textarea name="body:text" cols="80" rows="15" tal:content="here/getBody"
+     tal:attributes="class python:test(here.getBodyDisplayFormat()=='html','tinyeditor');
+                     rows python:test(here.getBodyDisplayFormat()=='html','20','15')"
+></textarea><br />
+   Format: <select name="body_display_format" tal:define="preval here/getBodyDisplayFormat">
+     <option value="plaintext" 
+      tal:attributes="selected python:test(preval=='plaintext')">Plain text</option>
+     <option value="html" 
+      tal:attributes="selected python:test(preval=='html')">HTML</option>
+     <option value="structuredtext" 
+      tal:attributes="selected python:test(preval=='structuredtext')">StructuredText</option>   
+     
+   </select>
+  </dd>
+
+  <tal:block condition="here/hasCategories">
+    <dt><label for="category" class="optional">Category</label></dt>
+    <dd>
+      <select name="category" 
+        tal:define="categories here/getCategories;
+                    selected   here/getCategory">
+        <option value=""
+          tal:attributes="selected python:test(selected,False,True)">None</option>
+        <option tal:repeat="category categories"
+          tal:attributes="value    category;
+                          selected python:test(selected==category,True,False)"
+          tal:content="category"/>
+     </select>
+   </dd>
+  </tal:block>
+
+  <dt><label for="publish_date">Publish date</label></dt>
+  <dd><input name="publish_date:date" 
+       tal:attributes="value python:here.getPublishDate().strftime('%Y-%m-%d %H:%M')" /></dd>
+
+  <tal:check condition="here/getBlogitemURL">
+  <dt><label for="blogitemurl">URL</label></dt>
+  <dd><input name="blogitemurl" tal:attributes="value here/getBlogitemURL" size="50" /></dd>
+  </tal:check>
+
+</dl>
+<input type="submit" value="Save changes" onclick="this.value='Please wait...'" />
+
+</form>
+
+
+
+</div>
+</html>

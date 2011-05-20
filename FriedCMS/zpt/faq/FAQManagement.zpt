@@ -1,0 +1,51 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body">
+
+  <div class="toprightbox">
+    <a href="addFAQForm"
+     tal:attributes="href string:manage_addProduct/${here/ProjectName}/addFAQForm">
+       <img tal:attributes="src string:/misc_/${here/ProjectName}/add_button.png" alt="Add" border="0" />
+    </a>
+    <a href="addFAQForm"
+      tal:attributes="href string:manage_addProduct/${here/ProjectName}/addFAQForm">
+      Add a new FAQ</a>
+  </div>
+  
+  <h3>List of all FAQ</h3>
+
+  <div tal:define="items python:here.getFAQs(filter_publish_date=0, sort='create_date')">
+  
+    <div tal:repeat="item items">
+       <b>Title: <span tal:replace="item/getTitle"></span></b>
+       [<a tal:attributes="href string:${item/absolute_url_path}/editFAQForm">edit</a> |
+        <a tal:attributes="href item/absolute_url_path">view</a> |
+        <a tal:attributes="href string:deleteFAQForm?id=${item/getId}">delete</a>]
+       <br />
+         <span style="color:green" tal:condition="item/isPublished"
+           tal:content="string:Published ${item/showPublishDate}"></span>
+         <span style="color:red" tal:condition="not:item/isPublished"
+           tal:content="string:Not yet published ${item/showPublishDate}"></span>
+       <br />
+        URL: <small style="color:green" tal:content="item/absolute_url_path"></small>
+       <br />
+  
+       <tal:block tal:define="body item/showBody; msize python:50">
+         <div tal:condition="python:len(body)<msize or request.get('expand','')==item.getId()">
+           Answer: <br tal:replace="structure body" />
+         </div>
+         <div tal:condition="not:python:len(body)<msize or request.get('expand','')==item.getId()">
+           Answer: <br tal:replace="structure python:body[:msize]" />
+           <a align="right" tal:attributes="href string:?expand=${item/getId}"
+  	  >Show the remaining <span tal:replace="python:len(body[msize:].split())"></span> words</a>
+         </div>
+       </tal:block>
+       <br />
+    </div>
+  
+    <em tal:condition="not:items">None created yet</em>
+  
+  </div>
+
+
+</div>
+</html>

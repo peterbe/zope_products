@@ -1,0 +1,22 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body">
+
+<tal:check condition="request/id|nothing">
+
+<div class="toprightbox">
+  <a href="BlogManagement">Cancel</a>
+</div>
+
+<h3>Confirm deletion</h3>
+
+
+<form action="deleteBlogItem">
+<input type="hidden" name="id" tal:attributes="value request/id" />
+<p>Id: <code tal:content="request/id"></code></p>
+<input type="submit" value="Delete blog item" />
+</form>
+
+</tal:check>
+
+</div>
+</html>

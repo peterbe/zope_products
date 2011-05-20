@@ -1,0 +1,96 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal">
+
+<body tal:define="visible_only python: test(request.get('visible_only',None),True,False);
+                  comments     python: here.getFlatComments(visible_only=visible_only)"
+      class="form-help">
+<tal:replace define="management_page_charset python: 'utf-8';
+                     dummy python: here.REQUEST.set('management_view','Comments')"
+             replace="structure here/manage_page_header" />
+<tal:replace define="manage_tabs_message options/manage_tabs_message | nothing"
+             replace="structure here/manage_tabs" />
+
+<form action="manage_addComment" method="post"
+      tal:define="comment_path request/comment_path|nothing">
+
+  <h3 tal:condition="comment_path">
+    <span tal:define="comment python: here.manage_getComment(comment_path)" tal:omit-tag="">
+      Add reply to <span tal:replace="comment/title"/>
+    </span>
+  </h3>
+  <h3 tal:condition="not: comment_path">Add new comment </h3>
+
+  <input type="hidden" name="comment_path"
+         tal:attributes="value comment_path"/>
+  <input type="hidden" name="ZMI" value="1"/> <!--Use this only in ZMI forms-->
+  <dl>
+    <dt>Title</dt>
+    <dd><input type="text" name="title"
+               tal:attributes="value request/title|nothing"/></dd>
+    <dt>Email</dt>
+    <dd><input type="text" name="email"
+               tal:attributes="value request/email|nothing"/></dd>
+    <dt>Text</dt>
+    <dd><textarea name="body"
+         tal:content="request/body|nothing"></textarea></dd>
+    <dt>Website</dt>
+    <dd><input type="text" name="website"
+         tal:attributes="value request/website|nothing"/></dd>
+  </dl>
+  <input type="submit" value="Add"/>
+</form>
+
+<form method="post"
+      tal:attributes="action template/absolute_url"
+      tal:condition="not: visible_only">
+  <input type="hidden" name="visible_only" value="1"/>
+  <input type="submit" value=" Show only visible comments "/>
+</form>
+
+<form method="post"
+      tal:attributes="action template/absolute_url"
+      tal:condition="visible_only">
+  <input type="submit" value=" Show all comments "/>
+</form>
+
+<h3>Comments</h3>
+<div style="color:green;"
+      tal:condition="here/isCommentingAvailable">Comments are enabled</div>
+<div style="color:red;"
+      tal:condition="not: here/isCommentingAvailable">Comments are disabled</div>
+
+<div tal:condition="comments" tal:omit-tag="">
+  <div tal:repeat="comment comments"
+       tal:attributes="class python: test(repeat['comment'].even(),'row-hilite','row-normal')">
+    <table cellspacing="0" cellpadding="0" class="form-help">
+      <tr>
+        <td tal:content="structure python: (3*comment['level'])*'&nbsp;'"/>
+        <td>
+          <b tal:content="comment/title"/>
+          <div tal:replace="python: str(comment['date'])[:19]"/>
+          <div tal:condition="comment/visible" tal:omit-tag="">
+            <span style="color:green;">Visible</span>
+            <a tal:attributes="href string:${here/absolute_url}/manage_changeVisibility?change_path=${comment/path}&visible=0&ZMI=1">Hide</a>
+          </div>
+          <div tal:condition="not: comment/visible" tal:omit-tag="">
+            <span style="color:red;">Hidden</span>
+            <a tal:attributes="href string:${here/absolute_url}/manage_changeVisibility?change_path=${comment/path}&visible=1&ZMI=1">Show</a>
+          </div>
+          | <a tal:attributes="href string:${template/absolute_url}?comment_path=${comment/path}&title=Re: ${comment/title}">
+          Add reply</a> |
+          <a tal:attributes="href string:${here/absolute_url}/manage_deleteComment?delete_path=${comment/path}">
+            Delete</a><br/>
+          <div tal:replace="comment/body"/>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div tal:condition="not: comments">
+  No comments.
+</div>
+
+</body>
+</html>

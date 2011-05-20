@@ -1,0 +1,141 @@
+<dtml-var manage_pan_header>
+
+<script type="text/javascript">
+function selectall(f) {
+  var els = document.getElementsByTagName('input');
+  for (var i=0,len=els.length; i<len; i++) 
+    if (els[i].name=='batch:list') 
+      if (!els[i].checked)
+        els[i].checked = true;
+}
+function deselectall(f) {
+  var els = document.getElementsByTagName('input');
+  for (var i=0,len=els.length; i<len; i++) 
+    if (els[i].name=='batch:list') 
+      if (els[i].checked)
+        els[i].checked = false;
+}
+function invertall(f) {
+  var els = document.getElementsByTagName('input');
+  for (var i=0,len=els.length; i<len; i++) 
+    if (els[i].name=='batch:list') 
+      els[i].checked = !els[i].checked;
+}
+function _selectbylambda(filterfunction) {
+  var tbodies = document.getElementsByTagName('tbody');
+  var els=null, hours=0.0, checkbox_element=null;
+  for (var j=0, jlen=tbodies.length; j<jlen; j++) {
+    els = tbodies[j].getElementsByTagName('input');
+    //alert(els.length);
+    for (var i=0, ilen=els.length; i<ilen; i++) {
+      if (els[i].name=='batch:list')
+        checkbox_element = els[i];
+      else if (els[i].name=='hours:float')
+        hours = parseFloat(els[i].value);
+    }
+    if (els.length) {
+      //alert(checkbox_element.value + ", " + (hours+0.1) +":"+ filterfunction(hours));
+      if (filterfunction(hours)) 
+        checkbox_element.checked = true;
+      else
+        checkbox_element.checked = false;
+      
+        
+      
+    }
+  }
+  
+}
+function selectbytrait(trait) {
+  if (trait=="nonzero") {
+    var filterfunction = function(x) {return x>0};
+  } else {
+    var hour = parseFloat(trait);
+    var filterfunction = function(x) {return hour==x};
+  }
+  _selectbylambda(filterfunction);
+}
+</script>
+
+<style type="text/css">
+a { font-size:10pt; }
+label {font-family:arial,sans-serif; font-size:10pt; }
+.hours { font-size:90%; }
+.helper { font-size:70%; width:100px}
+</style>
+
+<p class="form-title">Control the expiry headers of all or many documents</p>
+
+<form action="manage_setAllExpiryHeaders" method="post">
+
+
+<dtml-let documentobjects="getDocumentObjects()">
+<table border="0">
+  <thead>
+    <tr>
+      <th>&nbsp;</th>
+      <th>Current</th>
+      <th>Document</th>
+    </tr>
+  </thead>
+  
+  <dtml-call "REQUEST.set('different_hours',[])">
+  <dtml-in documentobjects>
+  <dtml-let path="calculateDocumentPath(absolute_url())" hours="getExpiryHours()">
+    <dtml-if "hours not in REQUEST['different_hours'] and hours != 0">
+      <dtml-call "REQUEST['different_hours'].append(hours)">
+    </dtml-if>
+  <tbody>
+    <tr class="<dtml-if sequence-even>even<dtml-else>odd</dtml-if>">
+      <td>
+        <input type="checkbox" name="batch:list" value="<dtml-var path>" />
+        <input type="hidden" name="applicable_paths:paths" value="<dtml-var path>" />
+      </td>
+      <td><input name="hours:float" size="3" class="hours"
+           value="<dtml-var hours>" /></td>
+      <td><img src="/misc_/FriedDocument/frieddoc_icon.gif" /> 
+          <a href="<dtml-var absolute_url_path>"><dtml-var id> &nbsp;(<dtml-var getTitle>)
+          </a></td>
+    </tr>
+  </tbody>
+  </dtml-let>
+  </dtml-in>
+  <tbody>
+    <tr>
+      <td valign="top">
+        <input type="button" class="helper" value="Check all"
+        onclick="selectall(this.form)" /><br />
+        <input type="button" class="helper" value="Uncheck all"
+        onclick="deselectall(this.form)" /><br />
+        <input type="button" class="helper" value="Invert"
+        onclick="invertall(this.form)" /><br />
+        <select name=""
+        onchange="if (this.options[this.selectedIndex].value){selectbytrait(this.options[this.selectedIndex].value)}"
+        >
+        <option value="">Check by trait</option>
+        <option value="0">0 hours</option>
+        <option value="nonzero">&gt;0 hours</option>
+        <dtml-in "REQUEST['different_hours']">
+          <option value="<dtml-var sequence-item>"
+           ><dtml-var sequence-item> hours</option>
+        </dtml-in>
+        </select>
+        
+        <br /><br />
+        <input name="commonhours" value="" size="3" /><small>hours</small><br />
+        <input type="submit" name="common" value="Save for checked" />
+
+      </td>
+      <td colspan="2" valign="top"><input type="submit" value="Save all changes" /></td>
+    </tr>
+  </tbody>
+  
+</table>
+</dtml-let>
+
+
+
+</form>
+
+
+<dtml-var manage_pan_footer>

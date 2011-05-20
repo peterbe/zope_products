@@ -1,0 +1,59 @@
+<dtml-var manage_page_header>
+<dtml-with "_(management_view='Menu items')">
+<dtml-var manage_tabs>
+</dtml-with>
+<dtml-if Principia-Version>
+<p> <em>You are currently working in version 
+  <dtml-var Principia-Version>
+  </em> </p>
+</dtml-if Principia-Version>
+<style type="text/css">
+#suggestions { float:left; }
+#suggestions a,
+#suggestions a:visited { text-decoration:underline; }
+#suggestions small a { text-decoration:none; }
+</style>
+
+<script type="text/javascript">
+function stripSpaces(x) {
+  return x.replace(/^\s+|\s+$/g,'');
+}
+    
+function addSuggestion(objid) {
+  var to=document.getElementById('menu_items');
+  var previous = to.value;
+  if (previous.indexOf(objid)==-1)
+    to.value += '\n' + objid;
+  return false;
+}
+</script>
+
+<form action="manage_setMenuItems">
+
+<div id="suggestions">
+  <dtml-let not_selected="[x for x in getMenuItemOptions() if x.getId() not in getMenuItems()]">
+  <dtml-if not_selected>
+  <p>Possible suggestions:</p>
+    <dtml-in "not_selected">
+      <a href="<dtml-var absolute_url>"><dtml-var title_or_id></a>
+      <small><a href="#" onclick="addSuggestion('<dtml-var getId>')">+ add</a></small>
+      <br />
+    </dtml-in>
+  </dtml-if>
+  </dtml-let>
+  
+
+</div>
+
+<p>Current menu items:</p>
+<textarea name="menu_items:lines" id="menu_items" cols="45" rows="10"
+><dtml-var "'\n'.join(getMenuItems())"></textarea>
+
+
+
+<br /><br />
+<input type="submit" value="Save changes" />
+</form>
+
+<br />&nbsp;
+<dtml-var manage_page_footer>

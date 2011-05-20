@@ -1,0 +1,82 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body">
+
+
+<dl tal:define="modules here/getFriedModules">
+
+<tal:block condition="python:'News' in modules">
+  <dt><p><b>News containers:</b></p></dt>
+  <dd tal:define="containers here/manage_findNewsContainers">
+    <div tal:repeat="container containers">
+    <a tal:attributes="href string:${container/absolute_url_path}/NewsManagement"
+     tal:content="container/getTitle"></a>
+    <br />
+    </div>
+    
+    <a tal:condition="not:containers" 
+       tal:attributes="href string:manage_addProduct/${here/ProjectName}/addNewsContainerForm?goto_after=${request/URL}"
+       >Add News container</a>
+  </dd>
+</tal:block>
+
+
+<tal:block condition="python:'Files' in modules">
+  <dt><p><b>File containers:</b></p></dt>
+  <dd tal:define="containers here/manage_findFileContainers">
+  
+    <div tal:repeat="container containers">
+    <a tal:attributes="href string:${container/absolute_url_path}/FileManagement"
+     tal:content="container/getId"></a>
+     <small style="color:#666" tal:content="container/absolute_url_path"></small>
+    </div>
+   
+  <a tal:condition="not:containers"
+     tal:attributes="href string:manage_addProduct/${here/ProjectName}/addFilesContainerForm?goto_after=${request/URL}"
+     >Add File container</a>
+  </dd>
+</tal:block>  
+
+<tal:block condition="python:'Blogs' in modules">
+  <dt><p><b>Blogs containers:</b></p></dt>
+  <dd tal:define="containers here/manage_findBlogContainers">
+  
+    <div tal:repeat="container containers">
+    <a tal:attributes="href string:${container/absolute_url_path}/BlogManagement"
+     tal:content="container/getId"></a>
+     <small style="color:#666" tal:content="container/absolute_url_path"></small>
+    </div>
+   
+  <a tal:condition="not:containers"
+     tal:attributes="href string:manage_addProduct/${here/ProjectName}/addBlogContainerForm?goto_after=${request/URL}"
+     >Add Blog container</a>
+  </dd>
+</tal:block>  
+  
+<tal:block condition="python:'Pages' in modules">
+  <dt><p><b>Pages containers:</b></p></dt>
+  <dd>
+     to do
+  </dd>
+</tal:block> 
+
+<tal:block condition="python:'FAQs' in modules">
+  <dt><p><b>FAQs containers:</b></p></dt>
+  <dd tal:define="containers here/manage_findFAQContainers">
+  
+    <div tal:repeat="container containers">
+    <a tal:attributes="href string:${container/absolute_url_path}/FAQManagement"
+     tal:content="container/getId"></a>
+     <small style="color:#666" tal:content="container/absolute_url_path"></small>
+    </div>
+   
+  <a tal:condition="not:containers"
+     tal:attributes="href string:manage_addProduct/${here/ProjectName}/addFAQContainerForm?goto_after=${request/URL}"
+     >Add FAQ container</a>
+  </dd>
+</tal:block>
+
+</dl>
+
+
+</div>
+</html>

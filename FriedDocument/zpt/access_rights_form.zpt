@@ -1,0 +1,59 @@
+<form metal:define-macro="widget"
+  action="setDocumentAccessRights" 
+  tal:define="view_roles here/getViewPermissionRoles;
+              roles here/getAllAdHocRoles;
+              default_preval_roles python:['Manager','Authenticated']">
+  <p>Who should be able to view this document and all its sub-documents?</p>
+  <table>
+    <tr>
+      <td valign="top" id="publicaccess"
+       tal:attributes="class python:test(view_roles, 'fd-shaded', 'fd-notshaded')">
+      <input type="radio" name="make_public:int" value="1" id="fd-make_public_1"
+       onchange="if(this.checked){highlightAccess('publicaccess','privateaccess')}"
+       tal:attributes="checked python:test(not view_roles)" />
+      <label for="fd-make_public_1">Everyone</label>
+      </td>
+      
+      <td valign="top">&nbsp;  &nbsp;</td>
+      
+      <td valign="top" id="privateaccess"
+       tal:attributes="class python:test(not view_roles, 'fd-shaded','fd-notshaded')">
+      <input type="radio" name="make_public:int" value="0" id="fd-make_public_0"
+       onchange="if(this.checked){highlightAccess('privateaccess','publicaccess')}"
+       tal:attributes="checked python:test(view_roles)" />
+       <label for="fd-make_public_0">Logged in people</label>
+      <a href="#" style="font-size:0.8em"
+         tal:condition="roles"
+      onclick="this.style['display']='none';id$('advancedaccessroles').style['display']='';return false"
+      ><br />Select individual roles</a>
+      <div id="advancedaccessroles" style="display:none">
+      Select individual roles:
+      <div tal:repeat="role roles">
+        
+        <input type="checkbox" name="view_roles:list"
+               tal:condition="view_roles"
+               tal:attributes="value role;
+                               checked python:test(role in view_roles)" />
+                               
+        <input type="checkbox" name="view_roles:list"
+               tal:condition="not:view_roles"
+               tal:attributes="value role;
+                               checked python:test(role in default_preval_roles)" />
+                               
+	 <br tal:replace="role" />
+         <small tal:condition="python:role=='Manager'">(can do everything)</small>
+         <small tal:condition="python:role=='Authenticated'">(anybody with valid login)</small>         
+      </div>
+      </div>
+      
+      
+      </td>      
+    </tr>
+    <tr>
+      <td align="center" colspan="3">
+        <input type="submit" value="Save changes" /> 
+      </td>
+    </tr>
+  </table>
+  
+</form>

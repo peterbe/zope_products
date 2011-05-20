@@ -1,0 +1,56 @@
+<html metal:use-macro="here/getManagementHeader">
+
+<div metal:fill-slot="body"
+     tal:define="roles here/getAvailableRoles">
+
+  <div class="toprightbox">
+    <div metal:use-macro="here/macrosUserFolder/macros/user_menu"/>
+  </div>
+
+  <h2>View User</h2>
+  <div tal:define="username request/name | nothing">
+  
+    <div tal:condition="username" tal:omit-tag="">
+      <div tal:define="user python: here.getUser(username)" tal:omit-tag="">
+  
+        <div tal:condition="user">
+          <div tal:condition="python: here.canAuthenticatedAccessUser(user)" tal:omit-tag="">
+
+            <dl>
+              <dt><label for="username">Login:</label></dt>
+              <dd><div tal:replace="user/getUserName"/></dd>
+              <!--dt><label for="roles">Roles:</label></dt>
+              <dd tal:define="user_roles python: user.getRoles()">
+                <div tal:repeat="role roles" tal:omit-tag="">
+                  <div tal:replace="role"/>,
+                </div>
+              </dd-->
+              <dt><label for="firstname">First name:</label></dt>
+              <dd><div tal:replace="user/getFirstName"/></dd>
+              <dt><label for="lastname">Last name:</label></dt>
+              <dd><div tal:replace="user/getLastName"/></dd>
+              <dt><label for="email">Email:</label></dt>
+              <dt><label for="company">Company:</label></dt>
+              <dd><div tal:replace="user/getCompany"/></dd>
+            </dl>
+          </div>
+
+          <div tal:condition="python: not here.canAuthenticatedAccessUser(user)" tal:omit-tag="">
+            You have no permission to access here.
+          </div>
+          
+        </div>
+  
+        <div tal:condition="not: user" tal:omit-tag="">
+          User <b tal:content="username"/> does not exist.
+        </div>
+      </div>
+    </div>
+  
+    <div tal:condition="not: username" tal:omit-tag="">
+      No user selected.
+    </div>
+  
+  </div>
+</div>
+</html>

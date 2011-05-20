@@ -1,0 +1,35 @@
+<html> 
+<head><title>Add Message Queue</title>
+<link rel="stylesheet" type="text/css" href="/manage_page_style.css">
+</head> 
+<body>
+<H2>Add Message Queue</H2> 
+<form action="manage_addMessageQueue">
+<dtml-if GoToURL>
+ <input type=hidden name=GoToURL value="<dtml-var GoToURL>">
+</dtml-if>
+<table border=0> 
+<tr><th><em>Id:</em></th> 
+    <td><input type=text name=id value="MessageQueue"></td>
+</tr>
+
+
+
+<tr><td></td><td><input type=submit value=" Add "></td></tr> 
+</table>
+</form>
+
+<p><b>README</b></p>
+<p>Once you've set up the MessageQueue object there are two things you need to do:</p>
+
+<ul>
+  <li><p>Send all messages to <code>sendEmail(msg, to, fr, subject,
+                  mcc=None, mbcc=None, subtype='plain', charset='us-ascii',              
+                  swallowerrors=False, debug=None)</code></p></li>
+  <li><p>Periodically visit the publically available method <code>sendAll</code></p></li>
+</ul>
+
+
+
+</body>
+</html> 

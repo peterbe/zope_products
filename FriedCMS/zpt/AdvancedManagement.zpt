@@ -1,0 +1,27 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body">
+
+
+
+
+<form action="InitZCatalog" method="post">
+<h3>Initialize Catalog</h3>
+<p>By initializing the ZCatalog you make sure it has all the correct indexes and metadata. This
+must have been done at least once before Update Catalog.</p>
+<input type="submit" value="Initialize Catalog" />
+
+</form>
+
+
+<form action="UpdateCatalog" method="post">
+<h3>Update Catalog</h3>
+<p>It is good to update the catalog from time to time if you've made some manual changes such renaming
+or moving documents around inside the management. On all other actions, the catalog gets automatically
+updated. Doing this does not harm.</p>
+<input type="submit" value="Update Catalog" />
+
+</form>
+
+
+</div>
+</html>

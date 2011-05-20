@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal">
+
+<body >
+<tal:replace define="management_page_charset string:utf-8;
+                     dummy python: here.REQUEST.set('management_view','Local Roles')"
+             replace="structure here/manage_page_header" />
+<tal:replace define="manage_tabs_message options/manage_tabs_message | nothing"
+             replace="structure here/manage_tabs" />
+  <p class="form-help" >
+    All objects that have local roles assigned
+  </p>
+  <table tal:define="records here/manage_getLocalRoles" class="form-text">
+    <tr class="list-header">
+      <th>Object</th>
+      <th>Users & Roles</th>
+    </tr>
+    <tr tal:repeat="record records"
+         tal:attributes="class python: test(repeat['record'].even(),'row-hilite','row-normal')">
+      <td>
+        <div tal:replace="structure python: (3*record['level'])*'&nbsp;'"/>
+        <img tal:attributes="src record/icon"/>
+        <a tal:attributes="href string:${record/url}/manage_main"
+           tal:content="record/title"/>
+      </td>
+      <td>
+        <div tal:repeat="role record/roles" tal:omit-tag="">
+          <b tal:content="python: role[0]"/>:
+          <div tal:repeat="name python: role[1]" tal:replace="name"/>
+        </div>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+
+

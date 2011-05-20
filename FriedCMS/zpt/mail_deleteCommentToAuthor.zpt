@@ -1,0 +1,11 @@
+<div tal:define="url      options/url | nothing;
+                 title    options/title | nothing"
+    tal:omit-tag="">
+Sorry,
+
+Your comment '<div tal:replace="title"/>' added to 
+<div tal:replace="url"/> has been deleted.
+
+------------------------------
+Fry-IT Comments
+</div>

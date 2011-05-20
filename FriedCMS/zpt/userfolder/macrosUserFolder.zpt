@@ -1,0 +1,187 @@
+<html>
+
+  <div metal:define-macro="userfolder_menu"
+       tal:define="template_id template/getId;">
+       
+    <a tal:attributes="href string:${here/absolute_url}/viewUsers">
+      <img tal:attributes="src string:/misc_/${here/ProjectName}/view.gif" alt="View Users" border="0" /></a>
+    <a tal:attributes="href string:${here/absolute_url}/viewUsers">
+      <b tal:condition="python: template_id == 'viewUsers'">View Users</b>
+      <div tal:condition="python: template_id != 'viewUsers'"
+           tal:omit-tag="">View Users</div>
+    </a><br/>
+    
+    <a tal:attributes="href string:${here/absolute_url}/addUserForm">
+      <img tal:attributes="src string:/misc_/FriedCMS/add_button.png" alt="Add User" border="0" /></a>
+    <a tal:attributes="href string:${here/absolute_url}/addUserForm">
+      <b tal:condition="python: template_id == 'addUserForm'">Add User</b>
+      <div tal:condition="python: template_id != 'addUserForm'"
+           tal:omit-tag="">Add User</div>
+    </a><br/>
+  </div>
+  
+  <div metal:define-macro="userfolder_menu2"
+       tal:define="img_url     string:/misc_/${here/ProjectName};
+                   view_all    string:viewUsers;
+                   back_url    string:${here/absolute_url}/${view_all};">
+
+    <a tal:attributes="href back_url">
+      <img tal:attributes="src string:${img_url}/back_arrow.gif" alt="Back to users" border="0" /></a>
+    <a tal:attributes="href back_url">
+      Back to users</a>
+    <br/>
+  </div>
+  
+  <!--
+  Macro that presents site structure available for user
+  -->
+  <div metal:define-macro="site_structure"
+       tal:define="site_structure here/getSiteStructure;
+                   site           python: site_structure['site'];
+                   clubs          python: site_structure['clubs'];
+                   req_paths      python: here.REQUEST.get('paths',[])">
+
+    <div tal:condition="site" tal:omit-tag="">
+      <div tal:define="path1 site/absolute_url_path" tal:omit-tag="">
+        <input name="paths:list" type="checkbox"
+               tal:attributes="value   path1;
+                               checked python: test(path1 in req_paths,True,False)">
+        <div tal:replace="site/title_or_id"/>
+        (<div tal:replace="string:/"/>)<br/>
+      </div>
+    </div>
+
+    <div tal:repeat="record clubs" tal:omit-tag="">
+      <div tal:define="club     record/club;
+                       sections record/sections"
+           tal:omit-tag="">
+        <div tal:condition="club" tal:omit-tag="">
+          <div tal:define="path2    club/absolute_url_path;
+                            path2_2 python: '/'.join(club.getPhysicalPath()[2:])"
+               tal:omit-tag="">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <input name="paths:list" type="checkbox"
+                   tal:attributes="value path2;
+                                   checked python: test(path2 in req_paths,True,False)">
+            <div tal:replace="club/title_or_id"/>
+            (<div tal:replace="path2_2"/>)<br/>
+          </div>
+        </div>
+        <div tal:repeat="section sections" tal:omit-tag="">
+          <div tal:define="path3   section/absolute_url_path;
+                           path3_2 python: '/'.join(section.getPhysicalPath()[2:])"
+               tal:omit-tag="">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input name="paths:list" type="checkbox"
+                 tal:attributes="value   path3;
+                                 checked python: test(path3 in req_paths,True,False)">
+            <div tal:replace="section/title_or_id"/>
+            (<div tal:replace="path3_2"/>)<br/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--
+  Macro that presents site structure available for user
+  but ONLY for reading
+  -->
+  <div metal:define-macro="site_structure_readonly"
+       tal:define="site_structure here/getSiteStructure;
+                   site           python: site_structure['site'];
+                   clubs          python: site_structure['clubs'];
+                   req_paths      python: here.REQUEST.get('paths',[])">
+
+    <div tal:condition="site" tal:omit-tag="">
+      <div tal:define="path1 site/absolute_url_path" tal:omit-tag="">
+        <div tal:condition="python: path1 in req_paths" tal:omit-tag="">
+          <div tal:replace="site/title_or_id"/>
+          (<div tal:replace="string:/"/>)<br/>
+        </div>
+      </div>
+    </div>
+
+    <div tal:repeat="record clubs" tal:omit-tag="">
+      <div tal:define="club     record/club;
+                       sections record/sections"
+           tal:omit-tag="">
+        <div tal:condition="club" tal:omit-tag="">
+          <div tal:define="path2 club/absolute_url_path;
+                           path2_2 python: '/'.join(club.getPhysicalPath()[2:])"
+               tal:omit-tag="">
+            <div tal:condition="python: path2 in req_paths" tal:omit-tag="">
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <div tal:replace="club/title_or_id"/>
+              (<div tal:replace="path2_2"/>)<br/>
+            </div>
+          </div>
+        </div>
+
+        <div tal:repeat="section sections" tal:omit-tag="">
+          <div tal:define="path3 section/absolute_url_path;
+                           path3_2 python: '/'.join(section.getPhysicalPath()[2:])"
+               tal:omit-tag="">
+            <div tal:condition="python: path3 in req_paths"
+                 tal:omit-tag="">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div tal:replace="section/title_or_id"/>
+              (<div tal:replace="path3_2"/>)<br/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--
+  Menu for managing users for view/edit/delete pages
+  -->
+  <div metal:define-macro="user_menu"
+       tal:define="template_id template/getId;
+                   username    request/name;
+                   parent      here;
+                   item        python:here.getUser(username);
+                   img_url     string:/misc_/${parent/ProjectName};
+                   view_all    string:viewUsers;
+                   view_page   string:viewUserForm;
+                   edit_page   string:editUserForm;
+                   del_page    string:deleteUserForm;
+                   back_url    string:${parent/absolute_url}/${view_all};
+                   view_url    string:${parent/absolute_url}/${view_page}?name=${username};
+                   edit_url    string:${parent/absolute_url}/${edit_page}?name=${username};
+                   del_url     string:${parent/absolute_url}/${del_page}?name=${username};
+                   ">
+
+    <a tal:attributes="href back_url">
+      <img tal:attributes="src string:${img_url}/back_arrow.gif" alt="Back to users" border="0" /></a>
+    <a tal:attributes="href back_url">
+      Back to users</a>
+    <br/>
+
+    <a tal:attributes="href view_url">
+      <img tal:attributes="src string:${img_url}/view.gif" alt="View" border="0" /></a>
+    <a tal:attributes="href view_url">
+      <b tal:condition="python: template_id == view_page">View</b>
+      <div tal:condition="python: template_id != view_page"
+           tal:omit-tag="">View</div>
+    </a><br/>
+
+    <a tal:attributes="href edit_url">
+      <img tal:attributes="src string:${img_url}/edit.gif" alt="Edit" border="0" /></a>
+    <a tal:attributes="href edit_url">
+      <b tal:condition="python: template_id == edit_page">Edit</b>
+      <div tal:condition="python: template_id != edit_page"
+           tal:omit-tag="">Edit</div>
+    </a><br/>
+    
+    <a tal:attributes="href del_url">
+      <img tal:attributes="src string:${img_url}/delete.gif" alt="Delete" border="0" /></a>
+    <a tal:attributes="href del_url">
+      <b tal:condition="python: template_id == del_page">Delete</b>
+      <div tal:condition="python: template_id != del_page"
+           tal:omit-tag="">Delete</div>
+    </a><br/>
+  </div>
+
+</html>

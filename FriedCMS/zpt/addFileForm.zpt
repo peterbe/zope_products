@@ -1,0 +1,51 @@
+<html metal:use-macro="here/getManagementHeader">
+<metal:script metal:fill-slot="extrajs">
+<script tal:condition="here/TinyManagement|nothing"
+  tal:replace="structure here/TinyManagement" />
+  
+</metal:script>
+
+<style type="text/css" metal:fill-slot="extracss">
+.hidden { display:none; }
+</style>
+
+<div metal:fill-slot="body">
+
+<div class="toprightbox">
+  <a tal:attributes="href string:${here/absolute_url}/FileManagement">Cancel</a>
+</div>
+
+<form action="manage_addFile" method="post" name="addform" enctype="multipart/form-data">
+
+<tal:check condition="here/TinyManagement|nothing">
+<input type="hidden" name="abstract_display_format" value="html" />
+</tal:check>
+
+<dl>
+
+  <dt><label for="file">File</label></dt>
+  <dd><input type="file" name="file" value="" size="30" /></dd>
+
+  <dt><label for="id" class="optional">Id</label></dt>
+  <dd><input name="fileid" id="id" value="" size="30" /></dd>
+
+  <dt><label for="title" class="optional">Title</label></dt>
+  <dd><input name="title" value="" size="50" maxlength="100" /></dd>
+  
+  <dt><label for="abstract" class="optional">Abstract</label></dt>
+  <dd><textarea id="abstract" name="abstract" cols="80" rows="10"
+       class="tinyeditor"></textarea></dd>
+  
+  <dt><label for="publish_date">Publish date</label></dt>
+  <dd><input name="publish_date:date" value=""
+       tal:define="then python:here.ZopeTime()+1.0/24"
+       tal:attributes="value python:then.strftime('%Y-%m-%d %H:%M')" /></dd>
+
+
+</dl>
+<input type="submit" value="Add file" onclick="this.value='Please wait...'" />
+
+</form>
+
+</div>
+</html>

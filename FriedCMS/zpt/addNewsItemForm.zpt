@@ -1,0 +1,89 @@
+<html metal:use-macro="here/getManagementHeader">
+<metal:script metal:fill-slot="extrajs">
+<script tal:condition="here/TinyManagement|nothing"
+  tal:replace="structure here/TinyManagement" />
+  
+<script type="text/javascript">
+function showSuggestButton() {
+  var title = document.addform.title.value;
+  if (title.length>0) {
+    document.getElementById('suggestbutton').className='';
+    }
+}
+function suggestId() {
+  var title = document.addform.title.value;
+  title = title.replace(/&/g, ' and ');
+  title = title.replace(/[^\w\s]/g, '');
+  title = title.replace(/\s\s+/g, ' ');
+  var space_splitted = title.split(/\s/);
+  
+  var total = new Array;
+  var total_c = 0;
+  for (var i=0, len=space_splitted.length; i<len; i++) {
+    total.push(space_splitted[i]);
+    total_c += space_splitted[i].length;
+    if (total_c>20) break;
+  }
+  title = total.join("-");
+  title = title.replace(/\s/g,'-');
+  var el = document.addform.id;
+  el.value = title;
+}
+</script>
+</metal:script>
+
+<style type="text/css" metal:fill-slot="extracss">
+#suggestbutton {
+  font-size:80%;
+}
+.hidden { display:none; }
+</style>
+
+<div metal:fill-slot="body">
+
+<div class="toprightbox">
+  <a tal:attributes="href string:${here/absolute_url}/NewsManagement">Cancel</a>
+</div>
+
+<form action="manage_addNewsItem" method="post" name="addform">
+
+<tal:check condition="here/TinyManagement|nothing">
+<input type="hidden" name="abstract_display_format" value="html" />
+<input type="hidden" name="body_display_format" value="html" />
+</tal:check>
+
+<dl>
+  <dt><label for="title" class="optional">Id</label></dt>
+  <dd><input name="id" tal:attributes="value here/manage_suggestNewsItemId" size="30" />
+  <input type="button" value="Suggest Id" onclick="suggestId()" id="suggestbutton" 
+   class="hidden" />
+  </dd>
+
+  <dt><label for="title">Title</label></dt>
+  <dd><input name="title" value="" size="50" maxlength="100"
+       onkeyup="if(this.value.length>10) showSuggestButton();"
+       onblur="showSuggestButton()" /></dd>
+  
+  <dt><label for="abstract">Abstract</label></dt>
+  <dd><textarea id="abstract" name="abstract" cols="80" rows="10"
+       class="tinyeditor"></textarea></dd>
+  
+  <dt><label for="body">Body</label></dt>
+  <dd><textarea id="body" name="body" cols="80" rows="25"
+       class="tinyeditor"></textarea></dd>
+
+  <dt><label for="publish_date">Publish date</label></dt>
+  <dd><input name="publish_date:date" value=""
+       tal:define="then python:here.ZopeTime()+1.0/24"
+       tal:attributes="value python:then.strftime('%Y-%m-%d %H:%M')" /></dd>
+
+  <dt><label for="newsitemurl" class="optional">URL</label></dt>
+  <dd><input name="newsitemurl" value="" size="50" /></dd>
+
+</dl>
+<input type="submit" value="Add News item" onclick="this.value='Please wait...'" />
+
+</form>
+
+</div>
+</html>

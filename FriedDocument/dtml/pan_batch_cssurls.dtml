@@ -1,0 +1,45 @@
+<dtml-var manage_pan_header>
+
+<style type="text/css">
+a { font-size:10pt; }
+label {font-family:arial,sans-serif; font-size:10pt; }
+</style>
+
+<p class="form-title">Set the CSS URL of all documents</p>
+
+<form action="manage_setAllCSSURLs" method="post">
+
+<label for="cu">New CSS URL</label><br />
+<input name="css_url" id="cu" size="40" /><br />
+<br />
+<label for="ep">Except for...</label>
+
+<dtml-call "REQUEST.set('SHOW_ICON', 0)">
+<dtml-call "REQUEST.set('SHOW_CHECKBOX', 1)">
+<dtml-call "REQUEST.set('SHOW_CSSURL', 1)">
+<dtml-call "REQUEST.set('SHOW_EXTRA_LINKS', 0)">
+<dtml-call "REQUEST.set('CHECKBOX_CHECKED', 0)">
+<dtml-call "REQUEST.set('CHECKBOX_NAME', 'exception_paths:list')">
+<dtml-var manage_Pan_showall>
+
+<dtml-comment>
+<dtml-let documentobjects="getDocumentObjects()">
+<select id="ep" name="exception_document_paths" multiple="multiple" 
+ size="<dtml-var "_.min(20, len(documentobjects))">">
+   <dtml-in documentobjects>
+     <option value="<dtml-var "calculateDocumentPath(absolute_url())">">
+       <dtml-var id> &nbsp;(<dtml-if getCSSURL><dtml-var getCSSURL><dtml-else>nothing set</dtml-if>)
+       </option>
+   </dtml-in>
+</select>
+</dtml-let>
+</dtml-comment>
+
+<br /><br />
+<input type="submit" value="Run batch job" onclick="this.value='Please wait...'" />
+
+
+</form>
+
+
+<dtml-var manage_pan_footer>

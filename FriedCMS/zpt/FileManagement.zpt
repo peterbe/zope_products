@@ -1,0 +1,40 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body">
+
+<div class="toprightbox">
+  <a tal:attributes="href string:manage_addProduct/${here/ProjectName}/addFileForm"
+  ><img tal:attributes="src string:/misc_/${here/ProjectName}/add_button.png" alt="Add" border="0" /></a>
+  <a tal:attributes="href string:manage_addProduct/${here/ProjectName}/addFileForm"
+   >Add a new file</a>
+</div>
+
+<h3>List of all Files</h3>
+
+<div tal:define="items python:here.getFiles(filter_publish_date=0, sort='create_date')">
+
+  <div tal:repeat="item items">
+    <b>Title: <span tal:replace="item/getTitle"></span></b>
+     [<a tal:attributes="href string:${item/absolute_url_path}/editFileForm">edit</a> |
+      <a tal:attributes="href item/absolute_url_path">view</a> | 
+      <a tal:attributes="href string:${item/aq_parent/absolute_url_path}/renameFileForm?id=${item/getId}">rename</a> |
+      <a tal:attributes="href string:${item/aq_parent/absolute_url_path}/deleteFileForm?id=<dtml-var getId>">delete</a>]
+     <br />
+      Id: <em tal:content="item/getId"></em>
+     <br />
+      URL: <small style="color:green" tal:content="item/absolute_url_path"></small>
+     <br />
+     <i>Abstract: <span tal:replace="item/getAbstract"></span></i><br />
+       <span style="color:green" tal:condition="item/isPublished"
+         tal:content="string:Published ${item/showPublishDate}"></span>
+       <span style="color:red" tal:condition="not:item/isPublished"
+         tal:content="string:Not yet published ${item/showPublishDate}"></span>
+     
+  
+  </div>
+  
+  <em tal:condition="not:items">None created yet</em>
+
+</div>
+
+</div>
+</html>

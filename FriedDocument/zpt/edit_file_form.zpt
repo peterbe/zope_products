@@ -1,0 +1,49 @@
+<form
+ metal:define-macro="widget"
+ action="editFileSimple" method="post" enctype="multipart/form-data"
+ tal:define="obj python:getattr(here, request.get('editid'))">
+
+<input type="hidden" name="oldid" tal:attributes="value obj/getId" />
+
+<div tal:define="special_icon python:here.getSpecialListIcon(obj)">
+
+<img tal:condition="special_icon"
+     tal:attributes="src special_icon; alt obj/content_type" />
+     
+</div>    
+
+
+<table class="fd-metadata">
+  <tr>
+    <td><label for="id">Id:</label></td>
+    <td><input name="id" id="id" tal:attributes="value obj/getId" size="35" /></td>
+  </tr>
+  <tr>
+    <td><label for="title">Title:</label></td>
+    <td><input name="title" id="title" tal:attributes="value obj/title" size="35" /></td>
+  </tr>
+  <tr>
+    <td><label>New file:</label></td>
+    <td><input type="file" size="25" name="file" /></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><input type="submit" value="Save changes" /></td>
+  </tr>
+</table>  
+
+
+
+<p class="fd-excessinfo">
+<strong>URL:</strong>
+<span style="color:green" tal:content="obj/absolute_url_path"></span>
+<br />
+<strong>Size:</strong>
+<br tal:replace="python:here.ShowFilesize(obj.size)" />
+<strong>Last modified:</strong>
+<br tal:replace="python:obj.bobobase_modification_time().strftime('%Y-%m-%d %H:%M')" />
+<strong>Modified by:</strong>
+<br tal:replace="python:obj.owner_info().get('id','n/a')" />
+</p>
+
+</form>

@@ -1,0 +1,55 @@
+<html metal:use-macro="here/getManagementHeader">
+
+<metal:style metal:fill-slot="extracss">
+  <link rel="stylesheet" href="/misc_/BAClubs/management.css" />
+</metal:style>
+
+<div metal:fill-slot="body"
+     tal:define="roles here/getAvailableRoles">
+
+  <div class="toprightbox">
+    <div metal:use-macro="here/macrosUserFolder/macros/userfolder_menu2"/>
+  </div>
+
+  <h2>Add User</h2>
+    <form action="manage_addUser" method="post">
+    <dl>
+      <dt><label for="username">Login:</label></dt>
+      <dd><input type="text" name="username" size="30"
+                 tal:attributes="value request/username|nothing"/></dd>
+      <dt><label for="password">Password:</label></dt>
+      <dd><input type="password" name="password:ustring" size="30" tal:attributes="value request/password|nothing" /></dd>
+      <dt><label for="repeat_password">Repeat password:</label></dt>
+      <dd><input type="password" name="repeat_password:ustring" size="30" tal:attributes="value request/repeat_password|nothing" /></dd>
+      <dt><label for="roles">Roles/groups:</label></dt>
+      <dd>
+        <select name="roles:list" size="5" multiple="true"
+                tal:define="req_roles python: here.REQUEST.get('roles',[])">
+          <option tal:repeat="role roles"
+                  tal:content="role"
+                  tal:attributes="value role;
+                                  selected python: test(role in req_roles,True,False)"/>
+        </select><br />
+        <strong>New role/group:</strong><br />
+        <input name="new_role" size="30"
+         tal:attributes="value request/new_role|nothing" />
+        
+      </dd>
+      <dt><label for="firstname">First name:</label></dt>
+      <dd><input type="text" name="firstname:ustring" size="30"
+                 tal:attributes="value request/firstname|nothing"/></dd>
+      <dt><label for="lastname">Last name:</label></dt>
+      <dd><input type="text" name="lastname:ustring" size="30"
+                 tal:attributes="value request/lastname|nothing"/></dd>
+      <dt><label for="email">Email:</label></dt>
+      <dd><input type="text" name="email:ustring" size="30"
+                 tal:attributes="value request/email|nothing"/></dd>
+      <dt><label for="company">Company:</label></dt>
+      <dd><input type="text" name="company:ustring" size="30"
+                 tal:attributes="value request/company|nothing"/></dd>
+    </dl>
+    <input type="submit" value="Add User"
+           onclick="this.value='Please wait...'" />
+  </form>
+</div>
+</html>

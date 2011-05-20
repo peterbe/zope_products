@@ -1,0 +1,42 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body">
+
+  <div class="toprightbox">
+    <div metal:use-macro="here/macrosUserFolder/macros/user_menu"/>
+  </div>
+
+  <h2>Do you really want to delete it?</h2>
+  <form action="manage_deleteUsers"
+        tal:define="username request/name | nothing">
+    <div tal:condition="username" tal:omit-tag="">
+      <div tal:define="user python: here.getUser(username)"
+           tal:omit-tag="">
+
+        <div tal:condition="user" tal:omit-tag="">
+          <div tal:condition="python: here.canAuthenticatedAccessUser(user)" tal:omit-tag="">
+            <input type="hidden" name="usernames"
+                   tal:attributes="value username">
+            <b tal:content="user/getUserName"/><br/>
+            <br/>
+            <input type="submit" value="Delete User"
+                   onclick="this.value='Please wait...'" />
+          </div>
+          
+          <div tal:condition="python: not here.canAuthenticatedAccessUser(user)" tal:omit-tag="">
+            You have no permission to access here.
+          </div>
+
+        </div>
+
+        <div tal:condition="not: user">
+          User <b tal:content="username"/> does not exist.
+        </div>
+      </div>
+    </div>
+    
+    <div tal:condition="not: username" tal:omit-tag="">
+      No user selected.
+    </div>
+  </form>
+</div>
+</html>

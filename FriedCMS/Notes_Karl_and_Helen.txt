@@ -1,0 +1,6 @@
+* FriedCMS depends on core.js for the CMS Banner
+
+* Include in navigation default choice on add_document_form not remembered
+
+* Already created FriedDocuments' don't change when you add a new TinyMCE editor config.
+

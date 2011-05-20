@@ -1,0 +1,36 @@
+0.3 (lukasz 14-19.08.2008)
+
+ 1. New 'Page' content
+
+ 2. Refactoring to use HCatalog. Changes for 'Page' and 'BlogItem'
+
+ 3. Added 'category' field to Blog. Updated code and add/edit forms
+
+ 4. Added 'categories' field to BlogContainer. This will be used as
+ selection list by BlogItem.
+
+ 5. Improved functionality for suggesting id for Page and BlogItem.
+ Lowering cases, no length limit for id, automatic suggestion
+ instead of button.
+
+ 6. Huge refactoring. Common methods used in content moved to 'BaseContent'
+ class. Comon methods for containers moved to 'BaseContainer'
+ 
+ 7. Changed parent class to 'BaseContent' for 'Page' and 'BlogItem'.
+ 
+ 8. Changed parent class to 'BaseContainer' for 'PageContainer' and 
+ 'BlogContainer'.
+ 
+ 9. Code related to categories moved to classes 'CategoriesContainer'
+ and 'Categories'. Code for 'Pages' and 'Blogs' refactored.
+ 
+ 10. New content: 'FAQContainer' and 'FAQ'. New Python classes in *FAQ.py*
+ and templates inside folder *zpt/faq*
+
+0.2.1
+
+  - Much improved cataloging and searching support.
+  
+0.2.0
+  
+  - Started keeping a changelog.

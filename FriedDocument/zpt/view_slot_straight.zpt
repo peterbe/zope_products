@@ -1,0 +1,14 @@
+<tal:block define="slot options/slot|request/slot;
+                   ignore_versioning python:bool(request.get('SUPPRESS_VERSIONING'));
+                   info python:here.manage_getSlotInfo(slot, ignore_versioning=ignore_versioning);
+                   format info/format;
+                   ">
+           
+<pre tal:condition="not:python:format=='html'"
+     tal:content="structure info/raw">
+</pre>
+
+<div tal:condition="python:format=='html'"
+     tal:content="structure info/rendered">
+</div>
+</tal:block>

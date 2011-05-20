@@ -1,0 +1,74 @@
+<dtml-unless in_path>
+  <dtml-call "REQUEST.set('in_path','')">
+</dtml-unless>
+
+
+<dtml-in "getDocumentPaths(recursive=0, start_path=in_path,
+include_folderish=1, only_meta_types='Fried Document')">
+  <dtml-if sequence-start>
+    <ul style="list-style:none;margin-left:-20px;">
+  </dtml-if>
+  <dtml-with "restrictedTraverse(_['sequence-item'])">
+  <dtml-if "meta_type=='Fried Document'">
+    <li onmouseover="this.style.backgroundColor='#cccccc'" onmouseout="this.style.backgroundColor='#ffffff'">
+      <dtml-if "REQUEST.get('SHOW_ICON',1)">
+        <img src="/<dtml-var icon>" alt="Fried Document" />
+      </dtml-if>
+      <dtml-if "REQUEST.get('SHOW_CHECKBOX',0)">
+        <input type="checkbox" name="<dtml-var "REQUEST.get('CHECKBOX_NAME','paths:list')">" value="<dtml-var "calculateDocumentPath(absolute_url())">"
+         <dtml-if "REQUEST.get('CHECKBOX_CHECKED',0)">checked="checked"</dtml-if> />
+      </dtml-if>
+      <a href="<dtml-var absolute_url>"><dtml-var getId> 
+        <dtml-if "REQUEST.get('SHOW_CSSURL',0)">(<dtml-var getCSSURL>)
+	<dtml-else>(<dtml-var getTitle>)</dtml-if></a>
+        
+      <dtml-if "inVersioning()">
+        <small>
+          <dtml-if "hasUnpublishedChanges()">
+            <dtml-let count="countUnpublishedChanges()">
+              <dtml-if "count==1">
+                (has 1 unpublished change)
+              <dtml-else>
+                (has <dtml-var count> unpublished changes)
+              </dtml-if>
+            </dtml-let>
+          <dtml-else>
+            (manual publishing mode)
+          </dtml-if>
+        </small>
+      </dtml-if>
+      
+	<dtml-let extra="REQUEST.get('SHOW_EXTRA_LINKS',['editable','contents','basic','options'])">
+          <dtml-if extra>
+	    &nbsp;
+            <small>[
+            <dtml-if "'editable' in extra">
+              <a class="small" href="<dtml-var absolute_url>/editable">view editable</a>,
+            </dtml-if>
+            <dtml-if "'manageable' in extra">
+              <a class="small" href="<dtml-var absolute_url>/manageable">manageable</a>,
+            </dtml-if>
+            <dtml-if "'contents' in extra">
+  	      <a class="small" href="<dtml-var absolute_url>/manage_main">contents</a>,
+            </dtml-if>
+            
+            <dtml-if "'basic' in extra">
+  	      <a class="small" href="<dtml-var absolute_url>/manage_Basic">basic</a>,
+            </dtml-if>
+            
+	    <dtml-if "'options' in extra">
+              <a  class="small" href="<dtml-var absolute_url>/manage_Options">options</a>
+            </dtml-if>
+            ]</small>
+          </dtml-if>
+	</dtml-let>
+    </li>
+  <dtml-else>
+    <li><dtml-var sequence-item></li>
+  </dtml-if>
+  </dtml-with>
+  <dtml-var "manage_Pan_showall(_, REQUEST, in_path=_['sequence-item'])">
+  <dtml-if sequence-end>
+    </ul>
+  </dtml-if>  
+</dtml-in>

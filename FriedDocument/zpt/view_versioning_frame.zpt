@@ -1,0 +1,64 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<title>Compare difference between published version and current changes</title>
+  
+<style type="text/css">
+body {
+  margin:0;
+  padding:0;
+  font-family:sans-serif, Arial; font-size:80%; 
+}
+#options {
+  margin:2px;
+  float:right; 
+}
+</style>
+</head>
+
+<body tal:define="diffed python:int(request.get('diffed', 1))">
+<div id="options">
+
+<a target="_parent"
+   tal:condition="diffed"
+   tal:attributes="href python:'./manage_viewVersioningDifference?'+ here.changeQueryString(request.get('QUERY_STRING',''), diffed=0)">view without highlight</a>
+<a target="_parent"
+   tal:condition="not:diffed"
+   tal:attributes="href python:'./manage_viewVersioningDifference?'+ here.changeQueryString(request.get('QUERY_STRING',''), diffed=1)">highlight difference</a>
+&nbsp;
+<a href="./" target="_top">Close comparison</a>
+
+</div>
+<p><strong>Comparing difference between published version and current changes</strong><br />
+Compare:
+<strong tal:condition="not:request/compareslot|nothing">whole page</strong>
+<a tal:condition="request/compareslot|nothing"
+   target="_parent" 
+   tal:attributes="href string:./manage_viewVersioningDifference?diffed=${diffed}">whole page</a>
+
+
+<tal:block define="preval python:request.get('compareslot','')"
+           repeat="slot here/manage_getNonEmptySlots">
+| <a tal:condition="not:python:slot==preval"
+     tal:attributes="href string:./manage_viewVersioningDifference?compareslot=${slot}&amp;diffed=${diffed}"
+     target="_parent"
+    ><code tal:content="slot"></code></a>
+  <strong tal:condition="python:slot==preval"
+   ><code tal:content="slot"></code></strong>
+</tal:block>
+</p>
+
+<table width="100%" style="border-top:1px solid black;">
+  <tr>
+    <td align="center"
+      ><strong>Last published version (for anonymous)</strong></td>
+    <td align="center"
+      ><strong>Current edited version (for editors)</strong></td>
+  </tr>
+</table>
+
+</body>

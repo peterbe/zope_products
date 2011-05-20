@@ -1,0 +1,144 @@
+<br tal:replace="here/stopCache" /><html metal:use-macro="here/getMETALHeader">
+<style metal:fill-slot="extracss" type="text/css">
+.fd-clear { clear:right; }
+#fd-manageable { border:1px dashed green; padding:2px; max-width:800px; background:white; font:12px sans-serif,Arial,Verdana; }
+#fd-manageable table { border-collapse:collapse; }
+#fd-manageable tr.even { background-color:#e1e1e1; }
+#fd-manageable tr.odd {  }
+#fd-actionss {float:right; }
+#fd-actionss ul { list-style:none; }
+#fd-actionss ul li { display: inline; background-repeat: no-repeat; background-position: 0 50%; }
+#fd-actionss select { font-size:0.8em; }
+#fd-security { line-height: 17px;}
+.fd-protected { background-image: url(/misc_/FriedDocument/security.gif); }
+.fd-public { background-image: url(/misc_/FriedDocument/unsecurity.gif); }  
+#fd-security a { padding-left:19px; }
+#fd-exitlist { background-image: url(/misc_/FriedDocument/objectlist.gif); line-height: 17px;}
+#fd-exitlist a { padding-left:16px; }
+.fd-actionbutton { font-size:0.9em; }
+.fd-metadata label { font-weight:bold; }
+.fd-excessinfo { font-size:8pt !important ; margin-top:20px;}
+.fd-excessinfo strong { padding-left:40px; }
+.fd-imagepreview img { border:1px solid #ccc; }
+.fd-bigimagepreview { }
+.fd-smallimagepreview { margin-left:35%; padding:15px; }
+#fd-goback a { font-weight:bold; }
+.fd-shaded { color:#999;}
+.fd-notshaded { color:#000;}
+</style>
+<metal:script metal:fill-slot="extrajs">
+<script type="text/javascript" tal:attributes="src python:here.getMiscAlias('/misc_/FriedDocument/http.js')"></script>
+<script type="text/javascript" tal:attributes="src python:here.getMiscAlias('/misc_/FriedDocument/manageable.js')"></script>
+
+</metal:script>
+<div metal:fill-slot="body" id="fd-manageable">
+
+<div id="fd-actionss">
+  <ul>
+    <li id="fd-security"
+        tal:condition="not:python:request.get('action') or request.get('editid')"
+        tal:attributes="class python:test(here.isAccessProtected(), 'fd-protected','fd-public')"
+       ><a href="?action=security"
+           tal:attributes="title python:test(here.isAccessProtected(),'Document is access protected','Document is not protected')">Access rights</a>
+       </li>
+    <li id="fd-exitlist" tal:condition="python:request.get('action') or request.get('editid')"
+       ><a href="./manageable">Return to list</a></li>
+    <li>
+    <li>
+      <select name="meta_type" onchange="if(this.options[this.selectedIndex].value){location.href='manageable?action='+this.options[this.selectedIndex].value}">
+        <option value="">Add new object...</option>
+        <option tal:attributes="value here/META_TYPE">Document</option>
+        <option value="Picture">Picture</option>
+        <option value="File">File</option>	
+      </select>
+    </li>
+  </ul>
+</div>
+
+<div id="folderuplink" tal:define="upfolderlink here/getUpFolderLink"
+     tal:condition="upfolderlink">
+<a tal:attributes="href upfolderlink"><img tal:attributes="src python:here.getMiscAlias('/misc_/FriedDocument/folder_up.gif')" alt="Parent document" border="0" /></a>
+<a tal:attributes="href upfolderlink">../Parent document</a>
+
+<div tal:condition="request/editid|nothing" id="fd-goback">
+  <a href="./manageable">&laquo; go back</a>
+</div>
+
+<div tal:condition="request/meta_type|nothing" id="fd-goback">
+  <a href="./manageable">&laquo; go back</a>
+</div>
+
+</div>
+<div class="fd-clear"></div>
+
+<form action="manage_changeDocumentTitle" id="titleform"
+ tal:condition="not:python:request.get('action') or request.get('editid')"
+ onsubmit="this.previous_title.value=this.new_title.value;return ajaxFormSubmit(this, function(){hideElement('titleformsubmit');showElement('titleformsuccess')})">
+<input type="hidden" name="use_show_in_nav" value="1" /> 
+<input type="hidden" name="previous_title" tal:attributes="value here/getTitle" />
+Document title: <input name="new_title:latin1:ustring" tal:attributes="value here/getTitle" size="40" style="font-size:0.9em"
+ onkeydown="if(this.form.new_title.value!=this.form.previous_title.value){hideElement('titleformsuccess');showElement('titleformsubmit')}" />
+&nbsp;  
+Include in navigation:
+<input type="checkbox" name="show_in_nav:boolean" value="1" tal:attributes="checked python:test(here.showInNav())"
+ onchange="if(!ajaxFormSubmit(this.form, function(){hideElement('titleformsubmit');showElement('titleformsuccess')})){this.form.submit()}"
+ /> 
+<input type="submit" style="font-size:0.9em;display:none" id="titleformsubmit" value="Save" />
+<span id="titleformsuccess" style="display:none">saved!</span>
+</form>
+<tal:block condition="python:not (request.get('editid') or request.get('action'))">
+<form action="#" id="objectlist"
+ tal:define="objects here/getObjectList">
+ 
+<p tal:condition="not:objects">
+<em>There are no documents, images or photos inside this document.</em>
+</p>
+
+<div id="objectlisttable" tal:content="structure python:here.manageable_objectlist(objects=objects)">
+</div>
+<div id="fd-actionbuttons" tal:condition="objects">
+<input type="button" value="Rename" id="renamebutton" class="fd-actionbutton" onclick="renameObjects(this.form)" />
+<input type="button" value="Copy" id="copybutton" class="fd-actionbutton" onclick="copyObjects(this.form)" />
+<input type="button" value="Cut" id="cutbutton" class="fd-actionbutton" onclick="cutObjects(this.form)" />
+<input type="button" value="Paste" id="pastebutton" class="fd-actionbutton" onclick="pasteObjects(this.form)"
+ tal:condition="here/validClipData" />
+<input type="button" value="Delete" id="deletebutton" class="fd-actionbutton" onclick="deleteObjects(this.form)" />
+</div>
+</form>
+</tal:block>
+
+
+<tal:block condition="python:request.get('editid') and getattr(here, request.get('editid')).meta_type=='Image'">
+<form metal:use-macro="here/edit_image_form/macros/widget"></form>
+</tal:block><!--/end image edit-->
+
+<tal:block condition="python:request.get('editid') and getattr(here, request.get('editid')).meta_type=='Photo'">
+<form metal:use-macro="here/edit_picture_form/macros/widget"></form>
+</tal:block><!--/end photo edit-->
+
+<tal:block condition="python:request.get('editid') and getattr(here, request.get('editid')).meta_type=='File'">
+<form metal:use-macro="here/edit_file_form/macros/widget"></form>
+</tal:block><!--/end file edit-->
+
+
+
+<tal:block tal:condition="python:request.get('action')=='security'">
+<form metal:use-macro="here/access_rights_form/macros/widget"></form>
+</tal:block><!--/end access rights-->
+
+
+<tal:block tal:condition="python:request.get('action')==here.META_TYPE">
+<form metal:use-macro="here/add_document_form/macros/widget"></form>
+</tal:block><!--/end add document-->
+
+<tal:block tal:condition="python:request.get('action')=='Picture'">
+<form metal:use-macro="here/add_picture_form/macros/widget"></form>
+</tal:block><!--/end add picture-->
+
+<tal:block tal:condition="python:request.get('action')=='File'">
+<form metal:use-macro="here/add_file_form/macros/widget"></form>
+</tal:block><!--/end add file-->
+
+<div id="action_pleasewait" style="display:none"></div>
+</div>
+</html>

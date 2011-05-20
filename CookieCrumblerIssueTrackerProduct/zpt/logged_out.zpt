@@ -1,0 +1,26 @@
+<html metal:use-macro="here/header_footer/macros/standard">
+<div metal:fill-slot="body">
+
+<img src="/misc_/CookieCrumblerIssueTrackerProduct/padlock.gif" alt="" width="300" style="float:left" />
+
+<tal:block tal:define="username python:modules['AccessControl'].getSecurityManager().getUser()">
+
+<div tal:condition="python:str(username).lower() == 'anonymous user'">
+  <h2>Logged out</h2>
+  
+  <p>If you change your mind you can return to the login form and 
+  <a href="login_form">log in again</a>.
+  </p>
+</div>
+
+<div tal:condition="not:python:str(username).lower() == 'anonymous user'">
+  <p style="font-weight:bold"> You are logged in using HTTP authentication.  You may need to
+ <a href="manage_zmi_logout">log out of the Zope management interface</a>.
+  </p>
+</div>
+
+
+</tal:block>
+
+</div>
+</html>

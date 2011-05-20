@@ -1,0 +1,15 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Advanced - "<dtml-var getTitle html_quote>"</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<meta name="robots" content="noindex" />
+<meta http-equiv="imagetoolbar" content="false" />
+<meta name="MSSmartTagsPreventParsing" content="true" />
+<link rel="stylesheet" href="<dtml-var absolute_url>/stylesheet.css" type="text/css" />
+
+</head>
+<body>
+<a href="manage_Options">Use Options instead</a>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<dtml-call "RESPONSE.setHeader('Content-Type','text/html;charset=%s'%getUnicodeEncoding())"><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<dtml-let currentslotname="manage_getSlots()[0]" currenteditmethod="manage_basic_editing_method(currentslotname)">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Basic editing - "<dtml-var getTitle html_quote>"</title>
+<meta http-equiv="Content-Type" content="text/html; charset=<dtml-var getUnicodeEncoding>" />
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="<dtml-var absolute_url>/stylesheet.css" type="text/css" />
+
+<script type="text/javascript" src="<dtml-var "getMiscAlias('/misc_/FriedDocument/jquery-1.2.3.min.js')">"></script>
+<script type="text/javascript" src="<dtml-var "getMiscAlias('/misc_/FriedDocument/fd-core.js')">"></script>
+<dtml-if "currenteditmethod=='wysiwyg' and hasTinyMCEConfiguration()">
+<script type="text/javascript" src="<dtml-var "getMiscAlias('/misc_/FriedDocument/TinyAjaxSaver.js')">"></script>
+<dtml-elif "currenteditmethod!='wysiwyg' or (currenteditmethod=='wysiwyg' and not hasTinyMCEConfiguration())">
+<script type="text/javascript" src="<dtml-var "getMiscAlias('/misc_/FriedDocument/PlainAjaxSaver.js')">"></script>
+</dtml-if>
+
+<script type="text/javascript">
+<!--
+var refresh_on_focus = false;
+do_focus = function() {
+  if (refresh_on_focus) {
+    var extramsg = "?manage_tabs_message=Refreshed+after+External+Editor";
+    u = ""+document.location;
+    bits = u.split('/');
+    var nu="";
+    for (i=0;i< bits.length - 1;i++)
+      nu += bits[i]+"/";
+    nu += "manage_Basic"+extramsg;
+    document.location=nu;
+  }
+} //do_focus
+do_blur = function() {
+  if (refresh_on_focus) {
+    var btnspan = document.getElementById('savechanges');
+    btnspan.innerHTML="Document in External Editor";
+  }
+}
+function prepare2refresh() {
+  refresh_on_focus = true;
+}
+window.onfocus=do_focus;
+window.onblur=do_blur;
+//-->
+</script>
+</head>
+<body>
+<span id="outtag"></span>
+<div id="tabs">
+<ul>
+  <li><a href="manage_Basic"><img src="<dtml-var "getMiscAlias('/misc_/FriedDocument/frieddoc_icon.gif')">" border="0" alt="Basic editing" /></a></li>
+  <li><a href="manage_main">Contents</a></li>
+  <li><a href="./">View</a></li>
+  <li><a href="editable">View (editable)</a></li>
+  <li><a href="manage_Options">Options</a></li>
+  <dtml-if "hasAdditionalProperties()"><li><a href="manage_propertiesForm">Properties</a></li></dtml-if>
+  <dtml-if has_ExternalEditor>
+  <li><a onkeypress="prepare2refresh();do_blur()" onclick="prepare2refresh();do_blur()" href="../externalEdit_/<dtml-var id>"
+  ><img src="/misc_/ExternalEditor/edit_icon" border="0" alt="Edit with ExternalEditor" /></a></li>
+  </dtml-if>
+  
+  
+  <dtml-let has_revisions="hasRevisions(currentslotname)">
+  <li id="revisionundoer" <dtml-unless has_revisions>style="display:none"</dtml-unless>>
+     <dtml-if has_revisions>
+       <dtml-var "show_revision_undo_form(_, REQUEST, currentslotname=currentslotname)">
+     </dtml-if>
+  </li>
+  </dtml-let>
+  
+  <li>
+    <dtml-if "inVersioning()">
+      <strong>Not auto-publishing</strong>
+      <div id="versioningoptions">
+        
+	<a href="manage_publishVersioning">Publish changes</a>
+        <a href="manage_publishVersioning?versioning_off=1">Publish changes and return to auto-publishing</a>
+        <a href="manage_scrapVersioning">Ignore changes and return to last published version</a>
+        <a href="manage_viewVersioningDifference">Compare differences</a>
+      </div>
+    <dtml-else>
+      <a href="manage_startVersioning">Stop auto-publishing</a>
+    </dtml-if>
+  </li>
+
+  <dtml-if manage_tabs_message>
+  <li><dtml-var manage_tabs_message newline_to_br> (<dtml-var ZopeTime fmt="%Y-%m-%d %H:%M">)</li>
+  </dtml-if>
+
+  
+</ul>
+</div>
+<div id="breadcrumb">
+<dtml-var "tabs_path_default(REQUEST)">
+</div>
+
+
+
+
+<dtml-try>
+<dtml-if "len(manage_getEditableSlots())>1">
+<div id="slotswitcher">
+  <b>Slot selection</b><br />
+  <dtml-in "manage_getEditableSlots()">
+    <dtml-if sequence-start><ul></dtml-if>
+    <dtml-if "_['sequence-item']==currentslotname">
+      <li class="on"><dtml-var sequence-item></li>
+    <dtml-else>
+      <li><a href="manage_changeFirstslot?slot=<dtml-var "_['sequence-item']" url_quote>"
+       ><dtml-var sequence-item></a></li>
+    </dtml-if>
+    <dtml-if sequence-end></ul></dtml-if>
+  </dtml-in>
+</div>
+</dtml-if>
+<dtml-except SlotKeyError>
+  <dtml-call "REQUEST.RESPONSE.redirect(REQUEST.URL1+'/manage_SlotFixer')">
+</dtml-try>
+
+
+<form action="manage_saveSlot" method="post" enctype="multipart/form-data" onsubmit="return ajaxSave(this)"
+>
+<input type="hidden" name="goto_after" value="" />
+<input type="hidden" name="slot" value="<dtml-var currentslotname>" />
+
+
+<div id="general-options"><label for="t">Title:</label>
+<input id="t" name="title:ustring:<dtml-var getUnicodeEncoding>" size="30" value="<dtml-var getTitle html_quote>" />
+ 
+<dtml-if "hasTinyMCEConfiguration()">
+<span id="editmethodswitcher">
+  <label for="em">Editing:</label>
+  <dtml-if "currenteditmethod=='wysiwyg'">
+    <img src="<dtml-var "getMiscAlias('/misc_/FriedDocument/wysiwyg-icon.gif')">" alt="WYSIWYG" border="0" class="on" />
+  <dtml-elif "canWYSIWYG(currentslotname)">
+    <a href="manage_changeEditingmethod?method=wysiwyg" title="Change to WYSIWYG" class="shaded"
+    ><img src="<dtml-var "getMiscAlias('/misc_/FriedDocument/wysiwyg-icon.gif')">" alt="WYSIWYG" border="0" /></a>
+  </dtml-if>
+
+  <dtml-if "currenteditmethod=='plain'">
+    <img title="Currently using plain method" src="<dtml-var "getMiscAlias('/misc_/FriedDocument/raw-icon.gif')">" alt="Plain" border="0" class="on" />
+  <dtml-else> 
+    <a href="manage_changeEditingmethod?method=plain" title="Plain" class="shaded"
+    ><img src="<dtml-var "getMiscAlias('/misc_/FriedDocument/raw-icon.gif')">" alt="Plain" border="0" /></a>
+  </dtml-if>
+  
+  </span>
+</dtml-if>
+ 
+ 
+</div>
+
+
+<dtml-if "currenteditmethod=='wysiwyg'">
+
+<dtml-let tinymceconfiguration="getTinyMCEConfiguration()">
+  <dtml-if tinymceconfiguration>
+    <dtml-var tinymceconfiguration>
+  </dtml-if>
+</dtml-let>
+  
+<textarea name="raw:<dtml-var getUnicodeEncoding>:utext" cols="80" rows="20"
+><dtml-var "getText(currentslotname)" html_quote></textarea>
+
+
+<dtml-else>
+<textarea name="raw:<dtml-var getUnicodeEncoding>:utext" cols="20" rows="20" style="width: 100%;"
+><dtml-var "getText(currentslotname)" html_quote></textarea>
+</dtml-if>
+
+
+<dtml-let validationerror="getValidationError()">
+<dtml-if validationerror>
+  <div id="validationerror" style="border:1px solid red;background:#fdd;padding:2px 6px;"
+  ><dtml-var validationerror html_quote></div>
+<dtml-else>
+  <div id="validationerror" style="display:none"><!-- prepareing element for AJAX updates --></div>
+</dtml-if>
+</dtml-let>
+
+<div id="savechanges">
+  
+  <input type="hidden" name="ajax_return" id="ajax_return" value="1" />
+
+
+  <dtml-if "getFormat(currentslotname)=='html' and canBeautifySource(currentslotname)">
+    <input type="submit" class="smallsavebutton" name="beautifysource" value="Format source" 
+     onclick="id$('ajax_return').value='0'" />
+  </dtml-if>
+
+<dtml-if "inVersioning()">
+  <input type="submit" value="Save changes" id="savechangesbutton"
+   onclick="this.value='Saving changes...'"
+   onkeypress="this.value='Saving changes...'" />
+<dtml-else>
+  <input type="submit" value="Save changes" id="savechangesbutton"
+   onclick="this.value='Publishing...'"
+   onkeypress="this.value='Publishing...'" />
+</dtml-if>
+
+<span id="savemessage"></span>
+</div>
+
+</form>
+
+
+
+</dtml-let>
+
+<br />&nbsp;
+<dtml-var manage_page_footer>

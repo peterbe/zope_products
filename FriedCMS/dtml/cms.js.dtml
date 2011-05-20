@@ -1,0 +1,421 @@
+<dtml-call "stopCache()"><dtml-call "RESPONSE.setHeader('Content-type','application/x-javascript')">
+<dtml-if options_logged_in>
+var CSS2STYLE = {
+   cmsbanner:"padding:0;margin:0;background-color:#39C;"+
+             "border:1px solid #39C;"+
+             "height:1px;"+
+             "color:white;font-family:sans-serif,Arial,Verdana;",
+     closer:"float:right;margin:7px;", // div
+     menulink:"float:left;font-size:11px;font-weight:bolder;padding-top:5px;margin:10px 7px 0 7px;", // p
+     publishoptions:"border:1px solid #ccc;z-index:1;position:relative;",
+     publishoptions_closer:"float:right;"
+     
+}
+var BANNER_ID = "CMSBANNER";
+var BANNER_HEIGHT = 19; //px
+var SHOW_BANNER_COOKIEKEY = "_cms_banner_show";
+
+
+
+function rzCC(s){
+   for(var exp=/-([a-z])/; exp.test(s); s=s.replace(exp,RegExp.$1.toUpperCase()));
+   return s;
+};
+
+function _setStyle(element, styledeclaration) {
+   if (styledeclaration.charAt(styledeclaration.length-1)==';')
+     styledeclaration = styledeclaration.slice(0, -1);
+   var k, v;
+   var splitted = styledeclaration.split(';');
+   for (var i=0, len=splitted.length; i<len; i++) {
+      k = rzCC(splitted[i].split(':')[0]);
+      v = splitted[i].split(':')[1];
+      eval("element.style."+k+"='"+v+"'");
+   
+   }
+}
+
+function createCMSBanner() {
+   var div = $E('div');
+   div.id = BANNER_ID;
+   //div.setAttribute('style', CSS2STYLE.cmsbanner);
+   _setStyle(div, CSS2STYLE.cmsbanner);
+   div.onmouseover=function() {showCMSBanner()};
+
+   // figure out what the first element is after <body>
+   var firstelement = null;
+   var body_children = document.body.childNodes;
+   for (var i=0, len=body_children.length; i < len; i++) {
+      if (body_children[i].nodeType==1) {
+	 firstelement = body_children[i];
+	 break;
+      }
+   }
+   
+   // insert the banner there
+   firstelement.parentNode.insertBefore(div, firstelement);
+   // insert a breaker
+   var breaker = $E('div');
+   //breaker.style='clear:left';
+   //breaker.setAttribute('style','clear:left; visibility:hidden; height:0;');
+   _setStyle(breaker, 'clear:left; visibility:hidden; height:0;');
+   firstelement.parentNode.insertBefore(breaker, firstelement);
+  
+   //setTimeout(function(){showCMSBanner()}, 1000);
+}
+
+
+function _fillCMSBanner() {
+   var div = $id(BANNER_ID);
+   
+   // create a close icon
+   //var closer = $E('div');
+   //closer.setAttribute('style',CSS2STYLE.closer);
+   //_setStyle(closer, CSS2STYLE.closer);
+   var closer_a = $E('a');
+   _setStyle(closer_a, CSS2STYLE.closer);
+   closer_a.href='#';
+   closer_a.onclick=closeCMSBanner;
+   var closer_img = $E('img');
+   closer_img.src='/misc_/FriedCMS/close.gif';
+   closer_img.alt='Close banner';
+   closer_img.border='0';
+   closer_a.appendChild(closer_img);
+   //closer.appendChild(closer_a);
+   //div.appendChild(closer);
+   div.appendChild(closer_a);
+   
+   var loggedin = $E('span');
+   //loggedin.setAttribute('style', CSS2STYLE.menulink);
+   _setStyle(loggedin, CSS2STYLE.menulink);
+   loggedin.appendChild($T("You are logged in as <dtml-var options_logged_in_name>"));
+   div.appendChild(loggedin);
+
+   /*<dtml-if options_management_home>*/
+   //var m_home = $E('span');
+   //m_home.setAttribute('style', CSS2STYLE.menulink);
+   var m_home_a = $E('a');
+   //m_home_a.setAttribute('style', CSS2STYLE.menulink);
+   _setStyle(m_home_a, CSS2STYLE.menulink);
+   m_home_a.href='<dtml-var options_management_home>';
+   m_home_a.appendChild($T('Management home'));
+   //m_home.appendChild(m_home_a);
+   //div.appendChild(m_home);
+   div.appendChild(m_home_a);
+   /*</dtml-if>*/
+   
+   /*<dtml-if options_editable_page>*/
+   //var editable = $E('span');
+   //editable.setAttribute('style', CSS2STYLE.menulink);
+   //_setStyle(editable, CSS2STYLE.menulink);
+   var editable_a = $E('a');
+   _setStyle(editable_a, CSS2STYLE.menulink);
+   editable_a.href='<dtml-var options_editable_page>';
+   editable_a.appendChild($T('This page is editable'));
+   //editable.appendChild(editable_a);
+   //div.appendChild(editable);
+   div.appendChild(editable_a);
+   /*<dtml-elif options_on_editable>*/
+   //var editable = $E('span');
+   var editable_a = $E('a');
+   _setStyle(editable_a, CSS2STYLE.menulink);
+   editable_a.href='<dtml-var options_on_editable>';
+   editable_a.appendChild($T('Exit editing'));
+   //editable.appendChild(editable_a);
+   //div.appendChild(editable);
+   div.appendChild(editable_a);
+   /*</dtml-if>*/
+
+   /*<dtml-if options_manageable_page>*/
+   //var manageable = $E('span');
+   //manageable.setAttribute('style', CSS2STYLE.menulink);
+   //_setStyle(manageable, CSS2STYLE.menulink);
+   var manageable_a = $E('a');
+   _setStyle(manageable_a, CSS2STYLE.menulink);
+   manageable_a.href='<dtml-var options_manageable_page>';
+   manageable_a.appendChild($T('This page is manageable'));
+   //manageable.appendChild(manageable_a);
+   //div.appendChild(manageable);
+   div.appendChild(manageable_a);
+   /*<dtml-elif options_on_manageable>*/   
+   //var manageable = $E('span');
+   //manageable.setAttribute('style', CSS2STYLE.menulink);
+   var manageable_a = $E('a');
+   _setStyle(manageable_a, CSS2STYLE.menulink);
+   manageable_a.href='<dtml-var options_on_manageable>';
+   manageable_a.appendChild($T('Exit manageable'));
+   //manageable.appendChild(manageable_a);
+   //div.appendChild(manageable);
+   div.appendChild(manageable_a);
+   /*</dtml-if>*/   
+   
+   /*<dtml-if options_unpublished_changes>*/
+   //var unpublished = $E('span');
+   //unpublished.setAttribute('style', CSS2STYLE.menulink);
+   
+   var unpublished_a = $E('a');
+   _setStyle(unpublished_a, CSS2STYLE.menulink);
+   unpublished_a.href='#';
+   unpublished_a.onclick=function() {
+      openPublishOptionsWindow(this);
+   };
+   unpublished_a.appendChild($T('Unpublished changes'));
+   //unpublished.appendChild(unpublished_a);
+   //div.appendChild(unpublished);
+   div.appendChild(unpublished_a);
+   /*</dtml-if>*/
+   
+}
+
+/*<dtml-if options_unpublished_changes>*/
+// Open an options window with the publishing options in it
+function openPublishOptionsWindow(element) {
+   function addOption(parent, href, title) {
+      var a = $E('a');
+      a.href=href;
+      a.appendChild($T(title));
+      parent.appendChild(a);
+      parent.appendChild($E('br'));
+
+   }
+   var div = $E('div');
+   div.setAttribute('id','publish_options');
+   //div.setAttribute('style', CSS2STYLE.publishoptions);
+   _setStyle(div, CSS2STYLE.publishoptions);
+   
+   var closer = $E('a');
+   //closer.setAttribute('style', CSS2STYLE.publishoptions_closer);
+   _setStyle(closer, CSS2STYLE.publishoptions_closer);
+   closer.href='#';
+   closer.onclick=function(){
+      closePublishOptionsWindow()
+   };
+   var closer_img = $E('img');
+   closer_img.src='/misc_/FriedCMS/close.gif';
+   closer_img.alt='Close';
+   closer_img.border='0';
+   closer.appendChild(closer_img);
+   div.appendChild(closer);
+   
+   addOption(div, 'manage_publishVersioning', 'Publish changes');
+   addOption(div, 'manage_publishVersioning?versioning_off=1',
+             'Publish changes and return to auto-publishing');
+   addOption(div, 'manage_scrapVersioning', 'Drop unpublished changes');
+   
+   
+}
+function closePublishOptionsWindow(element) {
+   
+}
+/*</dtml-if>*/
+
+function _removeAllChildren(element) {
+   element.innerHTML='';
+   return;
+   var children = element.childNodes;
+   for (var i=0,len=children.length;i<len;i++)
+     if (children[i].nodeType==1)
+       element.removeChild(children[i]);
+}
+
+function closeCMSBanner() {
+   // hide the banner
+   hideCMSBanner();
+   // remember in a cookie that the user wants it closed
+   SetCookie(SHOW_BANNER_COOKIEKEY,'closed', null, '/');
+   return false;
+}
+
+function hideCMSBanner() {
+   var el = $id(BANNER_ID);
+   var prev;
+   if (arguments.length) {
+      prev = arguments[0];
+   } else {
+      prev = parseInt(el.style.height);
+      _removeAllChildren(el);
+   }
+   if (prev > 1) {
+      prev -= 2;
+      el.style.height=prev+"px";
+      setTimeout("hideCMSBanner("+prev+")", 5);
+   } else {
+      el.style.height="1px";
+      el.onmouseover=function() {this.onmouseover=null;showCMSBanner()};
+      // this stops the hiding of the banner
+   }
+}
+
+function showCMSBanner() {
+   var el = $id(BANNER_ID);
+   var prev;
+   if (arguments.length) 
+     prev = arguments[0];
+   
+   else {
+      // first of all, remove onmouseoverevent
+      el.onmouseover=function(){};
+      prev = parseInt(el.style.height);
+   }
+      
+   if (prev < BANNER_HEIGHT) {
+      prev += 4;
+      el.style.height=prev+"px";
+      setTimeout("showCMSBanner("+prev+")", 3);
+   } else {
+      el.style.height=BANNER_HEIGHT+"px";
+      _fillCMSBanner();
+      SetCookie(SHOW_BANNER_COOKIEKEY,'opened', null, '/');
+      el.onmouseover=function() {};
+   }
+}
+
+
+
+/* ********************** USEFUL MISC STUFF BELOW ************************* */
+
+
+function insertAfter(newElement, targetElement) {
+   var parent = targetElement.parentNode;
+   if (parent.lastChild == targetElement) {
+      parent.appendChild(newElement);
+   } else {
+      parent.insertBefore(newElement, targetElement.nextSibling);
+   }
+}
+
+function $id(s) { return document.getElementById(s); }
+
+
+/* wrapper to save typing throughout the code */
+function $E(tagName) {
+   return document.createElement(tagName);
+}
+
+/* wrapper to save typing throughout the code */
+function $T(text) {
+   return document.createTextNode(text);
+}
+
+/* wrapper to save typing throughout the code */
+function $C(text) {
+   return document.createComment(text);
+}
+
+// from http://ejohn.org/projects/flexible-javascript-events/
+function addEvent( obj, type, fn ) { 
+  if ( obj.attachEvent ) {
+    obj["e"+type+fn] = fn;
+    obj[type+fn] = function() { obj["e"+type+fn]( window.event ); }
+    obj.attachEvent( "on"+type, obj[type+fn] );
+  } else
+    obj.addEventListener( type, fn, false );
+    
+}
+
+// from http://ejohn.org/projects/flexible-javascript-events/
+function removeEvent( obj, type, fn ) {
+  if ( obj.detachEvent ) {
+    obj.detachEvent( "on"+type, obj[type+fn] );
+		obj[type+fn] = null;
+  } else
+    obj.removeEventListener( type, fn, false );
+}
+
+function selfDestruct(element) {
+   var parent = element.parentNode;
+   parent.removeChild(element);
+}
+
+function xmlhttpPost(url, data, callback) {
+    /* POST an XMLHttpRequest, return response object */
+    var xmlHttpReq = false;
+    // Mozilla/Safari
+    if (window.XMLHttpRequest) {
+            xmlHttpReq = new XMLHttpRequest();
+            //breaks Opera:
+            //xmlHttpReq.overrideMimeType('text/xml');
+    }
+    // IE
+    else if (window.ActiveXObject) {
+            xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+    } 
+    xmlHttpReq.open('POST', url, true);
+    xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xmlHttpReq.onreadystatechange = function() {
+        if (xmlHttpReq.readyState == 4) {
+            switch (xmlHttpReq.status) {
+                case 200:
+                    callback(xmlHttpReq)
+                    break
+                case 404:
+                    alert('Error: Not Found.  ' + url)
+                    break;
+                default:
+                    document.body.innerHTML = xmlHttpReq.responseText;
+                    break;
+            }
+        }
+    }
+    xmlHttpReq.send(data);
+}
+
+//  Written by:  Bill Dortch, hIdaho Design <bdortch@hidaho.com>
+function getCookieVal (offset) {
+   var endstr = document.cookie.indexOf (";", offset);
+   if (endstr == -1)
+     endstr = document.cookie.length;
+   return unescape(document.cookie.substring(offset, endstr));
+}
+function FixCookieDate (date) {
+   var base = new Date(0);
+   var skew = base.getTime(); // dawn of (Unix) time - should be 0
+   if (skew > 0)  // Except on the Mac - ahead of its time
+     date.setTime (date.getTime() - skew);
+}
+function GetCookie (name) {
+   var arg = name + "=";
+   var alen = arg.length;
+   var clen = document.cookie.length;
+   var i = 0;
+   while (i < clen) {
+      var j = i + alen;
+      if (document.cookie.substring(i, j) == arg)
+        return getCookieVal (j);
+      i = document.cookie.indexOf(" ", i) + 1;
+      if (i == 0) break; 
+   }
+   return null;
+}
+function SetCookie(name,value,expires,path,domain,secure) {
+   document.cookie = name + "=" + escape (value) +
+     ((expires) ? "; expires=" + expires.toGMTString() : "") +
+     ((path) ? "; path=" + path : "") +
+     ((domain) ? "; domain=" + domain : "") +
+     ((secure) ? "; secure" : "");
+}
+
+function DeleteCookie(name,path,domain) {
+   if (GetCookie(name)) {
+      document.cookie = name + "=" +
+        ((path) ? "; path=" + path : "") +
+        ((domain) ? "; domain=" + domain : "") +
+        "; expires=Thu, 01-Jan-70 00:00:01 GMT";
+   }
+}
+/* ********************** END USEFUL MISC STUFF *************************** */
+
+
+if (GetCookie(SHOW_BANNER_COOKIEKEY)!='closed') {
+   addEvent(window, 'load', function() {
+      createCMSBanner();
+      showCMSBanner(100);
+      //setTimeout(function(){showCMSBanner()}, 1000);
+   });
+} else {
+   addEvent(window, 'load', createCMSBanner);
+}
+<dtml-else>
+// fun stuff happens here if you're logged in. 
+// See http://www.fry-it.com/Solutions
+</dtml-if>

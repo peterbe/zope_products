@@ -1,0 +1,64 @@
+<html metal:use-macro="here/getManagementHeader">
+
+<script tal:condition="here/TinyManagement|nothing"
+        tal:replace="structure here/TinyManagement"
+        metal:fill-slot="extrajs" />
+
+<div metal:fill-slot="body">
+
+<div class="toprightbox">
+    <a href="../FileManagement">Return to all files</a>
+</div>
+
+
+<form action="editFile" method="post">
+
+
+  <div tal:define="info here/getFileInfo">
+   
+  <img src=""
+   tal:attributes="src info/icon_nice" border="0" alt="" />
+  <b tal:content="here/getId">id</b><br />
+  Content-Type: <code tal:content="info/content_type"></code><br />
+  Size: <span tal:replace="info/size_nice"></span>
+  </div>
+
+
+<dl>
+  <dt><label for="title">Title</label></dt>
+  <dd><input name="title" tal:attributes="value here/getTitle" size="50" maxlength="100" /></dd>
+  
+  <dt><label for="abstract">Abstract</label></dt>
+  <dd><textarea name="abstract:text" cols="80" rows="6"
+   tal:attributes="class python:test(here.getAbstractDisplayFormat()=='html','tinyeditor');
+                   rows python:test(here.getAbstractDisplayFormat()=='html','10','6')"
+   tal:content="here/getAbstract"></textarea><br />
+   Format: <select name="abstract_display_format" tal:define="preval here/getAbstractDisplayFormat">
+     <option value="plaintext" 
+      tal:attributes="selected python:test(preval=='plaintext')">Plain text</option>
+     <option value="html" 
+      tal:attributes="selected python:test(preval=='html')">HTML</option>
+     <option value="structuredtext" 
+      tal:attributes="selected python:test(preval=='structuredtext')">StructuredText</option>
+   </select>
+  </dd>
+  
+
+  <dt><label for="publish_date">Publish date</label></dt>
+  <dd><input name="publish_date:date" 
+       tal:attributes="value python:here.getPublishDate().strftime('%Y-%m-%d %H:%M')" /></dd>
+
+
+  <dt><label class="optional">New file</label></dt>
+  <dd><input type="file" name="new_file" value="" size="30" /></dd>
+
+
+</dl>
+<input type="submit" value="Save changes" onclick="this.value='Please wait...'" />
+
+</form>
+
+
+
+</div>
+</html>

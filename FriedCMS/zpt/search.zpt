@@ -1,0 +1,67 @@
+<html metal:use-macro="here/getHeader">
+
+
+<metal:block metal:fill-slot="midnav"><!-- no midnav --></metal:block>
+
+<h2 metal:fill-slot="templatetitle" style="margin-bottom:0">Search site</h2>
+
+<div metal:fill-slot="body" tal:omit-tag=""
+ tal:define="root here/getRoot; rooturl here/getRootURLRelative">
+
+
+<form action="/search" name="searchform"
+ tal:attributes="action string:$rooturl/search">
+    <p>
+      <input name="q" size="35" maxlength="40" tal:attributes="value python:request.get('q','')"/>
+      <input type="submit" value="Search" />
+    </p>
+</form>
+
+<tal:block tal:condition="python:request.get('q')">
+<div id="searchresults" 
+ tal:define="bsize python:request.get('batch-size',20);
+             bsize python:test(bsize=='all', 100, bsize);
+             allresults python:here.doSearch(request.get('q'));
+	     results python:allresults[:int(bsize)]">
+  <p tal:condition="not:results"><br />Sorry, no pages found
+  <br /><br />
+  <a tal:define="spacesplitted python:request.get('q').split(' '); 
+                 joined python:' or '.join([x.strip() for x in spacesplitted if x != 'or'])"
+     tal:condition="python:len(spacesplitted)>1 and joined!=request.get('q')"
+     tal:attributes="href string:$rooturl/search?q=${joined}">try 
+     putting an 'or' between each word</a>
+  </p>
+  
+  <div tal:repeat="page results">
+    <img tal:condition="python:page.getId().lower().endswith('.pdf')" tal:replace="structure here/images/icon_pdf_small.gif" />
+    
+    <a href="" tal:attributes="href page/absolute_url_path"><b tal:content="structure python:here.highlightQ(request.get('q'), page.getTitle())"></b></a>
+    <tal:block tal:define="matchedlines python:here.highlightQ(request.get('q'), page.searchable_text(), splitlines=1)[:2]">
+    
+    <div tal:condition="not:matchedlines" tal:content="structure python:page.searchable_text()[:70]+'...'"></div>
+    <div tal:repeat="matchedline matchedlines"
+        tal:content="structure matchedline"></div>
+    </tal:block>
+    <span style="color:#999;" tal:content="python:page.absolute_url()"></span>
+    <br />&nbsp;
+   
+
+  </div>  
+
+   <p tal:condition="python:len(allresults)>bsize and not request.get('batch-size')=='all'"
+    style="font-style:italic">
+     Some results were omitted to keep the results page relatively small. If you like, you can
+     <a href="/search" tal:attributes="href string:/search?${request/QUERY_STRING}&batch-size=all"
+     >repeat the search with the omitted results included</a>.
+   </p>
+   
+</div>
+</tal:block>
+
+<script type="text/javascript" tal:condition="not:python:request.get('q')"><!--
+document.searchform.q.focus();
+//--></script>
+</div>
+
+
+</html>

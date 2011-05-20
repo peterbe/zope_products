@@ -1,0 +1,29 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body"
+     tal:define="users here/getUsers">
+
+  <div class="toprightbox">
+    <div metal:use-macro="here/macrosUserFolder/macros/userfolder_menu"/>
+  </div>
+  
+
+  <div tal:repeat="user users"
+       tal:condition="users">
+    <div tal:define="username user/getUserName">
+      <img tal:attributes="src string:/misc_/${here/ProjectName}/user_icon.gif" alt="User" border="0" />
+      <b tal:content="username"/>
+      <div tal:replace="user/getFirstName"/>
+      <div tal:replace="user/getLastName"/>
+       [<a tal:attributes="href string:${here/absolute_url}/editUserForm?name=${username}">edit</a> |
+        <a tal:attributes="href string:${here/absolute_url}/viewUserForm?name=${username}">view</a> |
+        <a tal:attributes="href string:${here/absolute_url}/deleteUserForm?name=${username}">delete</a>]
+       <br />
+    </div>
+  </div>
+
+  <div tal:condition="not: users">
+    No users defined.
+  </div>
+
+</div>
+</html>

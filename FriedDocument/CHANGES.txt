@@ -1,0 +1,131 @@
+- 0.1.18
+
+  Bug fixed: ExternalEditor doctype wrap has xmlns and xmlns:tal in
+  <html> tag.
+
+- 0.1.17
+
+  New feature: lxml.html not installed will warn when doing a diff.
+
+- 0.1.16
+
+  New feature: Pan indicates which documents have unpublished changes.
+
+- 0.1.15
+
+  New feature: Changes default encoding to UTF8.
+
+- 0.1.14
+
+  Bug fixed: Setting access control to something other than Everybody
+  removes the acquire for that permission.
+  
+- 0.1.13
+
+  Bug fixed: Revision comparison more sensitive when comparing unicode
+  and str.
+  
+- 0.1.12
+
+  New feature: Threw out Epoz altogether
+  
+  New feature: First draft of versioning (aka. auto-publishing)
+  
+- 0.1.11
+
+  Bug fixed: Deleting items from within index_html/ didn't work.
+  
+- 0.1.10
+
+  Bug fixed: rename, cut, copy, delete with only one item in the list
+  didn't work.
+  
+- 0.1.9
+
+  Bug fixed: Fixed a bad return value of manage_updateAll()
+  
+- 0.1.8
+
+  Bug fixed: 0.1.7 prevented regular naming of Page Template METAL
+  macro objects got broken.
+
+- 0.1.7
+
+  New feature: You can now specify the 'metalmacro' to be the name of a
+  method like 'getHeader' and it will work. 
+  
+- 0.1.6
+
+  Bug fixed: _slots_order is now correctly copied when using "be like"
+
+  New feature: The ExternalEditor slot marker is now the <body> tag
+
+  Bug fixed: manage_findBeLikeDocuments() firstly looks in its own
+  parent.
+  
+- 0.1.5
+
+  New feature: Two new hooked methods called FriedPreRenderHook() and
+  FriedPostRenderHook() that you can define in the acquisition path
+  (ZODB or python product).
+  The format of the parameters must be ...Hook(text, format, slotname)
+  
+- 0.1.4
+
+  Bug fix: Important changes to TinyAjaxSaver.js when you press "Save
+  changes" the first time. 
+  
+- 0.1.3
+
+  New feature: Slotfixer can help fix broken slots_orders.
+  
+  New feature: Expiry hours for FriedDocuments can be batch controlled
+  from Document Pan.
+  
+  New feature: Expiry hours setting for FriedDocuments
+  
+  New feature: /editable for FriedDocument save with AJAX now.
+  
+  New feature: All management of the document is controlled by a new
+  permission 'Manage Fried Document'
+  
+  New feature: Ajax saving instead of plain form POST submission.
+  
+  New feature: Tight ZTinyMCE integration instead of Epoz. Epoz still
+  an option.
+
+  New feature: Inside Basic tab, Properties is shown if any properties
+  are set
+  
+- 0.1.2
+
+  Bug fixed: 'editable' more alert to advanced properties
+  
+- 0.1.1
+
+  Bug fixed: 'editable' template requires Manager to View.
+  
+- 0.1.0
+
+  New feature: ExternalEditor link on editable
+
+  New feature: Correct content_type() sets correct extension for
+  ExternalEditor
+  
+  New feature: Be like... feature for adding Fried Documents
+  
+- 0.0.2
+
+  Bug fixed: 'body' slot was hardcoded in editable
+  
+  New feature: Undo tab enabled
+  
+  New feature: Added External Editor support
+  
+  New feature: 'editable' view draft
+  
+  New feature: Added CatalogAware support.
+
+- 0.0.1
+
+  First working version. Very basic.

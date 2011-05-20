@@ -1,0 +1,20 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body">
+
+
+<tal:block define="pan here/Document-Pan">
+
+
+<br tal:define="extra python:['editable','manageable'];
+                dummy python:request.set('SHOW_EXTRA_LINKS', extra)"
+    tal:replace="structure pan/manage_Pan_showall" />
+
+<p><a tal:attributes="href string:${pan/absolute_url_path}/manage_updateAll?goto_after=${request/URL}"
+>Update all document</a></p>
+
+</tal:block>
+
+
+
+</div>
+</html>

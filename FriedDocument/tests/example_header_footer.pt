@@ -1,0 +1,10 @@
+<metal:block define-macro="standard"><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<script metal:define-slot="extrajs"></script>
+<style metal:define-slot="extracss"></style>
+<body>
+<metal:block define-slot="body"></metal:block>
+</body>
+</html>
+</metal:block>
