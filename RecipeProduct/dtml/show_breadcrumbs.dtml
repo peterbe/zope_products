@@ -1,0 +1,8 @@
+<dtml-in getBreadcrumbs>
+<dtml-var sequence-item>
+
+<dtml-unless sequence-end>
+<img src="/misc_/RecipeProduct/arrow.gif" width="9" height="11" border=0>
+</dtml-unless>
+
+</dtml-in>

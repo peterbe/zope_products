@@ -1,0 +1,19 @@
+*** /home/peterbe/zope/zope274/lib/python/ZPublisher/Client.py	2003-11-17 22:34:19.000000000 +0000
+--- /home/peterbe/zope/zope273/lib/python/ZPublisher/Client.py	2005-02-17 09:22:59.000000000 +0000
+***************
+*** 141,147 ****
+                  )
+  
+          try:
+!             h=HTTP()
+              h.connect(self.host, self.port)
+              h.putrequest(method, self.rurl)
+              for hn,hv in headers.items():
+--- 141,147 ----
+                  )
+  
+          try:
+!             h=HTTP(self.host)
+              h.connect(self.host, self.port)
+              h.putrequest(method, self.rurl)
+              for hn,hv in headers.items():

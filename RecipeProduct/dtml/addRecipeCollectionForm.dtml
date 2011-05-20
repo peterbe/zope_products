@@ -1,0 +1,23 @@
+<HTML> 
+<HEAD><TITLE>Add Recipe Collection</TITLE>
+<link rel="stylesheet" type="text/css" href="/manage_page_style.css">
+</HEAD> 
+<BODY BGCOLOR="#FFFFFF" LINK="#000099" VLINK="#555555"> 
+<H2>Add Recipe Collection</H2> 
+<form action="manage_addRecipeCollection">
+<dtml-if GoToURL>
+ <input type=hidden name=GoToURL value="<dtml-var GoToURL>">
+</dtml-if>
+<table border=0> 
+<tr><th><em>Id:</em></th> 
+    <td><input type=text name=id value=""></td> 
+</tr>
+
+<tr><th>Title:</th>
+    <td><input type=text name=title size="40" value=""></td> 
+</tr>
+
+
+<tr><td></td><td><input type=submit value=" Add "></td></tr> 
+</table></form> 
+</body></html> 

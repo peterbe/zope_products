@@ -1,0 +1,4 @@
+<tal:block i18n:domain="ryf">
+<h2 i18n:translate="">Been here before?</h2>
+<p i18n:translate="">Signed up before and want to <a href="log-in">log in again</a>?</p>
+</tal:block>

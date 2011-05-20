@@ -1,0 +1,24 @@
+How to install ZTinyMCE
+=======================
+
+
+Easy. Just extract these files into your Zope's Products folder on 
+the filesystem then restart Zope.
+Once you've restarted Zope, go to a suitable place in the Zope object
+tree and create a ZTinyMCE object from the dropdown. It creates two 
+example ZTinyMCE Configurations which you can familiarize yourself
+with.
+
+
+How to install language packs
+=============================
+
+Go to http://services.moxiecode.com/i18n/ and select the languages you
+want to support. This will ask you to download a file called
+tinymce_lang_pack.zip which you download and place inside the ZTinyMCE
+directory (e.g. zope/Products/ZTinyMCE/). It's important that the
+filename is exactly ``tinymce_lang_pack.zip`` since that's how it will
+be discovered when you install it inside Zope.
+
+Once you've restarted Zope and recreated all the files, a directory
+called "langs" will appear in Zope.

@@ -1,0 +1,334 @@
+# translation of ryf.po to
+msgid ""
+msgstr ""
+"POT-Creation-Date: Mon Sep  4 16:36:05 2006\n"
+"PO-Revision-Date: 2007-01-15 13:38+0000\n"
+"Last-Translator: Peter\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/translation_files/extract.py\n"
+"Domain: ryf\n"
+"Project-Id-Version: ryf\n"
+"Language-Team:  <en@li.org>\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: /Cron.py:216
+msgid "You still haven't completed your full name.\n"
+msgstr ""
+
+#: /Cron.py:218
+msgid "Follow this link to change your settings: %s"
+msgstr ""
+
+#: /Cron.py:219
+msgid "Do that on the <a href=\"%s\">your settings page</a>."
+msgstr ""
+
+#: /Cron.py:228
+msgid "Do you want to invite %s to also use RememberYourFriends.com?"
+msgstr ""
+
+#: /Cron.py:232
+msgid "If so, click this link: %s"
+msgstr ""
+
+#: /Cron.py:233
+msgid "If so, go to the <a href=\"%s\">Send invite page</a>"
+msgstr ""
+
+#: /Cron.py:237
+msgid "You can invite more friends to RememberYourFriends.com"
+msgstr "Du kan bjuda in fler vänner till RememberYourFriends.com"
+
+#: /Cron.py:238
+msgid "on this page: %s"
+msgstr "på den här sidan: %s"
+
+#: /Cron.py:239
+msgid "on the <a href=\"%s\">Send invite page</a>."
+msgstr ""
+
+#: /Cron.py:244
+msgid "To add more reminders of other friends or change your current reminders"
+msgstr ""
+
+#: /Cron.py:245
+msgid "go to this page: %s"
+msgstr "gå till den här sidan: %s"
+
+#: /Cron.py:246
+msgid "go to the <a href=\"%s\">Add a new reminder page</a>."
+msgstr ""
+
+#: /Cron.py:257
+msgid "You are being reminded to remember:"
+msgstr ""
+
+#: /Cron.py:283
+msgid "One reminder sent before."
+msgstr ""
+
+#: /Cron.py:285
+msgid "%s reminders sent before."
+msgstr ""
+
+#: /Cron.py:287
+msgid "It was snoozed %s days"
+msgstr ""
+
+#: /Cron.py:291
+msgid "Snooze options:"
+msgstr "Snooze alternativ:"
+
+#: /Cron.py:292
+msgid "Snooze this:"
+msgstr "Snooza detta:"
+
+#: /Cron.py:312
+msgid "Change settings for %s"
+msgstr ""
+
+#: /Cron.py:316
+msgid "Do you know %s's birthday?"
+msgstr "Vet du %s's födelsedag?"
+
+#: /Cron.py:346
+msgid "RememberYourFriends.com reminder: "
+msgstr ""
+
+#: /Cron.py:400
+msgid "To unsubscribe go to"
+msgstr ""
+
+#: /Cron.py:71
+msgid "Getting started with RememberYourFriends.com"
+msgstr "Komma igång med RememberYourFriends.com"
+
+#: /Cron.py:77
+msgid "You signed up to RememberYourFriends.com on the"
+msgstr ""
+
+#: /Cron.py:79
+msgid "but haven't set up any reminders yet silly."
+msgstr "men har inte lagt in några påminnelser ännu."
+
+#: /Cron.py:85
+msgid "To add some, <a href=\"%s\">go to the <b>Add a new reminder</b> page</a>"
+msgstr ""
+
+#: /Cron.py:88
+msgid "To add some, go to the Add a new reminder page:"
+msgstr ""
+
+#: /Homepage.py:1101
+msgid "No user account found by that email. Sorry."
+msgstr ""
+
+#: /Homepage.py:1103
+msgid "Not a valid email address anyway."
+msgstr ""
+
+#: /Homepage.py:1155
+msgid "Settings saved."
+msgstr "Inställningar sparade."
+
+#: /Homepage.py:1186
+msgid "To verify that you want to unsubscribe from RememberYourFriends.com follow this link:\n"
+msgstr ""
+
+#: /Homepage.py:1191
+msgid "Confirm unsubscription from RememberYourFriends.com"
+msgstr ""
+
+#: /Homepage.py:1195
+msgid "A verification link has been sent to you"
+msgstr ""
+
+#: /Homepage.py:1282
+msgid "Invalid email address"
+msgstr "Ogiltig email adress"
+
+#: /Homepage.py:1290
+msgid "Invite sent less than a day ago"
+msgstr ""
+
+#: /Homepage.py:1301
+msgid "Text was empty"
+msgstr "Texten var tom"
+
+#: /Homepage.py:1306
+msgid "Doesn't contain RememberYourFriends.com"
+msgstr ""
+
+#: /Homepage.py:1308
+msgid "Doesn't contain '<invite link will be placed here>'"
+msgstr ""
+
+#: /Homepage.py:1344
+msgid "Inviting you to RememberYourFriends.com"
+msgstr ""
+
+#: /Homepage.py:1383
+msgid "Sent inviation to %s"
+msgstr ""
+
+#: /Homepage.py:396
+#: /Security.py:142
+msgid "Logged in"
+msgstr "Inloggad"
+
+#: /Homepage.py:420
+msgid "Invalid"
+msgstr "Ogiltig"
+
+#: /Homepage.py:422
+#: /Homepage.py:1284
+msgid "Already signed up"
+msgstr ""
+
+#: /Homepage.py:427
+msgid "No friends entered"
+msgstr ""
+
+#: /Homepage.py:896
+msgid "January"
+msgstr "Januari"
+
+#: /Homepage.py:897
+msgid "February"
+msgstr "Februari"
+
+#: /Homepage.py:898
+msgid "March"
+msgstr "Mars"
+
+#: /Homepage.py:899
+msgid "April"
+msgstr ""
+
+#: /Homepage.py:900
+msgid "May"
+msgstr "Maj"
+
+#: /Homepage.py:901
+msgid "June"
+msgstr "Juni"
+
+#: /Homepage.py:902
+msgid "July"
+msgstr ""
+
+#: /Homepage.py:903
+msgid "August"
+msgstr ""
+
+#: /Homepage.py:904
+msgid "September"
+msgstr ""
+
+#: /Homepage.py:905
+msgid "October"
+msgstr ""
+
+#: /Homepage.py:906
+msgid "November"
+msgstr ""
+
+#: /Homepage.py:907
+msgid "December"
+msgstr ""
+
+#: /Homepage.py:959
+msgid "1 month"
+msgstr ""
+
+#: /Homepage.py:961
+msgid "%s months"
+msgstr "%s månader"
+
+#: /Homepage.py:965
+msgid "1 week"
+msgstr "1 vecka"
+
+#: /Homepage.py:967
+msgid "%s weeks"
+msgstr "%s veckor"
+
+#: /Homepage.py:970
+msgid "1 day"
+msgstr "1 dag"
+
+#: /Homepage.py:973
+msgid "< 1 day"
+msgstr "< 1 dag"
+
+#: /Homepage.py:975
+msgid "%s days"
+msgstr "%s dagar"
+
+#: /Security.py:144
+msgid "Could not log in :("
+msgstr ""
+
+#: /zpt/index_html.zpt:113
+msgid "Sign up now"
+msgstr ""
+
+#: /zpt/index_html.zpt:122
+# Default: ""
+# "<strong>Spam guarantee:</strong>\n"
+# "Your email (or your friends email) will <strong>never</strong> \n"
+# "be sold or used for spamming.\n"
+# "<a href=\"i-hate-spam\">Read more about the spam guarantee</a>"
+msgid "spam_guarantee"
+msgstr ""
+
+#: /zpt/index_html.zpt:15
+msgid "What RememberYourFriends.com is all about"
+msgstr ""
+
+#: /zpt/index_html.zpt:17
+msgid "<strong>Do you have many friends that you want to email every now and then but have difficulties remembering to do that?</strong>"
+msgstr ""
+
+#: /zpt/index_html.zpt:21
+msgid "Perhaps you have a good friend who has moved to a different city or country but you want to maintain the contact and your only hope for now is to email this friend every now and then to show your commitment. Or you're a business and you want to remind your key customers of new products or stuff every 6 months."
+msgstr ""
+
+#: /zpt/index_html.zpt:26
+msgid "This site helps you maintaining these friendships by sending a periodic reminder to you via email based on how often you want to be reminded about certain friends.<br /> Once you have signed up you will only use this site to add or remove reminders. All communication is done via email."
+msgstr ""
+
+#: /zpt/index_html.zpt:32
+msgid "Read more &raquo;"
+msgstr "Läs mer &raquo;"
+
+#: /zpt/index_html.zpt:41
+#: /zpt/index_html.zpt:44
+msgid "Received reminder for 'Mamma'"
+msgstr ""
+
+#: /zpt/index_html.zpt:55
+#: /zpt/index_html.zpt:58
+msgid "Change your settings (start)"
+msgstr ""
+
+#: /zpt/index_html.zpt:66
+msgid "Your email address:"
+msgstr "Din email adress:"
+
+#: /zpt/index_html.zpt:71
+msgid "Add some friends right now..."
+msgstr ""
+
+#: /zpt/index_html.zpt:76
+msgid "Friend"
+msgstr "Vän"
+
+#: /zpt/index_html.zpt:77
+msgid "How often"
+msgstr "Hur ofta"
+

@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Add form created by FriedZopeProductCreator 0.4 -->
+<head>
+  <title>Add TinyMCE</title>
+  <link rel="stylesheet" type="text/css" href="/manage_page_style.css">
+  <style type="text/css">
+    label { font-weight:bold; font-family:sans-serif,Arial; }
+  </style>
+  <script type="text/javascript">
+  function startwaiting() {
+    document.getElementById('waitmessage').style['display']='';
+  }
+  </script>
+</head>
+<body>
+<h2>Add TinyMCE</h2>
+<form action="manage_addZTinyMCE">
+
+<dl>
+
+  <dt><label for="id">Id:</label></dt>
+  <dd><input name="id" size="30" value="TinyMCE" /></dd>
+
+  <dt><label for="title">Title:</label></dt>
+  <dd><input name="title" size="30" value="TinyMCE" /></dd>
+
+</dl>
+<br />
+<input type="submit" value=" Add " 
+ onclick="startwaiting()" />
+<input type="submit" name="addandedit" value="Add and Edit"
+ onclick="startwaiting()" />
+</form>
+
+<div id="waitmessage" style="display:none">
+<p><em><b>Please wait...</b></em></p>
+
+<p>Setting up a ZTinyMCE instance takes a couple of seconds because all the 
+Javascript, images and stylesheets needs to be extracted into this instance.</p>
+</div>
+
+</body>
+</html> 
+

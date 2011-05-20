@@ -1,0 +1,16 @@
+<tal:comment replace="nothing">
+show the change-reminders page but with params
+</tal:comment>
+
+<tal:preparation condition="python:request.get('sbf') and not request.has_key('showbirthdayform')">
+  <br tal:replace="python:request.set('showbirthdayform',request.get('sbf'))" />
+</tal:preparation>
+
+<tal:bad condition="not:request/rid|nothing">
+  <br tal:replace="python:here.http_redirect('change-reminders')" />
+</tal:bad>
+
+<form tal:define="template nocall:here/change-reminders"
+      tal:condition="request/rid|nothing"
+      tal:replace="structure python:template(here, request, showcurrentreminders=False)">
+</form>      

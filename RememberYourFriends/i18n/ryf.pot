@@ -1,0 +1,835 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: Wed Jan 31 09:03:38 2007\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Silva i18n team <walco@infrae.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/translation_files/extract.py\n"
+
+#: /BirthdayWidget.py:29
+#: /Homepage.py:942
+msgid "January"
+msgstr ""
+
+#: /BirthdayWidget.py:30
+#: /Homepage.py:943
+msgid "February"
+msgstr ""
+
+#: /BirthdayWidget.py:31
+#: /Homepage.py:944
+msgid "March"
+msgstr ""
+
+#: /BirthdayWidget.py:32
+#: /Homepage.py:945
+msgid "April"
+msgstr ""
+
+#: /BirthdayWidget.py:33
+#: /Homepage.py:946
+msgid "May"
+msgstr ""
+
+#: /BirthdayWidget.py:34
+#: /Homepage.py:947
+msgid "June"
+msgstr ""
+
+#: /BirthdayWidget.py:35
+#: /Homepage.py:948
+msgid "July"
+msgstr ""
+
+#: /BirthdayWidget.py:36
+#: /Homepage.py:949
+msgid "August"
+msgstr ""
+
+#: /BirthdayWidget.py:37
+#: /Homepage.py:950
+msgid "September"
+msgstr ""
+
+#: /BirthdayWidget.py:38
+#: /Homepage.py:951
+msgid "October"
+msgstr ""
+
+#: /BirthdayWidget.py:39
+#: /Homepage.py:952
+msgid "November"
+msgstr ""
+
+#: /BirthdayWidget.py:40
+#: /Homepage.py:953
+msgid "December"
+msgstr ""
+
+#: /BirthdayWidget.py:44
+msgid "Your name"
+msgstr ""
+
+#: /Cron.py:101
+msgid "Don't forget, it's"
+msgstr ""
+
+#: /Cron.py:144
+msgid "RememberYourFriends.com birthday reminder for"
+msgstr ""
+
+#: /Cron.py:147
+msgid "RememberYourFriends.com birthday reminder "
+msgstr ""
+
+#: /Cron.py:188
+msgid "Getting started with RememberYourFriends.com"
+msgstr ""
+
+#: /Cron.py:194
+msgid "You signed up to RememberYourFriends.com on the"
+msgstr ""
+
+#: /Cron.py:196
+msgid "but haven't set up any reminders yet silly."
+msgstr ""
+
+#: /Cron.py:202
+msgid "To add some, <a href=\"%s\">go to the <b>Add a new reminder</b> page</a>"
+msgstr ""
+
+#: /Cron.py:205
+msgid "To add some, go to the Add a new reminder page:"
+msgstr ""
+
+#: /Cron.py:331
+msgid ""
+"You still haven't completed your full name.\n"
+msgstr ""
+
+#: /Cron.py:333
+msgid "Follow this link to change your settings: %s"
+msgstr ""
+
+#: /Cron.py:334
+msgid "Do that on the <a href=\"%s\">your settings page</a>."
+msgstr ""
+
+#: /Cron.py:343
+msgid "Do you want to invite %s to also use RememberYourFriends.com?"
+msgstr ""
+
+#: /Cron.py:347
+msgid "If so, click this link: %s"
+msgstr ""
+
+#: /Cron.py:348
+msgid "If so, go to the <a href=\"%s\">Send invite page</a>"
+msgstr ""
+
+#: /Cron.py:352
+msgid "You can invite more friends to RememberYourFriends.com"
+msgstr ""
+
+#: /Cron.py:353
+msgid "on this page: %s"
+msgstr ""
+
+#: /Cron.py:354
+msgid "on the <a href=\"%s\">Send invite page</a>."
+msgstr ""
+
+#: /Cron.py:359
+msgid "To add more reminders of other friends or change your current reminders"
+msgstr ""
+
+#: /Cron.py:360
+msgid "go to this page: %s"
+msgstr ""
+
+#: /Cron.py:361
+msgid "go to the <a href=\"%s\">Add a new reminder page</a>."
+msgstr ""
+
+#: /Cron.py:372
+msgid "You are being reminded to remember:"
+msgstr ""
+
+#: /Cron.py:398
+msgid "One reminder sent before."
+msgstr ""
+
+#: /Cron.py:400
+msgid "%s reminders sent before."
+msgstr ""
+
+#: /Cron.py:402
+msgid "It was snoozed %s days"
+msgstr ""
+
+#: /Cron.py:406
+msgid "Snooze options:"
+msgstr ""
+
+#: /Cron.py:407
+msgid "Snooze this:"
+msgstr ""
+
+#: /Cron.py:427
+msgid "Change settings for %s"
+msgstr ""
+
+#: /Cron.py:431
+msgid "Do you know %s's birthday?"
+msgstr ""
+
+#: /Cron.py:461
+msgid "RememberYourFriends.com reminder: "
+msgstr ""
+
+#: /Cron.py:515
+msgid "To unsubscribe go to"
+msgstr ""
+
+#: /Homepage.py:1005
+msgid "1 month"
+msgstr ""
+
+#: /Homepage.py:1007
+msgid "%s months"
+msgstr ""
+
+#: /Homepage.py:1011
+msgid "1 week"
+msgstr ""
+
+#: /Homepage.py:1013
+msgid "%s weeks"
+msgstr ""
+
+#: /Homepage.py:1016
+msgid "1 day"
+msgstr ""
+
+#: /Homepage.py:1019
+msgid "< 1 day"
+msgstr ""
+
+#: /Homepage.py:1021
+msgid "%s days"
+msgstr ""
+
+#: /Homepage.py:1205
+msgid "No user account found by that email. Sorry."
+msgstr ""
+
+#: /Homepage.py:1207
+msgid "Not a valid email address anyway."
+msgstr ""
+
+#: /Homepage.py:1259
+msgid "Settings saved."
+msgstr ""
+
+#: /Homepage.py:1290
+msgid ""
+"To verify that you want to unsubscribe from RememberYourFriends.com follow this link:\n"
+msgstr ""
+
+#: /Homepage.py:1295
+msgid "Confirm unsubscription from RememberYourFriends.com"
+msgstr ""
+
+#: /Homepage.py:1299
+msgid "A verification link has been sent to you"
+msgstr ""
+
+#: /Homepage.py:1389
+msgid "Invalid email address"
+msgstr ""
+
+#: /Homepage.py:1397
+msgid "Invite sent less than a day ago"
+msgstr ""
+
+#: /Homepage.py:1408
+msgid "Text was empty"
+msgstr ""
+
+#: /Homepage.py:1413
+msgid "Doesn't contain RememberYourFriends.com"
+msgstr ""
+
+#: /Homepage.py:1415
+msgid "Doesn't contain '<invite link will be placed here>'"
+msgstr ""
+
+#: /Homepage.py:1451
+msgid "Inviting you to RememberYourFriends.com"
+msgstr ""
+
+#: /Homepage.py:1490
+msgid "Sent inviation to %s"
+msgstr ""
+
+#: /Homepage.py:438
+#: /Security.py:142
+msgid "Logged in"
+msgstr ""
+
+#: /Homepage.py:462
+msgid "Invalid"
+msgstr ""
+
+#: /Homepage.py:464
+#: /Homepage.py:1391
+msgid "Already signed up"
+msgstr ""
+
+#: /Homepage.py:469
+msgid "No friends entered"
+msgstr ""
+
+#: /Security.py:144
+msgid "Could not log in :("
+msgstr ""
+
+#: /zpt/HeaderFooter.zpt:24
+msgid "Reminds you to keep in touch"
+msgstr ""
+
+#: /zpt/HeaderFooter.zpt:75
+msgid "About RememberYourFriends.com"
+msgstr ""
+
+#: /zpt/HeaderFooter.zpt:86
+msgid "The Family"
+msgstr ""
+
+#: /zpt/accept-invite.zpt:18
+msgid "has sent an invitation to you to use RememberYourFriends.com to be reminded to keep in touch with your friends. This is a free service."
+msgstr ""
+
+#: /zpt/accept-invite.zpt:26
+#: /zpt/accept-invite.zpt:31
+msgid "To accept the invitation, complete the form on this page"
+msgstr ""
+
+#: /zpt/accept-invite.zpt:7
+msgid "Accept invitation"
+msgstr ""
+
+#: /zpt/birthdaywidget/your-birthday-widget.zpt:40
+msgid "Your birthday widget"
+msgstr ""
+
+#: /zpt/birthdaywidget/your-birthday-widget.zpt:46
+msgid "Copy and paste this code snippet into your website:"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:104
+msgid "Change a reminder"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:171
+msgid "Birthday:"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:182
+msgid "Calendar"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:200
+msgid "Cancel"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:215
+msgid "Upcoming birthdays"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:241
+msgid "Current reminders you have"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:250
+msgid "every"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:251
+msgid "next in"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:260
+msgid "send invite"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:281
+msgid "Reminder paused"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:286
+#: /zpt/change-reminders.zpt:290
+msgid "Pause reminders from being sent"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:293
+#: /zpt/change-reminders.zpt:297
+msgid "Resume reminders being sent"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:39
+msgid "no I don't"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:40
+msgid "Birtday?"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:46
+msgid "Do you know this friends birthday?\">"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:56
+msgid "Add a new reminder"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:59
+#: /zpt/change-reminders.zpt:113
+msgid "A submission error occured. Please try to amend the indicated problems."
+msgstr ""
+
+#: /zpt/change-reminders.zpt:64
+#: /zpt/change-reminders.zpt:141
+msgid "Name:"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:72
+#: /zpt/change-reminders.zpt:147
+msgid "Email:"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:76
+#: /zpt/change-reminders.zpt:150
+msgid "worried about spam?"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:83
+#: /zpt/change-reminders.zpt:158
+msgid "How often:"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:86
+# Default: ""
+msgid "periodicity"
+msgstr ""
+
+#: /zpt/change-reminders.zpt:96
+#: /zpt/change-reminders.zpt:199
+msgid "Save"
+msgstr ""
+
+#: /zpt/faq.zpt:14
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: /zpt/faq.zpt:17
+msgid "What will I be sent?"
+msgstr ""
+
+#: /zpt/faq.zpt:18
+msgid "A short and simple email every now and then (depending on your setup) reminding you to keep in touch with the people you've written down. It's only via email and apart from administrative stuff like password reminders there are no other emails sent to you. <a href=\"ryf-email.png\">A reminder email can look like this.</a>"
+msgstr ""
+
+#: /zpt/faq.zpt:26
+msgid "How much does it cost?"
+msgstr ""
+
+#: /zpt/faq.zpt:27
+msgid "Nothing. It's a free service."
+msgstr ""
+
+#: /zpt/faq.zpt:32
+msgid "If I complete my friends name with her email address, will you spam her?"
+msgstr ""
+
+#: /zpt/faq.zpt:33
+msgid "Absolutely not. The email addresses you optionally write down will never be processed or emailed. <a href=\"i-hate-spam\">Spamming will never happen</a>."
+msgstr ""
+
+#: /zpt/faq.zpt:39
+msgid "Is there an opt-out?"
+msgstr ""
+
+#: /zpt/faq.zpt:40
+msgid "Yes. In the signature of every email you get there's a link that takes you to the <a href=\"unsubscribe\">unsubscribe page</a>."
+msgstr ""
+
+#: /zpt/faq.zpt:45
+msgid "Who's behind this site?"
+msgstr ""
+
+#: /zpt/faq.zpt:46
+msgid "No company or anything like that. Its creator is <a href=\"peter\">Peter Bengtsson</a> who works for <a href=\"http://www.fry-it.com\">Fry-IT</a> in London who also host the site and the database."
+msgstr ""
+
+#: /zpt/index_html.zpt:112
+msgid "Sign up now"
+msgstr ""
+
+#: /zpt/index_html.zpt:121
+# Default: ""
+# "<strong>Spam guarantee:</strong>\n"
+# "Your email (or your friends email) will <strong>never</strong> \n"
+# "be sold or used for spamming.\n"
+# "Read more <a href=\"i-hate-spam\">about the spam guarantee</a> or\n"
+# "<a href=\"peter\">about the creator RememberYourFriends.com</a>."
+msgid "spam_guarantee"
+msgstr ""
+
+#: /zpt/index_html.zpt:14
+msgid "What RememberYourFriends.com is all about"
+msgstr ""
+
+#: /zpt/index_html.zpt:16
+msgid "<strong>Do you have many friends that you want to email every now and then but have difficulties remembering to do that?</strong>"
+msgstr ""
+
+#: /zpt/index_html.zpt:20
+msgid "Perhaps you have a good friend who has moved to a different city or country but you want to maintain the contact and your only hope for now is to email this friend every now and then to show your commitment. Or you're a business and you want to remind your key customers of new products or stuff every 6 months."
+msgstr ""
+
+#: /zpt/index_html.zpt:25
+msgid "This site helps you maintaining these friendships by sending a periodic reminder to you via email based on how often you want to be reminded about certain friends.<br /> Once you have signed up you will only use this site to add or remove reminders. All communication is done via email."
+msgstr ""
+
+#: /zpt/index_html.zpt:31
+msgid "Read more &raquo;"
+msgstr ""
+
+#: /zpt/index_html.zpt:40
+#: /zpt/index_html.zpt:43
+msgid "Received reminder for 'Mamma'"
+msgstr ""
+
+#: /zpt/index_html.zpt:54
+#: /zpt/index_html.zpt:57
+msgid "Change your settings (start)"
+msgstr ""
+
+#: /zpt/index_html.zpt:65
+msgid "Your email address:"
+msgstr ""
+
+#: /zpt/index_html.zpt:70
+msgid "Add some friends right now..."
+msgstr ""
+
+#: /zpt/index_html.zpt:75
+#: /zpt/sent-invites.zpt:28
+msgid "Friend"
+msgstr ""
+
+#: /zpt/index_html.zpt:76
+msgid "How often"
+msgstr ""
+
+#: /zpt/log-in.zpt:34
+#: /zpt/log-in.zpt:51
+msgid "Log in"
+msgstr ""
+
+#: /zpt/log-in.zpt:36
+msgid "If you can't remember your passkey, all you have to do is to dig out one of your <strong>previously sent reminders from this site</strong> which will contain a link to allow you to log in."
+msgstr ""
+
+#: /zpt/log-in.zpt:44
+msgid "Passkey:"
+msgstr ""
+
+#: /zpt/log-in.zpt:61
+msgid "Passkey reminder"
+msgstr ""
+
+#: /zpt/log-in.zpt:66
+msgid "Your email:"
+msgstr ""
+
+#: /zpt/log-in.zpt:73
+msgid "Send reminder"
+msgstr ""
+
+#: /zpt/logged-out.zpt:10
+msgid "If you want to log in again, you can on <a href=\"log-in\">the log in page</a>. If you can't remember your passkey, you can wait till you get the next reminder which will contain a link that logs you in."
+msgstr ""
+
+#: /zpt/logged-out.zpt:8
+msgid "Logged out"
+msgstr ""
+
+#: /zpt/peter.zpt:13
+msgid "My name is Peter Bengtsson and I created RememberYourFriends.com because I needed something like this for myself. Currently I live in London, UK and have been doing so for about 6 years now. When I moved here from Sweden I decided to try my best to maintain the friendship I had with as many people as possible from back home. The best way to do that is probably to call each other and talk on the phone. Often. The second best way is most definitely to send each other emails every now and then to tell them what's happening in your life and asking them what happens in theirs. It doesn't have to be long emails but it's important to show to your distant friends that you're still thinking about them and by maintaining a connection there's a much greater chance of not loosing the friendship."
+msgstr ""
+
+#: /zpt/peter.zpt:25
+msgid "My profession is web development. It's something I've been doing now for the past seven years and I enjoy what I do. I've developed several web applications of sorts and some of them are free and/or Open Source like <a href=\"http://smurl.name\">Smurl</a> and <a href=\"http://www.issuetrackerproduct.com\">the IssueTrackerProduct</a>. By spending my time on projects like this I can improve my skillset and try new concepts and solutions that I later apply under work conditions. The reason I ended up making a whole web application about keeping track of friends is because I wanted to test some new user experience features such as the password less security accounts and the email alerts in simple HTML."
+msgstr ""
+
+#: /zpt/peter.zpt:35
+msgid "If you want to read more about me and or what I do, visit <a href=\"http://www.peterbe.com\">my website</a> where you'll also find a <a href=\"http://www.peterbe.com/contact\">contact-me form</a> if you want to email me."
+msgstr ""
+
+#: /zpt/peter.zpt:8
+msgid "Peter, creator of RememberYourFriends.com"
+msgstr ""
+
+#: /zpt/send-invite.zpt:106
+msgid "Email address:"
+msgstr ""
+
+#: /zpt/send-invite.zpt:121
+msgid "How often should reminders about you be sent?"
+msgstr ""
+
+#: /zpt/send-invite.zpt:131
+msgid "Send as <input type=\"radio\" name=\"htmlformatted:boolean\" value=\"1\" checked=\"checked\" /> HTML email? No, send it as <input type=\"radio\" name=\"htmlformatted:boolean\" value=\"0\" /> plain text."
+msgstr ""
+
+#: /zpt/send-invite.zpt:145
+msgid "You've sent <strong>one</strong> invitation previously"
+msgstr ""
+
+#: /zpt/send-invite.zpt:148
+msgid "You've sent <strong></strong> invitations previously"
+msgstr ""
+
+#: /zpt/send-invite.zpt:94
+#: /zpt/send-invite.zpt:137
+#: /zpt/show_logged_in.zpt:25
+msgid "Send invite"
+msgstr ""
+
+#: /zpt/sent-invites.zpt:14
+msgid "Sent invites"
+msgstr ""
+
+#: /zpt/sent-invites.zpt:24
+msgid "You have sent invites to the following people:"
+msgstr ""
+
+#: /zpt/sent-invites.zpt:29
+msgid "Date"
+msgstr ""
+
+#: /zpt/sent-invites.zpt:30
+msgid "Clicked?"
+msgstr ""
+
+#: /zpt/sent-invites.zpt:31
+msgid "Signed up?"
+msgstr ""
+
+#: /zpt/sent-invites.zpt:41
+#: /zpt/sent-invites.zpt:43
+msgid "yes"
+msgstr ""
+
+#: /zpt/sent-invites.zpt:42
+msgid "no"
+msgstr ""
+
+#: /zpt/sent-invites.zpt:45
+msgid "send another invite"
+msgstr ""
+
+#: /zpt/sent-invites.zpt:45
+msgid "no <a style=\"font-size:80%\" href=\"\">x</a>"
+msgstr ""
+
+#: /zpt/sent-invites.zpt:56
+msgid "Send another invitation"
+msgstr ""
+
+#: /zpt/sent-invites.zpt:59
+msgid "No invites sent yet"
+msgstr ""
+
+#: /zpt/settings.zpt:10
+msgid "Settings"
+msgstr ""
+
+#: /zpt/settings.zpt:21
+msgid "Type of emails to send to you"
+msgstr ""
+
+#: /zpt/settings.zpt:25
+msgid "HTML emails look better than"
+msgstr ""
+
+#: /zpt/settings.zpt:28
+msgid "plain text emails do but the advantage with plain text is that they are simple."
+msgstr ""
+
+#: /zpt/settings.zpt:32
+msgid "Who are you anyway?"
+msgstr ""
+
+#: /zpt/settings.zpt:34
+msgid "Well, my first name is"
+msgstr ""
+
+#: /zpt/settings.zpt:36
+msgid "and my last name is"
+msgstr ""
+
+#: /zpt/settings.zpt:38
+msgid "I am a"
+msgstr ""
+
+#: /zpt/settings.zpt:41
+msgid "man"
+msgstr ""
+
+#: /zpt/settings.zpt:42
+msgid "woman"
+msgstr ""
+
+#: /zpt/settings.zpt:44
+msgid "and you'll find my own website on"
+msgstr ""
+
+#: /zpt/settings.zpt:51
+msgid "Currently I live in"
+msgstr ""
+
+#: /zpt/settings.zpt:62
+msgid "and I was born on the"
+msgstr ""
+
+#: /zpt/settings.zpt:69
+msgid "of"
+msgstr ""
+
+#: /zpt/settings.zpt:90
+msgid "Save all of the above stuff"
+msgstr ""
+
+#: /zpt/show-general-error.zpt:20
+msgid "Go back"
+msgstr ""
+
+#: /zpt/show_logged_in.zpt:11
+msgid "no reminders"
+msgstr ""
+
+#: /zpt/show_logged_in.zpt:14
+msgid "one reminder"
+msgstr ""
+
+#: /zpt/show_logged_in.zpt:23
+msgid "Add or remove reminders"
+msgstr ""
+
+#: /zpt/show_logged_in.zpt:6
+msgid "Logged in:"
+msgstr ""
+
+#: /zpt/show_not_logged_in.zpt:2
+msgid "Been here before?"
+msgstr ""
+
+#: /zpt/show_not_logged_in.zpt:3
+msgid "Signed up before and want to <a href=\"log-in\">log in again</a>?"
+msgstr ""
+
+#: /zpt/show_passkey_sent.zpt:12
+msgid "If you can't wait to open that email, here's a little teaser..."
+msgstr ""
+
+#: /zpt/show_passkey_sent.zpt:15
+msgid "Your current reminder starts with <code></code>."
+msgstr ""
+
+#: /zpt/show_passkey_sent.zpt:9
+msgid "Passkey sent to"
+msgstr ""
+
+#: /zpt/show_sent_reminders.zpt:17
+msgid "See your whole reminders log here"
+msgstr ""
+
+#: /zpt/show_sent_reminders.zpt:3
+#: /zpt/sent-reminders.zpt:12
+msgid "Sent reminders log"
+msgstr ""
+
+#: /zpt/snoozed.zpt:31
+msgid "The reminder to <strong></strong> <strong></strong> has been snoozed. Note taken <img src=\"/misc_/RememberYourFriends/smile.gif\" alt=\":-)\" /> <br /> The next reminder to <strong></strong> <strong></strong> will be sent <strong> <span style=\"display:none\"></span> <span>(tomorrow)</span> </strong> <strong></strong>"
+msgstr ""
+
+#: /zpt/snoozed.zpt:8
+msgid "Snoozed"
+msgstr ""
+
+#: /zpt/stats.zpt:39
+msgid "Stats"
+msgstr ""
+
+#: /zpt/stats.zpt:68
+msgid "Number of reminders sent"
+msgstr ""
+
+#: /zpt/stats.zpt:70
+msgid "Cumulative number of reminders sent"
+msgstr ""
+
+#: /zpt/stats.zpt:79
+msgid "show cumulative stats"
+msgstr ""
+
+#: /zpt/stats.zpt:85
+msgid "show each week stats"
+msgstr ""
+
+#: /zpt/unsubscribe.zpt:12
+msgid "Unsubscribe"
+msgstr ""
+
+#: /zpt/unsubscribe.zpt:15
+msgid "Had it?"
+msgstr ""
+
+#: /zpt/unsubscribe.zpt:17
+msgid "If you're unhappy with the reminders that are sent to you, perhaps the first thing you should do is to <strong><a href=\"change-reminders\">change the current reminders</a></strong> that you have."
+msgstr ""
+
+#: /zpt/unsubscribe.zpt:23
+msgid "To verify your unsubscription, we need to send a link to your email address (<span></span>) to be certain that it's you unsubscribing."
+msgstr ""
+
+#: /zpt/unsubscribe.zpt:28
+msgid "Send unsubscribe link"
+msgstr ""
+
+#: /zpt/unsubscribe.zpt:33
+msgid "You must be logged in to be able to unsubscribe. To log in, either follow the \"unsubscribe\" link in the latest email sent out to you from RememberYourFriends.com or go to the <a href=\"log-in\">log in page</a>."
+msgstr ""
+
+#: /zpt/unsubscribe.zpt:43
+msgid "A verification link has been emailed to you."
+msgstr ""
+
+#: /zpt/unsubscribed.zpt:11
+msgid "Sad but true. You have been unsubscribed."
+msgstr ""
+
+#: /zpt/unsubscribed.zpt:13
+msgid "If you change your mind, return to <a href=\"/\">the home page</a> and start again."
+msgstr ""
+
+#: /zpt/unsubscribed.zpt:9
+msgid "Unsubscribed"
+msgstr ""
+

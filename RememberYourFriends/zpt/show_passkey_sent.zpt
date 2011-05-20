@@ -1,0 +1,24 @@
+<html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf">
+<div metal:fill-slot="body">
+
+<h3>
+<i18n:block translate="">Passkey sent to</i18n:block>
+<em tal:content="options/email"></em></h3>
+
+<p i18n:translate="">If you can't wait to open that email, here's a little teaser...</p>
+<p tal:define="passkey options/passkey"
+   i18n:translate="">Your current reminder starts with 
+<code tal:content="python:passkey[:2]"></code>.</p>
+
+
+<div class="advert"></div>
+
+
+
+
+</div>
+</html>

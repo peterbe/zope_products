@@ -1,0 +1,22 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body">
+<h2>Skapa byst mapp</h2>
+<form action="manage_addBustFolder">
+
+
+<dl>
+
+  <dt><label for="id">Id:</label></dt>
+  <dd><input name="id" size="30" value="bilder" /></dd>
+
+  <dt><label for="title">Namn:</label></dt>
+  <dd><input name="title" size="30" value="Bilder" /></dd>
+
+</dl>
+<br />
+<input type="submit" value=" L&auml;gg till! " />
+</form> 
+
+</div>
+</html> 
+

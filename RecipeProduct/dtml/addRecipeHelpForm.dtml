@@ -1,0 +1,63 @@
+<dtml-var standard_html_header>
+<H2>Lägg till recept</H2> 
+<form action="manage_addRecipe">
+<dtml-if GoToURL>
+ <input type="hidden" name="GoToURL" value="<dtml-var GoToURL>">
+</dtml-if>
+<input type="hidden" name="id" value="">
+<table border=0> 
+<tr><th>Författare:</th>
+    <td><dtml-var getTitle></td> 
+</tr>
+
+<tr><th>Titel/Namn (på receptet):</th>
+    <td><input type="text" name="title" size="50" maxlength="50" value=""></td> 
+</tr>
+</table>
+<br><br>
+<table border=0>
+<tr>
+    <td valign="top">
+    <p><strong>Ingredienser</strong></p></td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
+    <td><textarea cols=60 rows=12 name="ingredients"></textarea></td>
+    <td valign="top">
+    	<p class="smalltext">Beskriv här ungefär vad man behöver denna rätt.<br>
+        Det måste inte vara saker som går att köpa i alla affärer,
+        men för den som bor i säg Ryssland kan det nog hjälpa att
+        förklara alternativ och sånt.<br>
+        Bryt varje del av ingredienserna med ett returslag.</p>
+    </td>
+</tr> 
+<tr>
+    <td valign="top"><br>
+    <p><strong>Hur man gör</strong></p></td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
+    <td><textarea cols=60 rows=12 name="instructions"></textarea></td>
+    <td valign="top">
+    	<p class="smalltext">Nu, men enkla ord och i passande ordning, 
+        förklara hur man ska göra för att laga till denna rätt.<br>
+        Här kan man skriva lite hur man vill. Lägg gärna till lite
+        tips där det behövs, som t.ex. iställt för att skriva "koka potatisen"
+        kan man skriva "för att koka potatisen lägg i dom i kallt vatten,
+        sätt sen plattan på max tills det börjat koka, sen...".</p>
+    </td>
+</tr> 
+</table>
+
+
+<input type="hidden" name="GoToPhotos" value="1">
+
+<br>
+<div align="center">
+<input type="submit" value="Gå vidare till uppladdning av bilder">
+Det du skrivit går att ändra efteråt
+</div>
+</form> 
+
+
+<dtml-var standard_html_footer>

@@ -1,0 +1,16 @@
+<br tal:replace="here/stopCache" /><html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf">
+<div metal:fill-slot="body">
+
+<tal:block condition="not:here/isLoggedIn">
+  <br tal:replace="python:here.http_redirect(here.getRootURL())" />
+</tal:block>
+
+<h2 i18n:translate="">Sent reminders log</h2>
+<br tal:replace="structure python:here.show_sent_reminders(request, notitle=1)" />
+
+</div>
+</html>

@@ -1,0 +1,16 @@
+<html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf">
+<div metal:fill-slot="body">
+
+
+<h2 i18n:translate="">Unsubscribed</h2>
+
+<p i18n:translate="">Sad but true. You have been unsubscribed.</p>
+
+<p i18n:translate="">If you change your mind, return to <a href="/">the home page</a> and start again.</p>
+
+</div>
+</html>

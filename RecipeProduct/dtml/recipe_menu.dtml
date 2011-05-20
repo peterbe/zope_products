@@ -1,0 +1,44 @@
+
+<dtml-if filtercategory>
+<dtml-call "REQUEST.set('call_filtercategory', filtercategory)">
+<dtml-else>
+<dtml-call "REQUEST.set('call_filtercategory', _.None)">
+</dtml-if>
+
+<dtml-if firstonly>
+<dtml-call "REQUEST.set('call_firstonly', _.int(firstonly))">
+<dtml-else>
+<dtml-call "REQUEST.set('call_firstonly', _.None)">
+</dtml-if>
+
+
+<dtml-in "getRecipes(authorids=REQUEST.get('authorids',_.None), filtercategory=REQUEST.get('call_filtercategory'),
+firstonly=REQUEST.get('call_firstonly'))">
+  <table>
+  <tr><td width="300" valign="top">
+  <ul>
+  <li><a href="<dtml-var absolute_url>"><dtml-var title_or_id></a>
+  <div class="smalltext"><dtml-var "getIngredients()[:85]">...<br>
+  <span style="color:black">
+  Av <a href="<dtml-var "getAuthor(only='object').absolute_url()">"><dtml-var "getAuthor(only='firstname')"></a>
+  <dtml-var showDate>
+  <dtml-if "_.len(objectIds('Recipe Comment'))>0">
+  &nbsp;<dtml-var "_.len(objectIds('Recipe Comment'))"> kommentarer
+  </dtml-if></span></div>
+
+  </li>
+  </ul>
+  </td>
+  <td valign="top">
+      <a href="<dtml-var absolute_url>"><dtml-var "getThumbnail()"></a>
+  </td>
+  </tr>
+  </table>
+<dtml-else>
+
+<dtml-if "meta_type == 'Recipe Author'">
+<em class="smalltext"><dtml-var getFirstname> har inte lagt in några recept ännu.</em>
+<dtml-elif filtercategory>
+<em class="smalltext">Tyvärr inga recept i denna kategorin</em>
+</dtml-if>
+</dtml-in>

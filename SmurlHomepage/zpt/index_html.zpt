@@ -1,0 +1,85 @@
+<br tal:replace="python:here.doCache(12)" /><html metal:use-macro="here/standard_header/macros/standard">
+<metal:script fill-slot="extrajs">
+<script type="text/javascript" tal:attributes="src python:here.getMiscAlias('/misc_/SmurlHomepage/jquery-1.3.2.min.js')"></script>
+<script type="text/javascript">
+$(function() {
+  $(document.body).bind('mouseover', function() {
+    $('input[name="today"]', 'form').val(new Date().getFullYear());
+    $(document.body).unbind('mouseover');
+    
+    $('#today').hide();
+    $('#yoursmurls').load("your_smurls");
+  });
+  $('form#makesmurl').bind('submit', function() {
+    if (!$('input[name="today"]', 'form').val()) {
+      alert("Fill in the anti-spambot quiz");
+      $('#today').show();
+      return false;
+    }
+    return true;
+  });
+});
+</script>
+</metal:script>
+<div class="storycontent" metal:fill-slot="content">
+	
+<tal:block tal:condition="options/small_url|request/small_url|nothing">
+	<dl tal:define="small_url options/small_url|request/small_url; url options/url|request/url">
+		<dt><p>The following URL:</dt>
+		<dd tal:content="structure python:here.showLongURL(url, maxlength=70)"></dd>
+		
+		<dt><p>became <b tal:content="python:len(url)-len(small_url)"></b> characters shorter as:</dt>
+		<dd><b><a href="" tal:attributes="href small_url" tal:content="small_url"></a></b></dd>
+	</dl>
+
+	<p><a href="/">Create another</a></p>
+</tal:block>
+
+
+<tal:block tal:condition="options/self_recursive_url|request/self_recursive_url|nothing">
+<p><b>He he!</b><br />
+Isn't <a tal:attributes="href here/absolute_url" tal:content="here/absolute_url"></a> already a short URL?
+<p>
+</tal:block>
+
+
+
+<tal:block tal:condition="not:options/small_url|request/small_url|nothing">
+
+	<form action="makeSmurl" method="get" id="makesmurl">
+        <p style="color:red" 
+            tal:condition="options/submiterror|request/submiterror|nothing"
+           tal:content="options/submiterror|request/submiterror">
+        </p>
+        <div class="aligncenter">
+	  <p><b>Enter a looong URL:</b><br />
+	  <input name="url" size="45" tal:attributes="value request/url|nothing"/>
+	  <input type="submit" value="Make it Smurl!" />
+          
+          <div id="today" align="left" 
+               tal:attributes="style python:test(here.get_cookie('notsmurlsb'), 'display:none')">
+          To prove that you're not a spambot type in today's year:
+          <input name="today" value=""/>
+          <small>(e.g. <br tal:replace="python:here.ZopeTime().strftime('%Y')"/>)</small>
+          </div>
+          
+        </div>	  
+        
+	</form>
+	
+	<p>&nbsp;</p>
+        <div id="yoursmurls">
+        </div>
+	
+	
+	
+</tal:block>
+
+	 	
+	
+<br />&nbsp;
+<br />&nbsp;
+	
+</div>
+
+</html>

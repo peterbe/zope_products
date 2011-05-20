@@ -1,0 +1,26 @@
+
+<form tal:attributes="action string:${here/absolute_url}/saveBirthday"
+ style="border:2px solid rgb(60,60,60);padding:4px;width:218px;font-size:12px;">
+<input type="hidden" name="id" tal:attributes="value options/id" />
+<strong style="color:white;background-color:#6a86ba;padding:3px;margin-bottom:0;display:block;">Tell me your birthday</strong>
+<select name="dd">
+<option value="">day</option>
+<option tal:repeat="d python:range(1,32)"
+        tal:attributes="value d"
+        tal:content="d"></option>
+</select>
+<select name="mm">
+<option value="">month</option>
+<option tal:repeat="m python:range(1,13)"
+        tal:attributes="value m"
+        tal:content="python:here.showMonthName(m)"></option>
+</select>
+<select name="yy">
+<option value="">year</option>
+<option tal:repeat="y python:range(2008, 1900, -1)"
+        tal:attributes="value y"
+        tal:content="y"></option>
+</select><br />
+<input tal:replace="structure here/getYourNameInput" />
+<input type="submit" value="Send" />
+</form>

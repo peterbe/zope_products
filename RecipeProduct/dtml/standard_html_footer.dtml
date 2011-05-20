@@ -1,0 +1,13 @@
+</td></tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<dtml-var chefpoint>
+
+<hr>
+<div align="center" class="copyright">&copy; <dtml-var "encodeEmailString('mail@peterbe.com','Peter Bengtsson')"> 
+(<a href="http://www.peterbe.com">www</a>) 2003-2004 
+<a href="<dtml-var About url>"><dtml-var "About.title_or_id()"></a>
+<a href="<dtml-var "getRoot().absolute_url()">/rss.xml">RSS</a></div>
+</body></html>

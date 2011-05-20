@@ -1,0 +1,7 @@
+- 0.2
+
+  Added getPageTitle() and setPageTitle() on the Smurl class
+
+- 0.1
+
+  Started

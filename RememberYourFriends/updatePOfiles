@@ -1,0 +1,5 @@
+#!/bin/bash
+pushd ~/RememberYourFriends
+i18nextract -d ryf -p ~/RememberYourFriends -o ~/RememberYourFriends/i18n
+i18ndude sync --pot ~/RememberYourFriends/i18n/ryf.pot ~/RememberYourFriends/i18n/ryf-sv.po
+popd

@@ -1,0 +1,22 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body">
+<h2>Skapa G&auml;stbok</h2>
+<form action="manage_addGuestbook">
+
+
+<dl>
+
+  <dt><label for="id">Id:</label></dt>
+  <dd><input name="id" size="30" value="gastbok" /></dd>
+
+  <dt><label for="title">Namn:</label></dt>
+  <dd><input name="title:ustring" size="30" value="G&auml;stbok" /></dd>
+
+</dl>
+<br />
+<input type="submit" value=" L&auml;gg till! " />
+</form> 
+
+</div>
+</html> 
+

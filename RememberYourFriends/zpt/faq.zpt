@@ -1,0 +1,52 @@
+<br tal:replace="python:here.doCache(12)" /><html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf">
+<style type="text/css" metal:fill-slot="extracss">
+h4 {margin-top:13px;}
+div.highlight { background-color:rgb(230,230,230);}
+
+</style>
+<script type="text/javascript" metal:fill-slot="extrajs" tal:attributes="src python:here.getMiscAlias('/misc_/RememberYourFriends/faq.js')"></script>
+<div metal:fill-slot="body">
+
+<h2 i18n:translate="">Frequently Asked Questions</h2>
+
+<div id="faq01">
+<h4 i18n:translate="">What will I be sent?</h4>
+<p i18n:translate="">A short and simple email every now and then (depending on your setup) 
+reminding you to keep in touch with the people you've written down.
+It's only via email and apart from administrative stuff like password reminders
+there are no other emails sent to you.
+<a href="ryf-email.png">A reminder email can look like this.</a></p>
+</div>
+
+<div id="faq02">
+<h4 i18n:translate="">How much does it cost?</h4>
+<p i18n:translate="">Nothing. It's a free service.</p>
+</div>
+
+
+<div id="faq03">
+<h4 i18n:translate="">If I complete my friends name with her email address, will you spam her?</h4>
+<p i18n:translate="">Absolutely not. The email addresses you optionally write down will never be
+processed or emailed. <a href="i-hate-spam">Spamming will never happen</a>.
+</p>
+</div>
+
+<div id="faq04">
+<h4 i18n:translate="">Is there an opt-out?</h4>
+<p i18n:translate="">Yes. In the signature of every email you get there's a link that takes you to the 
+<a href="unsubscribe">unsubscribe page</a>.</p>
+</div>
+
+<div id="faq05">
+<h4 i18n:translate="">Who's behind this site?</h4>
+<p i18n:translate="">No company or anything like that. Its creator is <a href="peter">Peter Bengtsson</a>
+who works for <a href="http://www.fry-it.com">Fry-IT</a> in London who also 
+host the site and the database.</p>
+</div>
+
+</div>
+</html>

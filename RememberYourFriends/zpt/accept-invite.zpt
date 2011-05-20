@@ -1,0 +1,44 @@
+<html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf">
+<div metal:fill-slot="body">
+<h2 i18n:translate="">Accept invitation</h2>
+
+<tal:block tal:condition="request/siid|nothing">
+
+<div tal:define="invite python:here.getSentInvitation(request.get('siid'));
+                 user python:here.getUser(invite.uid)">
+                 
+
+<p>
+<strong tal:condition="user/name" tal:content="user/name"></strong>
+<strong tal:condition="not:user/name" tal:content="user/email"></strong>
+<i18n:block translate="">
+has sent an invitation to you to use RememberYourFriends.com to be reminded to
+keep in touch with your friends. This is a free service.
+</i18n:block>
+</p>
+
+<p>
+
+<a tal:condition="user/name"
+tal:attributes="href string:${here/getRootURL}?email=${invite/email}&amp;friendname0=${user/name},+${user/email}&amp;friendperiodicity0=${invite/periodicity}"
+i18n:translate="">
+To accept the invitation, complete the form on this page</a>
+
+<a tal:condition="not:user/name"
+tal:attributes="href string:${here/getRootURL}?email=${invite/email}&amp;friendname0=${user/email}&amp;friendperiodicity0=${invite/periodicity}"
+i18n:translate="">
+To accept the invitation, complete the form on this page</a>
+
+</p>
+
+</div>
+
+</tal:block>
+
+
+</div>
+</html>

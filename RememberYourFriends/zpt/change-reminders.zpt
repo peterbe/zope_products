@@ -1,0 +1,336 @@
+<br tal:replace="here/stopCache" /><html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf"
+>
+<script type="text/javascript" tal:attributes="src python:here.getMiscAlias('/misc_/RememberYourFriends/change-reminders.js')"
+ metal:fill-slot="extrajs"></script>
+
+<metal:style metal:fill-slot="extracss">
+<style type="text/css" tal:condition="request/showbirthdayform|nothing">@import url(calendar.css);</style>
+<style type="text/css">
+table.reminders { border-collapse: collapse; }
+table.reminders td { padding-left:5px; }
+td.outside { background-color:white; }
+table.reminders td.delete { width:20px; }
+table.reminders td.name { width:200px; }
+table.reminders tr.over { background-color:rgb(200,200,200); cursor:pointer; }
+input.cancel { font-size:80%; }
+a.nospam { font-size:80%; }
+p.addbirthdaynotice { padding:15px; background-color:#ccffcc; border:2px solid #9c9;
+  
+}
+p.addbirthdaynotice a.no { float:right; }
+p.addbirthdaynotice a { padding-left:15px; }
+ 
+</style>
+</metal:style>
+<div metal:fill-slot="body">
+
+<tal:block condition="not:here/isLoggedIn">
+  <br tal:replace="python:here.http_redirect(here.getRootURL())" />
+</tal:block>
+
+
+<tal:block tal:condition="python:not request.get('rid') and request.get('addedrid')">
+<p tal:define="reminder python:here.getReminder(request.get('addedrid'))"
+   class="addbirthdaynotice">
+    <a href="./change-reminders" class="no" i18n:translate="">no I don't</a>
+  <img style="float:left" tal:attributes="src here/getRandomBdayImage" alt="Birthday?"
+   i18n:attributes="alt" />
+    <a tal:condition="reminder/name"
+       tal:attributes="href string:?rid=${request/addedrid}&amp;showbirthdayform=yes"
+       tal:content="string:Do you know ${reminder/name}'s birthday?"
+       i18n:translate=""></a>
+    <a tal:condition="not:reminder/name"
+       tal:attributes="href string:?rid=${request/addedrid}&amp;showbirthdayform=yes"
+       i18n:translate="">Do you know this friends birthday?"></a>  
+</p>
+</tal:block>
+
+
+
+<form id="addform" action="addReminder" tal:condition="not:request/rid|nothing"
+ onsubmit="return checkAddReminder(this)">
+<h2 i18n:translate="">Add a new reminder</h2>
+
+<div class="error" tal:condition="request/submiterrors|nothing">
+  <p i18n:translate="">A submission error occured. Please try to amend the indicated problems.</p>
+</div>
+
+<table tal:define="errors python:request.get('submiterrors', {})">
+  <tr>
+    <td><strong i18n:translate="">Name:</strong></td>
+    <td><input name="name" size="30" tal:attributes="value python:request.get('name','')" 
+         onblur="if(this.value){$('savebutton').className=''}"
+         />
+        <span class="error" tal:condition="errors/name|nothing" tal:content="errors/name"></span>
+    </td>
+  </tr>
+  <tr>
+    <td><strong  i18n:translate="">Email:</strong></td>
+    <td><input name="email" size="30" tal:attributes="value python:request.get('email','')" 
+         onblur="if(this.value){$('savebutton').className=''}"/>
+        <span class="error" tal:condition="errors/name|nothing" tal:content="errors/name"></span>
+        <a href="i-hate-spam" class="nospam"
+	   tal:condition="python:not errors.get('name') and request.get('email')"
+           i18n:translate=""
+	   >worried about spam?</a>
+    </td>
+  </tr>
+  <tr>
+    <td><strong i18n:translate="">How often:</strong></td>
+    <td><select name="periodicity" 
+         tal:define="preval request/periodicity|here/DEFAULT_PERIODICITY">
+        <option tal:repeat="option here/getPeriodicityOptions"
+                tal:attributes="value option/value;
+                                selected python:test(option['value']==preval)"
+                tal:content="option/label"
+	         i18n:translate="periodicity"></option>
+      </select>
+        <span class="error" tal:condition="errors/periodicity|nothing" tal:content="errors/periodicity"></span>
+    </td>
+  </tr>  
+</table>
+<input type="submit" value="Save" id="savebutton"
+ i18n:attributes="value"
+ tal:attributes="class python:test(not request.get('name', request.get('email','')),'h')" />
+
+</form>
+
+<form action="editReminder" tal:condition="request/rid|nothing" 
+ onsubmit="return checkEditReminder(this)">
+<h2 i18n:translate="">Change a reminder</h2>
+<input type="hidden" name="rid" tal:attributes="value request/rid" />
+
+
+<tal:block condition="not:python:here.isYourReminder(request.get('rid'))">
+  <br tal:replace="python:here.http_redirect(here.getRootURL(), failure='Bad reminder id')" />
+</tal:block>
+
+<div class="error" tal:condition="request/submiterrors|nothing">
+  <p i18n:translate="">A submission error occured. Please try to amend the indicated problems.</p>
+</div>
+
+<tal:form tal:define="errors python:request.get('submiterrors', {});
+                      reminder python:here.getReminder(request.get('rid'))">
+
+<tal:block condition="python:not request.get('showbirthdayform') and reminder.birthday and reminder.birthmonth">
+  <br tal:replace="python:here.http_redirect(request.URL, rid=request.get('rid'), showbirthdayform='yes')" />
+</tal:block>
+
+<br tal:condition="reminder/birthday" tal:replace="python:request.set('showbirthdayform',1)" />
+
+<p align="right"
+ tal:define="name python:request.get('name', reminder.name)"    
+ tal:condition="python:not request.get('showbirthdayform')">
+    <img tal:attributes="src here/getRandomBdayImage" alt="Birtday?" />
+    <a 
+       tal:condition="name"
+       tal:attributes="href string:?rid=${request/rid}&amp;showbirthdayform=yes"
+       tal:content="string:Do you know ${name}'s birthday?" ></a>
+    <a tal:condition="not:name"
+       tal:attributes="href string:?rid=${request/rid}&amp;showbirthdayform=yes"
+       tal:content="string:Do you know this friends birthday?" ></a>
+</p>
+
+
+<table border="0">
+  <tr>
+    <td><strong i18n:translate="">Name:</strong></td>
+    <td><input name="name" size="30" tal:attributes="value python:request.get('name', reminder.name)" />
+        <span class="error" tal:condition="errors/name|nothing" tal:content="errors/name"></span>
+    </td>
+  </tr>
+  <tr>
+    <td><strong i18n:translate="">Email:</strong></td>
+    <td><input name="email" size="30" tal:attributes="value python:request.get('email', reminder.email)" />
+        <span class="error" tal:condition="errors/name|nothing" tal:content="errors/name"></span>
+        <a href="i-hate-spam" class="nospam"
+	   tal:condition="python:not errors.get('name') and not reminder.email"
+	   i18n:translate=""
+	   >worried about spam?</a>
+	
+    </td>
+  </tr>
+  <tr>
+    <td><strong i18n:translate="">How often:</strong></td>
+    <td><select name="periodicity" 
+         tal:define="preval request/periodicity|reminder/periodicity">
+        <option tal:repeat="option here/getPeriodicityOptions"
+                tal:attributes="value option/value;
+                                selected python:test(option['value']==preval)"
+                tal:content="option/label"
+		i18n:translate=""></option>
+      </select>
+        <span class="error" tal:condition="errors/periodicity|nothing" tal:content="errors/periodicity"></span>
+    </td>
+  </tr>
+  <tr tal:condition="request/showbirthdayform|nothing">
+    <td><strong i18n:translate="">Birthday:</strong></td>
+    <td>
+<script type="text/javascript" tal:attributes="src python:here.getMiscAlias('/misc_/RememberYourFriends/calendar_stripped.js')"></script>
+<script type="text/javascript" tal:attributes="src python:here.getMiscAlias('/misc_/RememberYourFriends/calendar-en.js')"></script>
+<script type="text/javascript" tal:attributes="src python:here.getMiscAlias('/misc_/RememberYourFriends/calendar-setup_stripped.js')"></script>    
+    
+      <input name="dob" id="dob" value="" tal:condition="reminder/birthday"
+       tal:attributes="value python:request.get('dob', here.showReminderBirthday(reminder.birthday, reminder.birthmonth, reminder.birthyear))" />
+      <input name="dob" id="dob" value="" tal:condition="not:reminder/birthday"
+       tal:attributes="value python:request.get('dob','')" />
+       
+      <img src="calendar.gif" alt="Calendar" id="dobcalendar" border="0"
+        i18n:attributes="alt"/>
+      
+<script type="text/javascript">
+Calendar.setup({
+   inputField     :    "dob",     // id of the input field
+   ifFormat       :    "%B %d, %Y",     // format of the input field (even if hidden, this format will be honored)
+   daFormat       :    "%A, %B %d, %Y",// format of the displayed date
+   button         :    "dobcalendar",  // trigger button (well, IMG in our case)
+   align          :    "Tl"           // alignment (defaults to "Bl")
+});
+</script>      
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">&nbsp;
+      <input type="submit" value="Save" class="save"  i18n:attributes="value" />
+      <input type="button" onclick="cancelexit()" value="Cancel" class="cancel"  i18n:attributes="value" />
+    </td>
+  </tr>
+</table>
+</tal:form>
+
+
+</form>
+
+<br />
+<tal:block condition="python:options.get('showcurrentreminders',True) and here.isLoggedIn()">
+
+<tal:bdays define="bdays python:here.getUpcomingBirthdays(sort=True)"
+           condition="bdays">
+<a name="upcomingbdays"></a>
+<h3 i18n:translate="">Upcoming birthdays</h3>
+
+<table style="width:99%">
+  <tr tal:repeat="bday bdays">
+    <td><a tal:attributes="href string:?rid=${bday/rid}&amp;showbirthdayform=y"
+         ><img src="bday-small.png" alt="Click to change reminders" border="0" /></a></td>
+    <td><strong tal:content="bday/name"></strong></td>
+    <td tal:define="birthmonth_fmt python:here.showMonthNumber(bday.birthmonth)">
+      <span tal:condition="not:bday/birthday_today"
+            tal:replace="string:${bday/birthday} ${birthmonth_fmt}"></span>
+      <strong tal:condition="bday/birthday_today">today!!</strong>
+    </td>
+    <td tal:condition="bday/birthyear">
+      <span tal:define="thisyear python:int(here.ZopeTime().strftime('%Y'));
+                      age python:thisyear - bday.birthyear" 
+          tal:content="string:$age years old!"
+	  i18n:translate="" ></span>
+    </td>
+    <td tal:condition="not:bday/birthyear">&nbsp;</td>
+  </tr>
+</table>
+
+</tal:bdays>
+
+
+<a name="currentreminders"></a>
+<h3 i18n:translate="">Current reminders you have</h3>
+
+<form action="#" tal:define="reminders python:here.getReminders(order='next_date', include_invite_option=True)">
+
+<table tal:condition="reminders" class="reminders"
+       tal:define="uqp nocall:here/url_quote_plus">
+  <thead>
+    <tr>
+      <td>&nbsp;</td>
+      <td style="width:70px" i18n:translate="">every</td>
+      <td i18n:translate="">next in</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+  </thead>
+  <tbody tal:repeat="reminder reminders" 
+         tal:attributes="class python:test(path('repeat/reminder/odd'), 'odd','even')">
+    <tr onmouseover="this.className='over'" onmouseout="this.className=''">
+      <td class="name" tal:attributes="onclick string:editthis(${reminder/rid})">
+        <a tal:condition="reminder/is_invitable"
+           tal:define="e python:uqp(reminder.email);n python:uqp(reminder.name)"
+           tal:attributes="href string:send-invite?email=${e}&amp;name=${n}"
+           style="float:right"
+	    i18n:translate="">send invite</a>
+        <br tal:replace="structure python:here.showReminderName(reminder.name, reminder.email)" />
+        <img src="bday-small.png"
+         tal:condition="python:reminder.birthday and reminder.birthmonth and reminder.birthyear"
+         tal:attributes="alt python:'Birthday: ' + here.showReminderBirthdayRecord(reminder)"
+	 i18n:attributes="alt" />
+        <img src="bday-small-half.png"
+         tal:condition="python:reminder.birthday and reminder.birthmonth and not reminder.birthyear"
+         tal:attributes="alt python:'Birthday: ' + here.showReminderBirthdayRecord(reminder)" 
+	 i18n:attributes="alt"/>
+      </td>
+      <td tal:attributes="onclick string:editthis(${reminder/rid})">
+        <code tal:content="reminder/periodicity"></code>
+      </td>
+      <td tal:attributes="onclick string:editthis(${reminder/rid})">
+        <code tal:condition="not:reminder/paused"
+              tal:content="python:here.showCountdown(reminder.age_days)"></code>
+        <code tal:condition="reminder/paused"
+         title="Reminder paused"
+	 i18n:attributes="title">n/a</code>
+      </td>
+      <td class="outside">
+        <a tal:attributes="href string:pauseReminder?rid=${reminder/rid}" 
+	   tal:condition="not:reminder/paused"
+           title="Pause reminders from being sent"
+	   i18n:attributes="title">
+	<img tal:attributes="src python:here.getMiscAlias('/misc_/RememberYourFriends/pause.gif')" alt="Pause reminders from being sent" border="0"
+	  i18n:attributes="alt" />
+	</a>       
+        <a tal:attributes="href string:resumeReminder?rid=${reminder/rid}"
+	   tal:condition="reminder/paused"
+           title="Resume reminders being sent"
+	   i18n:attributes="title">
+	<img tal:attributes="src python:here.getMiscAlias('/misc_/RememberYourFriends/resume.gif')" alt="Resume reminders being sent" border="0"
+         i18n:attributes="alt" />
+	</a>       	
+      </td>
+      <td class="outside"
+         tal:define="showbirthdayform python:reminder.birthday and reminder.birthmonth">
+        <a tal:attributes="href string:?rid=${reminder/rid}&amp;showbirthdayform=yes"
+           tal:condition="showbirthdayform"
+           ><img src="pencil.gif" alt="Edit reminder" border="0" /></a>
+        <a tal:attributes="href string:?rid=${reminder/rid}"
+           tal:condition="not:showbirthdayform"
+           ><img src="pencil.gif" alt="Edit reminder" border="0" /></a>           
+      </td>
+      <td class="outside delete" valign="bottom"
+        ><a href="#" tal:attributes="href string:deleteReminder?rid=${reminder/rid};
+                                     onclick string:return confirmDelete('${reminder/name}', '${reminder/email}')"
+        ><img tal:attributes="src python:here.getMiscAlias('/misc_/RememberYourFriends/trash.gif')" border="0"
+                        alt="Delete reminder"
+                        onmouseover="colourTrash(this)"
+                        onmouseout="uncolourTrash(this)" /></a></td>      
+    </tr>
+  </tbody>
+</table>
+
+
+<p tal:condition="reminders">
+<a href="send-invite">Do you want <b>invite</b> someone to also use RememberYourFriends.com?</a>
+</p>
+
+<em tal:condition="not:reminders">You have no reminders set up. That's a shame. 
+Come on, set some up as soon as possible!</em>
+
+</form>
+</tal:block>
+
+
+
+
+</div>
+</html>

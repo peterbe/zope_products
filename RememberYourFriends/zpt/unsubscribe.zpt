@@ -1,0 +1,47 @@
+<html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf">
+<div metal:fill-slot="body">
+
+<tal:block tal:condition="request/login-by-url|nothing">
+  <br tal:replace="python:here.http_redirect(request.URL)" />
+</tal:block>
+
+<h2 i18n:translate="">Unsubscribe</h2>
+
+<div tal:condition="not:request/link_sent|nothing">
+<h3 i18n:translate="">Had it?</h3>
+
+<p i18n:translate="">If you're unhappy with the reminders that are sent to you, perhaps the first
+thing you should do is to <strong><a href="change-reminders">change the current reminders</a></strong>
+that you have.</p>
+
+<form action="sendUnsubscribeLink" tal:condition="here/isLoggedIn">
+<p i18n:translate="">To verify your unsubscription, we need to send a link to your email address 
+(<span tal:define="user here/getLoggedinUser"
+       tal:content="user/email"></span>) to be certain that it's you unsubscribing.
+</p>       
+
+<p align="center">
+<input type="submit" value="Send unsubscribe link" i18n:attributes="value" />
+</p>
+
+</form>
+
+<p style="color:red" tal:condition="not:here/isLoggedIn"
+ i18n:translate="">
+You must be logged in to be able to unsubscribe. To log in, either follow the 
+"unsubscribe" link in the latest email sent out to you from RememberYourFriends.com or
+go to the <a href="log-in">log in page</a>.
+</p>
+
+</div>
+
+<div tal:condition="request/link_sent|nothing">
+<p i18n:translate="">A verification link has been emailed to you. </p>
+</div>
+
+</div>
+</html>

@@ -1,0 +1,83 @@
+<dtml-var manage_page_header>
+
+<dtml-with "_(management_view='Find Smurl')">
+<dtml-var manage_tabs>
+</dtml-with>
+
+
+<dtml-var "manage_form_title(this(), _,
+           form_title='Find Smurl',
+           )">
+           
+<dtml-if "REQUEST.get('name')">
+<script type="text/javascript">
+function toggleAll(on) {
+  var elms= document.getElementsByTagName('input');
+  for (var i=0, len=elms.length; i<len; i++) {
+    if (elms[i].name=='ids:list')
+      elms[i].checked = on;
+  }
+}
+</script>
+<form action="deleteSmurls">
+<dtml-let smurls="findSmurls(REQUEST.get('name'))">
+<dtml-in smurls sort="create_date">
+
+  <dtml-if sequence-start>
+    <table>
+      <tr>
+        <td><input type="checkbox" onclick="toggleAll(this.checked)"/></td>
+	<td colspan="4"><small>&lt;-- toggle all</small></td>
+      </tr>
+  </dtml-if>
+  
+      <tr>
+        <td><input type="checkbox" name="ids:list" value="<dtml-var getId>" /></td>
+        <td><strong><dtml-var getId></strong></td>
+        <td><a href="<dtml-var getURL html_quote>" style="font-size:80%">
+	<dtml-if "_.len(getURL()) > 120">
+	  <dtml-var "getURL()[:120]" html_quote>...
+	<dtml-else>
+	  <dtml-var getURL html_quote>
+	</dtml-if>
+	</a>
+        <span style="font-size:80%">(<a href="http://www.google.com/safebrowsing/diagnostic?site=<dtml-var getURL url_quote>">Google safebrowsing</a>)</span>
+        </td>
+	<td><dtml-var create_date fmt="%Y-%m-%d %H:%M:%S"></td>
+	<td><dtml-var getIP></td>
+        <td><dtml-if "getPageTitle()">
+	  <dtml-if "_.len(getPageTitle()) > 80">
+             <dtml-var "getPageTitle()[:80]" html_quote>...
+	  <dtml-else>
+             <dtml-var getPageTitle html_quote>
+	  </dtml-if>
+	
+	<dtml-else>&nbsp;</dtml-if>
+	</td>
+      </tr>
+      
+  <dtml-if sequence-end>
+    </table>
+    <input type="submit" value="Delete selected" />
+  </dtml-if>
+  
+  <dtml-else>
+  <p><em>None found</em></p>
+  
+</dtml-in>
+</dtml-let>
+</form>
+</dtml-if>
+
+<form action="FindSmurlZMI">
+Smurl ID or URL: <input name="name" size="80" value="<dtml-var "REQUEST.get('name','')">" />
+<input type="submit" value="Go!" />
+</form>
+<p>&nbsp;</p>
+<p class="form-help">
+</p>
+
+
+
+<dtml-var manage_page_footer>
+

@@ -1,0 +1,50 @@
+<html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf">
+<div metal:fill-slot="body">
+
+<h3 i18n:translate="">Snoozed</h3>
+
+<tal:block tal:condition="python:int(request.get('r')) and here.getReminder(request.get('r'))">
+<p tal:define="reminder python:here.getReminder(request.get('r'))"
+    i18n:translate=""
+>The reminder to 
+<strong tal:condition="reminder/name" tal:content="reminder/name"></strong>
+<strong tal:condition="not:reminder/name" tal:content="reminder/email"></strong>
+has been snoozed. Note taken
+<img src="/misc_/RememberYourFriends/smile.gif" alt=":-)" />
+<br />
+The next reminder to 
+<strong tal:condition="reminder/name" tal:content="reminder/name"></strong>
+<strong tal:condition="not:reminder/name" tal:content="reminder/email"></strong>
+will be sent
+<strong tal:condition="python:reminder.age_days>7">
+  <span tal:condition="python:reminder.age_years==0"
+        tal:replace="reminder/next_date_month_formatted"></span>
+  <span tal:condition="not:python:reminder.age_years==0"
+        tal:replace="reminder/next_date_year_formatted"></span>
+  <span style="display:none" tal:content="python:reminder.age_days"></span>
+  <span tal:condition="python:reminder.age_days==1">(tomorrow)</span>
+</strong>
+<strong tal:condition="not:python:reminder.age_days>7"
+        tal:content="reminder/next_date_week_formatted">
+</strong>
+</p>
+</tal:block>
+
+
+
+<tal:comment replace="nothing">
+<div class="advert">
+<a href="http://www.jot.com/wiki/free-wiki-trial.html?R=0B0A04013A7A770E43564756415156157F0E07157E0E595C4740435C473A0203023A0202030A" 
+><img src="http://www.jot.com/img/banner2-468x60.gif" border="0" /></a>
+</div>
+</tal:comment>
+
+
+
+
+</div>
+</html>

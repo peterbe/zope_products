@@ -1,0 +1,22 @@
+<tal:block i18n:domain="ryf">
+<br tal:replace="python:request.RESPONSE.setHeader('Content-Type','text/html; charset=iso-8859-1')" />
+<h3 tal:condition="not:options/notitle|nothing" i18n:translate="">Sent reminders log</h3>
+<table style="border:0;border-collapse:collapse;table-layout:fixed;width:100%"
+  tal:define="count python:here.getSentReminders(count=True);
+              limit python:int(request.get('limit',1000))">
+  <tbody tal:repeat="reminder python:here.getSentReminders(offset=int(request.get('offset',0)), limit=limit)"
+         tal:attributes="class python:test(path('repeat/reminder/odd'), 'odd','even')">
+    <tr>
+      <td tal:content="structure python:here.showReminderName(reminder.name, reminder.email)"></td>
+      <td tal:content="reminder/sent_date_formatted"></td>
+    </tr>
+  </tbody>
+  <tbody tal:condition="python:count > limit" class="odd even">
+    <tr>
+      <td colspan="2" align="center">
+        <a href="sent-reminders" i18n:translate="">See your whole reminders log here</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</tal:block>

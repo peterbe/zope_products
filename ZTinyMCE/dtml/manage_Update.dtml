@@ -1,0 +1,43 @@
+<dtml-var manage_page_header>
+<dtml-with "_(management_view='Management')">
+<dtml-var manage_tabs>
+</dtml-with>
+<dtml-if Principia-Version>
+<p> <em>You are currently working in version 
+  <dtml-var Principia-Version>
+  </em> </p>
+</dtml-if Principia-Version>
+
+<style type="text/css">
+div.area { background-color:#efefef; padding:2px 15px; margin:7px; }
+.btn { font-weight:bold; }
+div.alert { border:2px solid red; }
+</style>
+
+<dtml-if "canUpgradeClean()">
+<div class="area alert">
+  <p><b>Upgrade alert</b>
+    The tinyMCE zipfile of the ZTinyMCE has been upgraded. It's
+recommended that you do a <a href="Update?clean:int=1">Recreate
+update</a>.
+  </p>
+</div>
+</dtml-if>
+
+
+<div class="area">
+<form action="Update">
+<input type="hidden" name="clean:int" value="0" />
+<input type="submit" value="Update carefully" class="btn" />
+<p>Only make sure we have all objects that aren't already uploaded.</p>
+</form>
+
+<form action="Update">
+<input type="hidden" name="clean:int" value="1" />
+<input type="submit" value="Recreate update" class="btn" />
+<p>Recreate all objects.</p>
+</form>
+</div>
+
+<br />&nbsp;
+<dtml-var manage_page_footer>

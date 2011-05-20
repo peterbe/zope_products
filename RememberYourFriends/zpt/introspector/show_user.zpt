@@ -1,0 +1,82 @@
+<html metal:use-macro="here/getManagementHeader">
+<script type="text/javascript" metal:fill-slot="extrajs">
+function confirmDelete(f) {
+  var certainty = confirm("Permanently delete this user?");
+  if (certainty) return true;
+  return false;
+}
+</script>
+<style type="text/css" metal:fill-slot="extracss">
+.yes { color:green; }
+.no { color:red; }
+
+</style>
+<div metal:fill-slot="body">
+
+<tal:check condition="request/uid|nothing">
+<tal:block define="user python:here.getUserDetails(request.get('uid'))">
+<h2 tal:content="python:here.showName(user.email, user.first_name, user.last_name)"></h2>
+
+<dl>
+  <dt>Email:</dt>
+  <dd tal:content="user/email"></dd>
+
+  <dt>Passkey:</dt>
+  <dd tal:content="user/passkey"></dd>
+  
+  <dt>Added/Modified:</dt>
+  <dd>
+    <br tal:replace="user/add_date_formatted" />
+    <br tal:replace="user/modify_date_formatted" />    
+  </dd>
+  
+  <dt>HTML emails:</dt>
+  <dd>
+    <span tal:condition="user/html_emails" class="yes">yes</span>
+    <span tal:condition="not:user/html_emails" class="no">no</span>
+  </dd>
+  
+  <dt>Reminders (sent)</dt>
+  <dd><span tal:content="string:${user/count_reminders} (${user/count_sent_reminders})"></span><br />
+    <table tal:define="reminders python:here.getSomeonesReminders(user.uid, order='add_date', include_invite_option=False)">
+      <tr tal:repeat="reminder reminders">
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td tal:content="structure python:here.showReminderName(reminder.name, reminder.email)"></td>
+        <td>&nbsp; &nbsp; &nbsp;
+          <small tal:content="python:here.showReminderBirthday(reminder.birthday, reminder.birthmonth, reminder.birthyear)"></small>
+        </td>
+        <td>&nbsp; every <br tal:replace="reminder/periodicity" /></td>
+        <td>(sent #<br tal:replace="reminder/count_sent_reminders" />)</td>
+      </tr>
+    </table>
+  </dd>
+
+  <dt>Invitations (clicked)</dt>
+  <dd tal:content="string:${user/count_sent_invitations} (${user/count_sent_invitations_clicked})"></dd>
+
+  <dt>First/Last name:</dt>
+  <dd>
+    <br tal:replace="user/first_name" />
+    <br tal:replace="user/last_name" />
+  </dd>
+
+  <dt>DOB</dt>
+  <dd tal:content="string:${user/birthday}/${user/birthmonth}/${user/birthyear}"></dd>
+
+  <dt>Gender</dt>
+  <dd tal:content="user/sex"></dd>
+
+
+</dl>
+
+
+<form action="deleteUser" onsubmit="return confirmDelete(this)">
+<input type="hidden" name="uid:int" tal:attributes="value request/uid" />
+<input type="submit" value="Delete user" style="font-size:80%" />
+</form>
+
+</tal:block>
+</tal:check>
+
+</div>
+</html>

@@ -1,0 +1,38 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body">
+<h2>&Auml;ndra byst bild</h2>
+
+<div class="toprightbox">
+  <a href="../BustManagement"
+   >G&aring; tillbaka till alla bilder</a>
+</div>
+
+<form action="manage_editBust" method="post" enctype="multipart/form-data">
+
+
+<input type="hidden" name="id" value="" />
+<dl>
+
+  <dt><label for="title">Namn:</label></dt>
+  <dd><input name="title:latin1:ustring" size="30" tal:attributes="value here/getTitle" /></dd>
+
+<tal:item replace="structure python:here.getPhoto().tag(display='thumbnail', style='float:right')" />
+
+  <dt><label for="bigphoto">Foto:</label></dt>
+  <dd><input type="file" name="bigphoto" size="30" /></dd>
+
+  <dt><label for="littleimage">Minibild:</label></dt>
+  <dd><input type="file" name="littleimage" size="30" /></dd>
+
+  <dt><label for="description">Beskrivning:</label></dt>
+  <dd><textarea name="description:latin1:utext" cols="60" rows="8"
+   tal:content="here/getDescription"></textarea></dd>
+
+</dl>
+<br />
+<input type="submit" value=" Spara! " />
+</form> 
+
+</div>
+</html> 
+

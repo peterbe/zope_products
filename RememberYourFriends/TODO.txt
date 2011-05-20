@@ -1,0 +1,16 @@
+* Reminder birthdays as part of the cron jobs!
+
+* A 'Upcoming birthdays' section on the home page.
+
+* user RSS feed of reminders
+
+* Abillity to change your email address on your settings page!!
+
+
+-- FUTURE --
+
+* Activation link sent when registered. No activation needed to admin
+the account/passkey but activation needed for the reminders to be sent
+at all.
+
+* http://www.burstmedia.com/publisher/index.asp

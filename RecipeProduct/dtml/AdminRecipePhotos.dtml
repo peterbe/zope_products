@@ -1,0 +1,56 @@
+<dtml-var standard_html_header>
+
+<h2>Bilder till: <dtml-var title_or_id></h2>
+
+<p><a href="<dtml-var absolute_url>/EditRecipe">Återgå till receptet</a></p>
+
+<table>
+<tr>
+<td valign="top"><h3>Lägg till ny bild</h3>
+
+<form action="addPhoto" method="post" enctype="multipart/form-data">
+<input type="file" name="file" size="30"><br>
+<input type="submit" value="Ladda upp">
+<dtml-unless isReady>
+<br>
+<input type="checkbox" name="sendifpossible" value=1 checked> 
+<span class="smalltext">Skicka nyhetsbrev om receptet blir klart med denna bilden</span>
+</dtml-unless>
+</form>
+
+</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td valign="top">
+
+<h3>Existernade bilder</h3>
+
+<dtml-in "objectValues('Photo')">
+
+	<table>
+	<tr><td valign="top">
+		<a href="<dtml-var absolute_url>"><dtml-var "_['sequence-item'].tag(display='thumbnail', border=1)"></a>
+	</td>
+	<td valign="top">
+	<form action="delPhoto">
+	<input type="hidden" name="id" value="<dtml-var id>">
+	<input type="submit" value="Ta bort">
+	</form>
+	</td>
+	</tr>
+	
+	</table>
+
+
+<dtml-else>
+	<em>Inga en så länge</em>
+</dtml-in>
+
+</td>
+
+
+</tr>
+</table>
+
+
+
+<dtml-var standard_html_footer>

@@ -1,0 +1,30 @@
+projectname = "ThuaWood"
+
+author = "<peter@fry-it.com>"
+
+versionnr='0.1' # alternatively 0.0.1 
+
+modules = (
+   dict(
+     modulename='Bust', # eg. Archive (becomes Archive.py)
+     
+     classname='Bust', # eg. ArchiveFolder (becomes class ArchiveFolder)
+     
+     baseclassname='HomepageBaseCatalogAware',
+     addformmethodname='manage_addBustForm',
+     
+     addmethodname='manage_addBust',
+     
+     iconname='bust_icon.gif', # eg. homepage_icon.gif
+     
+     # Misc
+     create_root_methods=False,           # getRoot(), getWebmastername(), etc.
+
+     
+   ),
+   
+)   
+   
+   
+
+

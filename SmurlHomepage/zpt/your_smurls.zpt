@@ -1,0 +1,22 @@
+<div id="yoursmurls" 
+     tal:define="smurls python:here.getRememberedSmurlIds(asobjects=1)">
+
+<h3 tal:condition="smurls"><i>Your</i> previous Smurl names:</h3>
+<script tal:condition="smurls">
+function Show(elid) { document.getElementById(elid).className=""; }
+function Hide(elid) { document.getElementById(elid).className="hidden"; }
+</script>
+<div tal:repeat="o smurls">
+<a tal:attributes="href o/absolute_url_path;
+                   onmouseover string:Show('sp-${o/getId}');
+                   onmouseout string:Hide('sp-${o/getId}')"
+   tal:content="o/absolute_url"></a>&nbsp;
+   <span tal:condition="o/getPageTitle" class="pagetitle"
+         tal:content="structure python:o.getPageTitle()[:50]"></span>
+   <br />
+<span class="hidden" style="color:#008000"
+  tal:attributes="id string:sp-${o/getId}"
+  tal:content="structure python:here.showLongURL(o.getURL(), maxlength=180)"></span>
+</div>
+
+</div>

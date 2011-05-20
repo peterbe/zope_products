@@ -1,0 +1,54 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body">
+
+<form action="manage_deleteEntry"
+ tal:repeat="entry here/getEntries">
+
+<div class="entry"
+ >
+
+<input type="submit" value="Ta bort, radera" style="float:left" />
+<table>
+  <tr>
+    <td class="head">Namn:</td>
+    <td tal:content="entry/name"></td>
+  </tr>
+  <tr tal:condition="entry/city">
+    <td class="head">Stad:</td>
+    <td tal:content="entry/city"></td>
+  </tr>
+  <tr>
+    <td class="head">E-post:</td>
+    <td tal:condition="not:entry/email">&nbsp;</td>
+    <td tal:condition="entry/email"
+        tal:content="structure python:here.encodeEmailString2(entry.email)"></td>
+  </tr>
+  <tr tal:condition="entry/webpage">
+    <td class="head">Hemsida:</td>
+    <td><a tal:replace="structure entry/showWebpage"></a></td>
+  </tr>
+  <tr>
+    <td valign="top" class="head">Kommentar:</td>
+    <td tal:content="entry/comment"></td>
+  </tr>
+  <tr>
+    <td valign="top" class="head">Tillagd:</td>
+    <td tal:content="python:entry.create_date.strftime('%Y/%m/%d %H:%M')"></td>
+  </tr>  
+  <tr>
+    <td>&nbsp;</td>
+    <td><a tal:attributes="href string:${entry/absolute_url}/manage_propertiesForm"
+           style="font-size:80%">change</a></td>
+  </tr>
+
+</table>
+<input type="hidden" name="id" tal:attributes="value entry/getId" />
+
+
+</div><!--/entry-->
+<br />&nbsp;
+</form>
+
+
+</div>
+</html>

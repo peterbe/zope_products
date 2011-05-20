@@ -1,0 +1,84 @@
+<dtml-var standard_html_header>
+
+<table width="80%">
+<tr>
+<td valign="top">
+<h3>Författarens sida: <dtml-var getTitle></h3>
+<a href="<dtml-var absolute_url>">Titta på min sida</a>
+<br>&nbsp;
+</td><td valign="top">
+<h3><a href="AdminQandAs">Frågor och svar</a></h3>
+
+</td>
+</tr>
+</table>
+
+
+<table border=0>
+<tr><td valign="top">
+
+<h4>Nytt recept</h4>
+
+<form action="addRecipeHelpForm">
+<input type="submit" value="Lägg till nytt recept">
+</form>
+
+<h4>Dina recept</h4>
+
+<dtml-in "getAuthorRecipes()">
+  <table>
+  <tr><td width="300" valign="top">
+  <ul>
+  <li><a href="<dtml-var absolute_url>"><dtml-var title_or_id></a>
+  <div class="smalltext"><dtml-var "getIngredients()[:90]">...<br>
+  <span style="color:black"><dtml-var showDate></span></div>
+  <form action="<dtml-var absolute_url>/EditRecipe">
+  <input type="submit" value="Redigera recept"></form>
+
+  </li>
+  </ul>
+  </td>
+  <td valign="top">
+      <a href="<dtml-var absolute_url>"><dtml-var "getThumbnail()"></a>
+  </td>
+  </tr>
+  </table>
+</dtml-in>
+
+
+</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td valign="top">
+
+
+
+<form action="editAuthor">
+<table>
+<tr>
+  <td><strong>Förnamn</strong></td>
+  <td><input name="firstname" value="<dtml-var getFirstname>" size="30"></td>
+</tr>
+<tr>
+  <td><strong>Efternamn</strong></td>
+  <td><input name="lastname" value="<dtml-var getLastname>" size="30"></td>
+</tr>
+<tr>
+  <td><strong>Email</strong></td>
+  <td><input name="email" value="<dtml-var getEmail>" size="30"></td>
+</tr>
+</table>
+<br>
+
+<h4>Författarens egna ruta</h4>
+<textarea name="authorcomment" rows="12" cols="50"><dtml-var getComment></textarea>
+
+<br><br>
+
+<input type="submit" value="Spara ändringarna">
+</form>
+
+</td>
+</tr>
+</table>
+
+<dtml-var standard_html_footer>

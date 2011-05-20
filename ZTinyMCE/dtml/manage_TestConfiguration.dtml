@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Test Configuration '<dtml-var getId>'</title>
+<script type="text/javascript">
+function MyOnBlurFunction() {
+  var el=document.getElementById('dbgout');
+  el.innerHTML = "Blurred :(<br>\n"+el.innerHTML;
+}
+function MyOnFocusFunction() {
+  var el=document.getElementById('dbgout');
+  el.innerHTML = "Focused :)<br>\n"+el.innerHTML;
+}
+</script>
+</head>
+
+<body>
+
+<dtml-var render>
+
+<p><a href="manage_Configure" style="font:80% sans-serif,arial">&lt;&lt; Return to Configuration</a></p>
+
+<form action="manage_TestConfiguration" method="post">
+
+<textarea name="<dtml-var "REQUEST.get('textareaname','anything')">" 
+ cols="85" rows="20"
+><dtml-var test_config_content html_quote></textarea>
+
+<br />
+<div id="dbgout" style="font-size:0.7em;color:#333"></div>
+
+<br />
+<p>Name of textarea: <input name="textareaname" 
+ value="<dtml-var "REQUEST.get('textareaname','anything')">" />
+<input type="submit" value="change name of textarea" />
+</form>
+
+</body>

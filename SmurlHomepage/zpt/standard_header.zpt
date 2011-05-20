@@ -1,0 +1,149 @@
+<metal:block define-macro="standard"><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Smurl - Make long URLs Smurl</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="Description" content="Smurl is a simple web application that lets you make aliases for long URLs to that you get a more practical (short) URL to work with" />
+	<meta name="Keywords" content="Smurl, small url, url, small, zope, peterbe.com, fry-it, peter bengtsson, tiny, smallurl, short, little, mini" />
+	<meta name="Author" content="Peter Bengtsson" />
+	<meta name="generator" content="Zope (zope.org)" />
+        <link rel="stylesheet" type="text/css" media="screen" 
+              tal:attributes="href python:here.getMiscAlias('/misc_/SmurlHomepage/style.css')" />
+
+        <metal:script define-slot="extrajs"></metal:script>
+	</head>
+
+<body>
+<tal:item replace="here/domain_name_fixer" />
+<div id="container">
+<div id="header"><a name="top"></a><h1><a href="/"><b>SMURL</b> - Make long URLs small</a></h1>
+
+
+</div>
+
+
+<div id="sidebar">
+<metal:sidebar metal:define-slot="sidebar">
+
+<h2>About Smurl</h2>
+<p>Smurl simply takes a long URL and stores it represented with a much smaller URL so that when you use that small URL you get redirected
+to the original URL. The benefit with using a small URL is that it fits better in emails or other text where you don't want to enter 
+too long spaceless strings like in an SMS for example.<br />
+<a href="about">more info</a></p>
+<br />
+
+
+<h2>Bookmark link</h2>
+
+<p>Drag this URL into your bookmark or toolbar:<br />
+<a href="javascript:void(location.href='http://smurl.name/makeSmurl?url='+escape(location.href))">Make it Smurl!</a>
+</p>
+<br />
+
+<h2>The Family</h2>
+<ul>
+
+	<li><a href="http://www.peterbe.com" title="Peter Bengtsson's personal website">Peterbe.com</a></li>
+	<li><a href="http://www.fry-it.com" title="Fry-IT Ltd - UK based IT company">Fry-IT</a></li>
+	<li><a href="http://donecal.com" title="DoneCal - a timesheet/timetracker calendar">DoneCal</a></li>
+	<li><a href="http://kungfupeople.com" title="Kung Fu People">Kung Fu People</a></li>
+	<li><a href="http://kungfupeople.com" title="Crosstips - crossword solver, fast and simple" >Crosstips</a></li>
+	<li><a href="http://www.issuetrackerproduct.com" title="A user-friendly issue tracker web application for Zope">IssueTrackerProduct</a></li>
+</ul>
+<br />
+
+
+<div>&nbsp;</div>
+
+<tal:comment replace="nothing">
+
+
+<h2>Archives</h2>
+<ul>
+
+	<li><a href='http://www.robertnyman.com/2005/09/' title='September 2005'>September 2005</a></li>
+	<li><a href='http://www.robertnyman.com/2005/08/' title='August 2005'>August 2005</a></li>
+	<li><a href='http://www.robertnyman.com/2005/07/' title='July 2005'>July 2005</a></li>
+	<li><a href='http://www.robertnyman.com/2005/06/' title='June 2005'>June 2005</a></li>
+	<li><a href='http://www.robertnyman.com/2005/05/' title='May 2005'>May 2005</a></li>
+	<li><a href='http://www.robertnyman.com/2005/04/' title='April 2005'>April 2005</a></li>
+
+	<li><a href='http://www.robertnyman.com/2005/03/' title='March 2005'>March 2005</a></li>
+</ul>
+<br />
+
+<h2>Blogroll</h2>
+<ul>
+<li><a href='http://www.jeroenmulder.com/' title='JeroenMulder.com / Weblog'>Jeroen Mulder</a></li>
+<li><a href='http://annevankesteren.nl/' title='Anne&#039;s Weblog about Markup &amp; Style'>Anne van Kesteren</a></li>
+<li><a href='http://www.kurafire.net/' title='Faruk Ates and his writings'>KuraFire</a></li>
+<li><a href='http://www.456bereastreet.com/' title='456 Berea Street | Web Standards, Accessibility, Usability'>456 Berea Street</a></li>
+
+<li><a href='http://www.autisticcuckoo.net/' title='Life, Jeeps and Web Standards @ The Autistic Cuckoo'>Autistic Cuckoo</a></li>
+</ul>
+<br />
+
+<h2>Developer links</h2>
+<ul>
+<li><a href='http://www.csszengarden.com/' title='The amazing css Zen Garden!'>css Zen Garden</a></li>
+<li><a href='http://css-discuss.incutio.com/' title='All you need to know about CSS'>css-discuss</a></li>
+<li><a href='http://www.quirksmode.org/' title='QuirksMode - for all your browser quirks'>QuirksMode</a></li>
+</ul>
+<br />
+
+</tal:comment>
+</metal:sidebar>
+</div>
+
+<div id="content">
+	 
+	<div class="storycontent" metal:define-slot="content">
+	
+<tal:block tal:condition="options/small_url|request/small_url|nothing">
+	<dl tal:define="small_url options/small_url|request/small_url; url options/url|request/url">
+		<dt><p>The following URL:</dt>
+		<dd tal:content="structure python:here.showLongURL(url, maxlength=70)"></dd>
+		
+		<dt><p>became <b tal:content="python:len(url)-len(small_url)"></b> characters shorter as:</dt>
+		<dd><b><a href="" tal:attributes="href small_url" tal:content="small_url"></a></b></dd>
+	</dl>
+	
+	<p><a href="/">Create another</a></p>
+</tal:block>
+<tal:block tal:condition="not:options/small_url|request/small_url|nothing">
+	<form action="makeSmurl" method="get">
+	  <p><b>Enter a looong URL:</b><br />
+	  <input name="url" size="45" /> <input type="submit" value="Make it Smurl!" />
+	  
+	</form>
+</tal:block>
+
+	</div>
+	<br />
+	<br />
+	
+
+		
+	 	
+	
+		
+		
+	
+</div>
+
+
+
+<!-- begin footer -->
+<div id="footer">
+
+<p>
+	<a href="http://www.fry-it.com">&copy <br tal:replace="python:here.ZopeTime().strftime('%Y')" /> Fry-IT ltd</a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>
+</metal:block>

@@ -1,0 +1,94 @@
+<html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf">
+<style type="text/css" metal:fill-slot="extracss">
+#mostreminderssent { border-collapse: collapse; width:100%}
+#mostreminderssent .name { width:300px; }
+#mostreminderssent .number { font-weight:bold; padding-left:6px; padding-right:6px; }
+#mostreminderssent .first { font-size:1.1em; font-weight:bolder; background:url(/misc_/RememberYourFriends/gold-medal.gif) no-repeat 5px 2px;}
+#mostreminderssent .first td.number { font-size:0.1em; }
+#mostreminderssent .second { font-weight:bold; background:url(/misc_/RememberYourFriends/silver-medal.gif) no-repeat 5px 2px; }
+#mostreminderssent .second td.number { font-size:0.1em; }
+#mostreminderssent .third { background:url(/misc_/RememberYourFriends/bronze-medal.gif) no-repeat 5px 2px;}
+#mostreminderssent .third td.number { font-size:0.1em; }
+#mostreminderssent td small  { padding-left:6px; }
+</style>
+<script type="text/javascript" metal:fill-slot="extrajs">
+function toggleCumulative(a_element) {
+  var e = $('chartreminderssent');
+  var e_src = e.getAttribute('src');
+  var cum = parseInt(e_src.match(/cumulative:int=(\d)/)[1]);
+  if (cum) cum=0; 
+  else cum=1;
+  var n_src = e_src.replace(/cumulative:int=(\d)/,'cumulative:int='+cum);
+  e.src = n_src;
+  if (cum==1) {
+    $('chartremindertitle').innerHTML='Cumulative number of reminders sent';
+    a_element.innerHTML='show each week stats';
+  } else {
+    $('chartremindertitle').innerHTML='Number of reminders sent';
+    a_element.innerHTML='show cumulative stats';
+  }
+  return false;
+}
+</script>
+<div metal:fill-slot="body">
+
+<h2 i18n:translate="">Stats</h2>
+
+<tal:comment replace="nothing">
+<h3 i18n:translate="">User with most reminders sent</h3>
+
+<table id="mostreminderssent">
+  <tbody tal:repeat="record python:here.getMostRemindersSentStats(howmany=10)"
+         tal:attributes="class python:test(path('repeat/record/even'),'even','odd')">
+    <tr tal:define="i repeat/record/number">
+     <td class="number" tal:condition="python:i<=3">
+       <img tal:attributes="src python:here.getMiscAlias('/misc_/RememberYourFriends/gold-medal.gif')" alt="Gold" tal:condition="python:i==1" />
+       <img tal:attributes="src python:here.getMiscAlias('/misc_/RememberYourFriends/silver-medal.gif')" alt="Silver" tal:condition="python:i==2" />
+       <img tal:attributes="src python:here.getMiscAlias('/misc_/RememberYourFriends/bronze-medal.gif')" alt="Bronze" tal:condition="python:i==3" />
+     </td>
+     <td class="number" tal:condition="python:i>3"
+                        tal:content="repeat/record/number"></td>
+      <td class="name"
+          tal:content="python:here.showNameCarefully(record.email, record.first_name, record.last_name)"
+          ></td>
+      <td tal:content="record/count_sent_reminders"></td>
+      <td tal:define="delta python:record.count_sent_reminders-record.count_sent_reminders_last_month"
+       ><small tal:content="string:+$delta"></small></td>
+    </tr>
+  </tbody>
+</table>
+</tal:comment>
+
+<tal:block tal:define="cum python:int(bool(request.get('cumulative',0)))">
+
+<h3 id="chartremindertitle" tal:condition="not:cum"
+    i18n:translate="">Number of reminders sent</h3>
+<h3 id="chartremindertitle" tal:condition="cum"
+    i18n:translate="">Cumulative number of reminders sent</h3>
+<a name="number"></a>
+
+<img
+  id="chartreminderssent"
+  alt="Number of reminders sent"
+  tal:attributes="src string:ChartRemindersSent?cumulative:int=${cum}"  />
+
+<a href="stats?cumulative:int=1#number"
+   onclick="return toggleCumulative(this)"
+   tal:condition="not:cum"
+   i18n:translate=""
+  >show cumulative stats</a>
+
+<a href="stats?cumulative:int=0#number"
+   onclick="return toggleCumulative(this)"
+   tal:condition="cum"
+   i18n:translate=""
+  >show each week stats</a>
+
+</tal:block>
+
+</div>
+</html>

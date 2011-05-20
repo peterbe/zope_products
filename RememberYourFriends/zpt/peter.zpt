@@ -1,0 +1,41 @@
+<br tal:replace="python:here.doCache(12)" /><html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf">
+<div metal:fill-slot="body">
+
+<h2 i18n:translate="">Peter, creator of RememberYourFriends.com</h2>
+
+<img class="photo right" tal:attributes="src python:here.getMiscAlias('/misc_/RememberYourFriends/eating-brownie.jpg')"
+alt="A picture of me" />
+
+<p i18n:translate="">My name is Peter Bengtsson and I created RememberYourFriends.com 
+because I needed something like this for myself. Currently I live in London, UK and have
+been doing
+so for about 6 years now. When I moved here from Sweden I decided to try my best to maintain
+the friendship I had with as many people as possible from back home. The best way to do 
+that is probably to call each other and talk on the phone. Often. The second best way is 
+most definitely to send each other emails every now and then to tell them what's happening
+in your life and asking them what happens in theirs. It doesn't have to be long emails
+but it's important to show to your distant friends that you're still thinking about them
+and by maintaining a connection there's a much greater chance of not loosing the friendship.
+</p>
+
+<p i18n:translate="">My profession is web development. It's something I've been doing 
+now for the past seven years and I enjoy what I do. I've developed several web applications
+of sorts and some of them are free and/or Open Source like <a href="http://smurl.name">Smurl</a> 
+and <a href="http://www.issuetrackerproduct.com">the IssueTrackerProduct</a>. By spending 
+my time on projects like this I can improve my skillset and try new concepts and solutions
+that I later apply under work conditions. The reason I ended up making a whole web application
+about keeping track of friends is because I wanted to test some new user experience 
+features such as the password less security accounts and the email alerts in simple HTML.
+</p>
+
+<p i18n:translate="">If you want to read more about me and or what I do, visit 
+<a href="http://www.peterbe.com">my website</a> where you'll also find a 
+<a href="http://www.peterbe.com/contact">contact-me form</a> if you want to email me.
+</p>
+
+</div>
+</html>

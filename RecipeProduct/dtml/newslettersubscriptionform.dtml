@@ -1,0 +1,28 @@
+<form action="createNewsletterReceiverWeb">
+
+<table border=0 style="border:1px solid #CCCCCC;"
+ cellpadding=6>
+
+<tr>
+<td><strong>Nyhetsbrev för alla nya recept?</strong>
+<br>
+<span class="smalltext">
+<dtml-if "REQUEST.has_key('RecipeNewsletterReceiver') and REQUEST.get('RecipeNewsletterReceiver','')!=''">
+Email <input name="email" 
+value="<dtml-var "REQUEST.get('RecipeNewsletterReceiver')">"><br>
+Ja! <input type="radio" name="subscribe:int" value="1">
+Glöm mig <input type="radio" name="subscribe:int" checked value="0">
+<dtml-else>
+Email <input name="email" value=""><br>
+Ja! <input type="radio" name="subscribe:int" checked value="1">
+Glöm mig <input type="radio" name="subscribe:int" value="0">
+</dtml-if>
+</span>
+<input type="submit" value="Spara!">
+</td>
+</tr>
+
+ 
+</table>
+
+</form>

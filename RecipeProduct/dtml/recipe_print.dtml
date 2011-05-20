@@ -1,0 +1,51 @@
+<dtml-var print_html_header>
+
+<div id="top">
+<dtml-in getPhotos>
+   <dtml-var "_['sequence-item'].tag(display='thumbnail', border=0,
+style='float:left;padding:5px')">
+</dtml-in>
+<h2><dtml-var getTitle></h2>
+<p><dtml-var showDate><br>
+<span class="smalltext"><dtml-var getAuthor></span></p>
+</div>
+
+<br clear="left">
+
+<div id="leftbit">
+<div id="ingredients">
+<h3>Ingredienser</h3>
+<dtml-var "showText(getIngredients())">
+</div>
+
+
+<dtml-if difficultylevel>
+<p><strong>Svårighetsgrad:</strong><br>
+<dtml-var difficultylevel></p>
+</dtml-if>
+
+<dtml-if categories>
+<p><strong><dtml-if
+"_.len(categories)==1">Kategori<dtml-else>Kategorier</dtml-if>:</strong><br>
+<dtml-in categories><dtml-var sequence-item><dtml-unless
+sequence-end>, </dtml-unless></dtml-in>
+</dtml-if>
+
+</div>
+
+<div id="rightbit">
+<div id="howto">
+<h3>Hur man gör</h3>
+<dtml-var "showText(getInstructions())">
+</div>
+
+</div>
+
+<br clear="left">
+<div id="comment">
+<h3><dtml-var "getAuthor(only='firstname')">s kommentar</h3>
+<dtml-var "showText(getComment())">
+</div>
+
+<p>&nbsp;</p>
+<dtml-var print_html_footer>

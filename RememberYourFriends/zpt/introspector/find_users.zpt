@@ -1,0 +1,117 @@
+<html metal:use-macro="here/getManagementHeader">
+<style type="text/css" metal:fill-slot="extracss">
+a.formswitcher {
+  float:right; 
+  font-size:80%;
+}
+
+table#users { border-collapse:collapse; }
+table#users thead td {font-weight:bold; border-bottom:2px solid black;
+ padding-left:1px; padding-right:20px; padding-top:10px;
+}
+</style>
+<script type="text/javascript" metal:fill-slot="extrajs">
+function changeForm() {
+  var s = $('simpleform');
+  var a = $('advancedform');
+  if (s.style['display']=='none') {
+    s.style['display'] = '';
+    a.style['display'] = 'none';
+  } else {
+    s.style['display'] = 'none';
+    a.style['display'] = '';
+  }
+  return false;
+}
+function fillInBlanks(f) {
+  var v = f.all.value;
+  if (!v) return true;
+  f.uid.value = v;
+  f.email.value = v;
+  f.passkey.value = v;
+  f.first_name.value = v;
+  f.last_name.value = v;
+  return true;
+}
+</script>
+<div metal:fill-slot="body">
+
+<h2>Find users</h2>
+
+<form action="manage_find_users" id="simpleform" tal:define="blank string:"
+ onsubmit="return fillInBlanks(this)"
+ tal:attributes="style python:test(request.get('formtype','simple')!='simple','display:none')" >
+<a class="formswitcher" href="#" onclick="return changeForm()">advanced form</a> 
+<input type="hidden" name="formtype" value="simple" />
+Anything: <input name="all" tal:attributes="value request/all|blank" size="35" />
+<input type="hidden" name="uid" tal:attributes="value request/uid|blank" />
+<input type="hidden" name="email" tal:attributes="value request/email|blank" />
+<input type="hidden" name="passkey" tal:attributes="value request/passkey|blank" />
+<input type="hidden" name="first_name" tal:attributes="value request/first_name|blank" />
+<input type="hidden" name="last_name" tal:attributes="value request/last_name|blank" />
+<input type="submit" name="search" value="Search!" />
+
+</form>
+
+<form action="manage_find_users" id="advancedform"
+ tal:attributes="style python:test(request.get('formtype','simple')!='advanced','display:none')"
+ >
+<a class="formswitcher" href="#" onclick="return changeForm()">simple form</a>
+<p>Under construction</p> 
+<input type="hidden" name="formtype" value="advanced" />
+<input type="submit" name="search" value="Search!" />
+</form>
+
+
+
+<a tal:condition="request/formtype|nothing" 
+   tal:attributes="href string:manage_find_users?formtype=${request/formtype}"
+   style="float:right">reset</a>
+<h3 tal:condition="request/search|nothing">Search results</h3>
+<h3 tal:condition="not:request/search|nothing">Recently added</h3>
+
+<div tal:define="users python:here.findUsers(uid=request.get('uid',0), 
+                                             email=request.get('email'),
+                                             passkey=request.get('passkey'),
+                                             first_name=request.get('first_name'),
+                                             last_name=request.get('last_name'),
+                                             order_by=request.get('order_by','add_date'), 
+                                             reverse=request.get('reverse',True)
+                                             )">
+
+<em tal:condition="python:request.get('search') and not users">
+None found :(
+</em>
+<table tal:condition="users" id="users">
+  <thead>
+    <tr tal:define="S python:here.sortByHeader">
+      <td><a tal:attributes="href python:S('uid')">UID</a></td>
+      <td><a tal:attributes="href python:S('email')">Email</a></td>
+      <td><a tal:attributes="href python:S('passkey')">Passkey</a></td>
+      <td><a tal:attributes="href python:S('first_name')">First</a>/<br /><a tal:attributes="href python:S('last_name')">Last name</a></td>
+      <td># <a tal:attributes="href python:S('count_reminders')">reminders</a><br />(<a tal:attributes="href python:S('count_sent_reminders')">sent</a>)</td>
+      <td># <a tal:attributes="href python:S('count_sent_invitations')">invitations</a><br />(<a tal:attributes="href python:S('count_sent_invitations_clicked')">clicked</a>)</td>
+      <td><a tal:attributes="href python:S('add_date')">Added</a></td>
+    </tr>
+  </thead>
+  <tbody tal:repeat="user users">
+    <tr tal:define="odd repeat/user/odd"
+        tal:attributes="class python:test(odd, 'odd','even')">
+      <td><a tal:attributes="href string:manage_show_user?uid=${user/uid}"
+             tal:content="user/uid"></a>
+      </td>
+      <td tal:content="user/email"></td>
+      <td tal:content="user/passkey"></td>
+      <td tal:content="string:${user/first_name} ${user/last_name}"></td>
+      <td tal:content="string:${user/count_reminders} (${user/count_sent_reminders})"></td>
+      <td tal:content="string:${user/count_sent_invitations} (${user/count_sent_invitations_clicked})"></td>      
+      <td tal:content="user/add_date_formatted"></td>
+    </tr>
+  </tbody>
+</table>
+</div>                                             
+
+
+
+</div>
+</html>

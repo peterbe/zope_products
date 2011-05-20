@@ -1,0 +1,15 @@
+Your passkey is <dtml-var passkey>
+To log in and change any of your settings, follow this link:
+<dtml-var getRootURL>/_<dtml-var passkey>
+
+<dtml-if count_reminders>You have <dtml-if "count_reminders==1">1
+reminder <dtml-else><dtml-var count_reminders> reminders </dtml-if>
+but you can set up more by following the link above.</dtml-if>
+
+<dtml-if next_reminder_name><dtml-if next_reminder_on>
+Your next reminder will be sent to you on *<dtml-var next_reminder_on>* 
+reminding you to send an email to <dtml-var next_reminder_name>.
+</dtml-if></dtml-if>
+
+--
+<dtml-var getSignature>

@@ -1,0 +1,153 @@
+<html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf">
+<metal:javascript metal:fill-slot="extrajs">
+<script type="text/javascript" tal:attributes="src python:here.getMiscAlias('/misc_/RememberYourFriends/jquery.autocomplete.js')"></script>
+
+<script tal:condition="here/isLoggedIn" type="text/javascript"
+        tal:content="structure here/getFriendsEmailAddressesJSArray" ></script>
+<script tal:condition="here/isLoggedIn" type="text/javascript">
+
+$(function() {
+  $("#email").autocompleteArray(emails, {delay:1, minChars:1, matchSubset:1, autoFill:true});
+});
+
+function submitInvite(f) {
+  var text = f.text.value;
+  if (text.indexOf('<invite link will be placed here>')==-1) {
+    alert("You're missing the text '<invite link will be placed here>'. Copy from the next message");
+    prompt("Copy this into your text:", "<invite link will be placed here>");
+    return false;
+  }
+  
+  if (!f.email.value) {
+    alert("Please enter the email address first of the person you want to invite.");
+    return false;
+  } 
+  
+  if (text.indexOf("Hi friend,")!=-1) {
+    var greeting = prompt("Want to replace 'Hi friend,' with real name?", "Hi friend");
+    // can be update $('name').value with this greeting?
+    if (greeting) {
+      var name = greeting.replace(/Hi\s*/,'').replace(/,/,'');
+      name = name.replace(/friend/,'');
+      name = $.trim(name);
+      if (name && name.split(' ').length==2) {
+        name = name.split(' ')[1];
+      }
+      if (name) {
+        $('name').value = name;
+      }
+      
+    }
+    if (greeting) {
+      if (greeting.charAt(greeting.length-1)!=',') 
+        greeting += ',';
+      text = text.replace(/Hi friend,/, greeting);
+      f.text.value = text;
+    }
+  }
+  return true;
+}
+</script>
+</metal:javascript>
+
+<metal:style fill-slot="extracss">
+<link rel="stylesheet" type="text/css" tal:attributes="href python:here.getMiscAlias('/misc_/RememberYourFriends/jquery.autocomplete.css')" />
+<style type="text/css">
+.suggestion_list {
+  background: white;
+  border: 1px solid;
+  padding: 4px;
+}
+
+.suggestion_list ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.suggestion_list a {
+  text-decoration: none;
+  color: navy;
+}
+
+.suggestion_list .selected {
+  background: navy;
+  color: white;
+}
+
+.suggestion_list .selected a {
+  color: white;
+}
+
+#autosuggest {
+  display: none;
+}
+
+</style>
+</metal:style>
+
+<div metal:fill-slot="body">
+<h2 i18n:translate="">Send invite</h2>
+
+<tal:block tal:condition="not:here/isLoggedIn">
+<tal:item replace="python:here.http_redirect('log-in', came_from=request.URL)" />
+</tal:block>
+
+
+<form action="sendInvite" method="post" onsubmit="return submitInvite(this)"
+ tal:define="errors python:request.get('submiterrors', {})">
+ 
+<input type="hidden" name="name" id="name" value="" /> 
+<p>
+<tal:block i18n:translate="">
+Email address: 
+</tal:block>
+<input name="email" id="email" size="35"
+ tal:attributes="value python:request.get('email','')" />
+<span class="error" tal:condition="errors/email|nothing" tal:content="errors/email"></span>
+</p>
+<div id="autosuggest"><ul></ul></div>
+
+<textarea name="text" cols="52" rows="15"
+tal:content="python:request.get('text', here.getDefaultInviteText(request.get('name')))"></textarea>
+<span class="error" tal:condition="errors/text|nothing" tal:content="errors/text"></span>
+<br />
+
+<p>
+<tal:block i18n:translate="">How often should reminders about you be sent?</tal:block>
+<select name="periodicity"
+ tal:define="default_preval request/periodicity|here/DEFAULT_PERIODICITY">
+ <option tal:repeat="option here/getPeriodicityOptions"
+         tal:attributes="value option/value;
+                         selected python:test(option['value']==default_preval);
+     		         "
+         tal:content="option/label"></option>
+</select>
+
+<p i18n:translate="">Send as <input type="radio" name="htmlformatted:boolean" value="1" checked="checked" />
+HTML email? No, send it as <input type="radio" name="htmlformatted:boolean" value="0" /> plain text.
+</p>
+
+
+
+<input type="submit" value="Send invite" i18n:attributes="value" />
+</form>
+
+<br />
+<p tal:define="count python:len(here.getSentInvitations())"
+   tal:condition="count">
+   
+<span tal:condition="python:count==1">   
+<a href="sent-invites" i18n:translate="">You've sent <strong>one</strong> invitation previously</a>
+</span>
+<span tal:condition="not:python:count==1">   
+<a href="sent-invites" i18n:translate="">You've sent <strong tal:content="count" i18n:name="count"></strong> invitations previously</a>
+</span>
+</p>
+
+</div>
+</html>

@@ -1,0 +1,34 @@
+<html metal:use-macro="here/getHeader">
+<div metal:fill-slot="body">
+
+<h2>I hate spam</h2>
+
+<img class="left" tal:attributes="href python:here.getMiscAlias('/misc_/RememberYourFriends/spam.jpg')" alt="I hate spam" />
+
+<p>This website doesn't make any money and if it ever does it'll be 
+from some advertisement on the webpages or possibly additional 
+"gold features" for paying customers. I'm running this little project
+as a sparetime fun project primarily because I needed the service for 
+myself and also because I wanted to test some new web development techniques, 
+for example, the passwordless login.</p>
+
+<p><strong>If you're worried about entering your email address, don't be. I won't
+send you any spam or other annoying offers from companies that I don't even
+know. If you're worried about entering your a friends email address, don't be.</strong>
+Those email address will <strong>never</strong> be used for anything except your
+own benefit, which is that the reminders sent to you will make it easier to 
+send the email to your friend.</p>
+
+<p>If you're interested, check out this blog item I wrote about a 
+solution to stop spam from happening: <a href="http://www.peterbe.com/Idea-A-new-anti-spam-law"
+>it should be illegal to respond to spam</a>.</p>
+
+
+<p align="right">Yours, <a href="peter">Peter Bengtsson</a></p>
+
+<br />
+<p>Now, take a deep breath and return to the <a href="/">home page</a> and let
+this web application help start remembering your old friends.</p>
+
+</div>
+</html>

@@ -1,0 +1,18 @@
+<dtml-var standard_html_header>
+
+<dtml-comment>
+För framtiden: Kanske bör göra denna sidan likadant som för recepten
+med tabbar och sånt. Fast för att det ska funka måste man ha 
+kategorier på frågorna.
+</dtml-comment>
+
+<h2>Frågor och svar</h2>
+
+<dtml-call "REQUEST.set('tablewidth', 500)">
+<dtml-in "getAllQuestions(sort=1)">
+  <dtml-var show_cooking_question>
+<dtml-else>
+  <em class="smalltext">Det finns ännu inga frågor</em>
+</dtml-in>
+
+<dtml-var standard_html_footer>

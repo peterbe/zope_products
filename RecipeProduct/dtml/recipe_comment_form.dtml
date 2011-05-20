@@ -1,0 +1,70 @@
+<dtml-if "REQUEST.has_key('editcomment')">
+
+<dtml-with "getCommentById(REQUEST.get('editcomment'))">
+<form action="changeComment" method="post">
+<input type="hidden" name="id" value="<dtml-var id>">
+<table>
+<tr>
+<td><strong>Namn </strong></td>
+<td><dtml-var showName></td>
+</tr>
+<tr>
+<td><strong>Email </strong></td>
+<td><dtml-var showEmail></td>
+</tr>
+<tr><td colspan="2">
+<textarea name="comment" cols="40" rows="6"><dtml-var comment></textarea>
+</td>
+</tr>
+<tr>
+<td></td>
+<td><input type="submit" value="Spara kommentar"></td>
+</tr>
+</table>
+
+</form>
+</dtml-with>
+
+
+<dtml-else>
+
+<form action="createComment" method="get">
+<a name="commentform"></a>
+<table>
+<dtml-if "REQUEST.has_key('ct') or REQUEST.has_key('commentto')">
+<dtml-with "_.getitem(REQUEST.get('ct',REQUEST.get('commentto')))">
+<tr>
+<td><strong>Svar på </strong></td>
+<td><span class="smalltext" style="font-style:italic;"><dtml-var "getComment()[:30].strip()"><dtml-if "_.len(getComment())>30">...</dtml-if></span>
+<span class="showtext">av <dtml-var getName></span>
+<input type="hidden" name="commentto" value="<dtml-var getId>"></td>
+</tr>
+</dtml-with>
+</dtml-if>
+<tr>
+<td><strong>Namn </strong></td>
+<td><input name="name" size="25" 
+value="<dtml-var "REQUEST.get('yn',REQUEST.get('RecipeCommentName',''))">"></td>
+</tr>
+<tr>
+<td><strong>Email </strong></td>
+<td><input name="email" size="25" 
+value="<dtml-var "REQUEST.get('ye',REQUEST.get('RecipeCommentEmail',''))">"></td>
+</tr>
+<tr>
+<td colspan=2 class="smalltext">Epost adresser blir krypterade för 
+att hindra spammare</td>
+</tr>
+<tr><td colspan="2">
+<textarea name="comment" cols="40" rows="6"></textarea>
+</td>
+</tr>
+<tr>
+<td></td>
+<td><input type="submit" value="Spara kommentar"></td>
+</tr>
+</table>
+
+</form>
+
+</dtml-if>

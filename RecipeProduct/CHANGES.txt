@@ -1,0 +1,7 @@
+0.0.2
+
+	- Enabled a better event-index with multiple PeopleFolder
+
+0.0.1
+
+	- Started

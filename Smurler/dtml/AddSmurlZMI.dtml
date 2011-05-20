@@ -1,0 +1,39 @@
+<dtml-var manage_page_header>
+
+<dtml-with "_(management_view='Add Smurl')">
+<dtml-var manage_tabs>
+</dtml-with>
+
+
+<dtml-var "manage_form_title(this(), _,
+           form_title='Add Smurl',
+           )">
+
+<dtml-if small_url>
+<dl>
+  <dt><p>The following URL:</dt>
+  <dd><b><dtml-var url></b></dd>
+  
+  <dt><p>became <b><dtml-var "_.len(url)-_.len(small_url)"></b> characters shorter as:</dt>
+  <dd><b><a href="<dtml-var small_url>"><dtml-var small_url></a></b></dd>
+</dl>
+
+  <p style="font-size:80%"><a href="AddSmurlZMI">Create another</a></p>
+
+<dtml-else>
+<form action="createSmurlZMI" method="get">
+<p>
+Enter a looong URL: <input name="url" size="80" value="" />
+<input type="submit" value="Make it Smurl!" />
+</p>
+
+<p>&nbsp;</p>
+<p class="form-help">
+Alternatively, do this via the web by going to<br />
+<a href="<dtml-var absolute_url>/createSmurl?url="><dtml-var absolute_url>/createSmurl?url=_________________________________________</a>
+</form>
+
+</dtml-if>
+
+<dtml-var manage_page_footer>
+

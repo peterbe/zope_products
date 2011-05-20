@@ -1,0 +1,96 @@
+<br tal:replace="python:here.doCache(12)" /><html metal:use-macro="here/standard_header/macros/standard">
+
+<div metal:fill-slot="sidebar">
+<h2>Homepage</h2>
+<p><a href=".">Return to the Home page</a></p>
+
+<br />
+<br />
+<br />
+
+<h2>Feedback</h2>
+  <tal:unsent condition="request/feedback-sent|nothing">
+  <p><span style="color:green">Thank you!</span> Your feedback has been sent.</p>
+  </tal:unsent>
+  
+  <tal:unsent condition="not:request/feedback-sent|nothing">
+    <p>Please feel free to send bug reports, ideas, feature requests and feedback to us.</p>
+    <form action="sendFeedback" method="post">
+    <textarea name="feedback" cols="20" style="width:190px" rows="8"></textarea>
+    <br />
+    <p>Your email (for replies)<br />
+    <input name="your_email" value="" size="20" /></p>
+    <div class="ihs">
+    Your web site: <input name="website" value="" />
+    </div>
+    <input type="submit" value="Send!" />
+    </form>
+  </tal:unsent>
+  
+</div>
+
+
+
+<div metal:fill-slot="content">
+<h2>More info about Smurl</h2>
+
+<p><b>The word "Smurl" comes from "Small" + "URL".</b></p>
+
+<p>The idea of the <b>Smurl</b> came from the need for a base system that does
+exactly what <b>Smurl</b> does. We needed a pluggable web application that we
+can use to do what this site does but for various projects and different domains.
+This website you're looking at right now is just an implementation with a 
+<b>Smurl Folder </b><a href="http://www.zope.org">Zope</a> object base. It allows
+you this functionality but does nothing in terms of presentation. All it really
+gives you for an interface is the <code>createSmurl</code> function which accepts
+a parameter <code>url</code> and returns the corresponding redirect URL.</p>
+
+
+<tal:block condition="here/releases|nothing">
+<h3>Open Source</h3>
+
+<p>The <code>Smurl Folder</code> base object is available as a downloadable Zope product here:</p>
+
+<ul tal:define="releases python:here.releases.objectValues('File')">
+  <li tal:repeat="release releases">
+    <a tal:attributes="href release/absolute_url_path"
+       tal:content="release/id"></a>
+  </li>
+</ul>
+
+<p>The license is <a href="http://www.zope.org/Resources/ZPL">ZPL</a></p>
+</tal:block>
+
+<h3>Smurl Web Services</h3>
+
+<p>This <b>Smurl</b> website has a simple but useful web API that any body can use. Suppose Python is your favorite weapon:</p>
+<code>&gt;&gt;&gt; <span class="p-keyword">import</span> xmlrpclib<br />
+&gt;&gt;&gt; api = xmlrpclib.Server(<span class="p-string">'http://smurl.name/'</span>)<br />
+&gt;&gt;&gt; <span class="p-keyword">print</span> api.createSmurl(<span class="p-string">'http://www.somelengthydomain.name/path/test'</span>)<br />
+<span class="p-string">'http://smurl.name/6r'</span>
+</code>
+
+<h3>About the redirecting</h3>
+
+<p>The redirecting is a straight forward simple server side redirect. It does
+not use any client side scripting.</p>
+
+<p><font color="#0039b6">G</font><font color="#c41200">o</font><font color="#f3c518">o</font><font color="#0039b6">g</font><font color="#30a72f">l</font><font color="#c41200">e</font>
+will understand and spider these redirects. When it does so, it does <i>not</i>
+index the found content at the destination <i>with the Smurl URL</i>. That 
+basically means that the URL you see when searching for a site that Google 
+has found by spidering a <b>Smurl</b> will be the destination URL. In other words,
+you will never see any <b>Smurl</b> URLs on the Google result page. Believe it if
+you like; Google indexing is still very much like alchemy.</p>
+
+
+<h3>About the author</h3>
+
+<p><a href="http://www.peterbe.com">Peter Bengtsson</a> is a senior web
+programmer at <a href="http://www.fry-it.com">Fry-IT</a> based in London, England.<br />
+Read the <a href="http://www.peterbe.com/plog/smurl.name">announcement about Smurl.name</a> on www.peterbe.com</p>
+
+
+
+</div>
+</html>

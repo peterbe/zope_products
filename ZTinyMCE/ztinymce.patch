@@ -1,0 +1,117 @@
+diff -ur ZTinyMCE.orig/Constants.py ZTinyMCE/Constants.py
+--- ZTinyMCE.orig/Constants.py	2007-02-09 19:22:38.000000000 +0100
++++ ZTinyMCE/Constants.py	2007-03-20 15:37:54.000000000 +0100
+@@ -47,6 +47,7 @@
+ CACHE_HOURS = not int(DEBUG) and 2 or 0 #hours
+ 
+ TINYMCE_ZIPFILE = 'tinymce_2_0_9.zip'
++LPACKAGE_ZIPFILE = 'tinymce_lpackage.zip'
+ 
+ # Permission
+-MANAGE_CONFIGURATION = 'Manage ZTinyMCE Configuration'
+\ No newline at end of file
++MANAGE_CONFIGURATION = 'Manage ZTinyMCE Configuration'
+diff -ur ZTinyMCE.orig/TinyMCE.py ZTinyMCE/TinyMCE.py
+--- ZTinyMCE.orig/TinyMCE.py	2007-02-09 19:22:38.000000000 +0100
++++ ZTinyMCE/TinyMCE.py	2007-03-22 09:19:08.000000000 +0100
+@@ -8,6 +8,7 @@
+ import os, re, sys
+ import itertools
+ import shutil
++import tempfile
+ 
+ # Zope
+ from Globals import InitializeClass, package_home, DTMLFile
+@@ -137,23 +138,27 @@
+         instanciate in this instance. """
+ 
+         producthome = package_home(globals())
++
+         try:
+             # 1. Create temp dir
+-            os.mkdir(os.path.join(producthome, '_tinymce_unpacked'))
++            tmpdir = tempfile.mkdtemp()
+             
+-            # 2. unpack
+-            Utils.extract(os.path.join(producthome, TINYMCE_ZIPFILE),
+-                          os.path.join(producthome, '_tinymce_unpacked'))
++            # 2. unpack tinymce
++            Utils.extract(os.path.join(producthome, TINYMCE_ZIPFILE), tmpdir)
++
++            # 3. unpack language pack (if exists)
++            lpackage = os.path.join(producthome, LPACKAGE_ZIPFILE)
++            if os.path.isfile(lpackage):
++                Utils.extract(lpackage, tmpdir)
+                           
+-            # 3. Unravel into zope
+-            tinymcehome = os.path.join(package_home(globals()), '_tinymce_unpacked')
+-            self._uploadInto(tinymcehome, self, clean=clean, create_zope_folder=0)
++            # 4. Unravel into zope
++            self._uploadInto(tmpdir, self, clean=clean, create_zope_folder=0)
+ 
+         finally:
+-            # 4. Remove the unpacked dir
+-            if os.path.isdir(os.path.join(producthome, '_tinymce_unpacked')):
+-                shutil.rmtree(os.path.join(producthome, '_tinymce_unpacked'))
+-                #os.remove()
++            # 5. Remove the unpacked dir
++            if os.path.isdir(tmpdir):
++                shutil.rmtree(tmpdir)
++
+ 
+         self._updateLastUpdateDate()
+         if clean:
+@@ -163,7 +168,7 @@
+             url = self.absolute_url() + '/manage_Update'
+             url += '?manage_tabs_message=Update+finished'
+             REQUEST.RESPONSE.redirect(url)
+-            	
++
+     def _uploadInto(self, os_folderpath, zope_container, clean=False, 
+                     create_zope_folder=True):
+         """ upload all files in 'os_folderpath' into 'zope_container' """
+@@ -273,4 +278,4 @@
+ 
+     
+     
+-    
+\ No newline at end of file
++    
+diff -ur ZTinyMCE.orig/Utils.py ZTinyMCE/Utils.py
+--- ZTinyMCE.orig/Utils.py	2007-02-09 19:22:38.000000000 +0100
++++ ZTinyMCE/Utils.py	2007-03-20 15:37:54.000000000 +0100
+@@ -92,26 +92,20 @@
+     http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/465649
+     """
+     zf = zipfile.ZipFile( filename )
+-    namelist = zf.namelist()
+-    dirlist = filter( lambda x: x.endswith( '/' ), namelist )
+-    filelist = filter( lambda x: not x.endswith( '/' ), namelist )
++
+     # make base
+     pushd = os.getcwd()
+     if not os.path.isdir( dir ):
+         os.mkdir( dir )
+     os.chdir( dir )
+-    # create directory structure
+-    dirlist.sort()
+-    for dirs in dirlist:
+-        dirs = dirs.split( '/' )
+-        prefix = ''
+-        for dir in dirs:
+-            dirname = os.path.join( prefix, dir )
+-            if dir and not os.path.isdir( dirname ):
+-                os.mkdir( dirname )
+-            prefix = dirname
++
+     # extract files
+-    for fn in filelist:
++    for fn in zf.namelist():
++        fdir = os.path.dirname(fn)
++        if fdir and not os.path.exists(fdir):
++            os.makedirs(fdir)
++        if fn.endswith('/'):
++            continue
+         try:
+             out = open( fn, 'wb' )
+             buffer = StringIO( zf.read( fn ))

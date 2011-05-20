@@ -1,0 +1,145 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2003-02-26 01:02+GMT, normaltid\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "January"
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "December"
+msgstr ""
+
+msgid "Sun"
+msgstr ""
+
+msgid "Mon"
+msgstr ""
+
+msgid "Tue"
+msgstr ""
+
+msgid "Wed"
+msgstr ""
+
+msgid "Thu"
+msgstr ""
+
+msgid "Fri"
+msgstr ""
+
+msgid "Sat"
+msgstr ""
+
+msgid "List Attendances"
+msgstr ""
+
+msgid "Count"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "None"
+msgstr ""
+
+msgid "Create Attendance"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Attendees"
+msgstr ""
+
+msgid "Attendance"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Remove this attendance"
+msgstr ""
+
+msgid "Person details"
+msgstr ""
+
+msgid "First name"
+msgstr ""
+
+msgid "Last name"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Phone number"
+msgstr ""
+
+msgid "   Save   "
+msgstr ""
+
+msgid "Remove person permanently"
+msgstr ""
+
+msgid "Invitation"
+msgstr ""
+
+msgid "Reset password and send invitation email"
+msgstr ""
+
+msgid "List Persons"
+msgstr ""
+
+msgid "edit"
+msgstr ""
+
+msgid "Add Person"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Password again"
+msgstr ""

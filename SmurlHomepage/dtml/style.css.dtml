@@ -1,0 +1,253 @@
+<dtml-call "RESPONSE.setHeader('Content-Type','text/css')">
+<dtml-call "RESPONSE.setHeader('Expires',(ZopeTime()+5).rfc822())">
+
+
+/* The Basics */
+* { 
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	color: #3287B6;
+}
+
+a:hover {
+	color: #D88207;
+	text-decoration: underline;
+}
+
+a img {
+	border: none;
+}
+
+acronym, abbr {
+	border-bottom: 1px dashed #444;
+	font-size: 90%;
+	letter-spacing: .07em;
+	cursor:help;
+}
+
+blockquote {
+    margin: 0px 20px;
+    padding: 10px 10px 10px 15px;
+    font-family: Georgia, "Times New Roman", Times, serif;    
+    color: #666;
+    text-align: justify;
+}
+
+blockquote.code {
+	margin-left: 0;
+	padding: 10px 0;
+}
+
+form {
+	margin-top: 7px;
+}
+
+p {
+	padding: 5px 0 5px 0;
+}
+
+small {
+	font-size: 85%;
+}
+
+
+#sidebar p {
+	font-size: 10px;
+	line-height: 15px;
+}
+
+
+#footer p {
+	color: #666;
+}
+
+.alignright {
+	float: right;
+}
+
+.alignleft {
+	float: left;
+}
+
+.aligncenter {
+	text-align: center;
+}
+
+.date {
+	font-size: 10px;
+	font-weight: normal;
+	text-align: right;
+	margin-bottom: 10px;
+}
+
+.description {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	color: #fff;
+	margin-left: 20px;
+}
+
+.feedback {
+	background-color: #f8f8f8;
+	padding: 0 5px 2px 5px;
+}
+/*
+.meta {
+	font-size: 10px;
+	font-weight: normal;
+	text-align: left;
+}
+*/
+/*
+.post {
+	margin-bottom: 35px;
+}
+*/
+/* Headings */
+h1 { font: bolder 39px "Trebuchet MS",Verdana,sans-serif; margin-left: 20px; padding-top: 35px; }
+h1 a { color: #fff; text-decoration: none; border: none; }
+h1 a:hover { color: #fff; text-decoration: none; border: none; }
+/*
+div#headerfirstpage h1{
+	padding-top: 100px;
+}
+*/
+h2 { border-bottom: 1px solid #ddd; color: #336; padding-bottom: 2px; font: bold 19px Arial, Helvetica, sans-serif; margin-bottom:10px; }
+h2 a { color: #336; text-decoration: none; border: none; }
+h2 a:hover { color: #889AC2; text-decoration: none; border: none; }
+#sidebar h2 { font-size: 13px; font-weight: normal; }
+h3 { border-bottom: 1px solid #ddd; color: #336; padding-bottom: 2px; font: normal 14px Arial, Helvetica, sans-serif; padding-top: 20px; }
+h4 { font: bold 12px Arial, Helvetica, sans-serif; }
+
+/* Layout */
+body { 
+	background-color: #dda;
+	font: 11px/18px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: #444;
+	margin: 0px;
+	padding:10px 0px;
+}
+
+#container {
+	width: 700px;
+	margin: 0 auto;
+	background-color: #fff;
+	padding: 20px 20px 0 20px;
+    border-right: 2px solid #C2C295;
+    border-left: 2px solid #C2C295;
+    border-top: 1px solid #c2c295;
+    border-bottom: 2px solid #c2c295;
+}
+
+#content {
+	float: left;
+	width: 450px;
+}
+
+#footer {
+	clear: both;
+	border-top: 1px solid #ddd;
+	padding-bottom: 8px;
+	text-align: left;
+}
+
+#header {
+	height: 116px;
+	margin-bottom: 35px;
+	background: url(/misc_/SmurlHomepage/bannery.jpg);
+}
+
+
+div.excerpt{
+         width:450px;
+         overflow:hidden;
+}
+
+.sep {
+	margin: 25px 0 20px 0;
+	padding: 0;
+	height: 30px;
+	border:none;
+	background: url(/misc_/SmurlHomepage/sep.png);
+}
+
+#sidebar {
+	float: right;
+	width: 200px;
+	margin-bottom: 35px;
+}
+
+/* Images */
+img.centered {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px solid #ddd;
+}
+	
+img.alignright {
+	padding: 4px;
+	margin: 4px 0 5px 7px;
+	display: inline;
+	border: 1px solid #ddd;
+}
+
+img.alignleft {
+	padding: 4px;
+	margin: 4px 7px 5px 0;
+	display: inline;
+	border: 1px solid #ddd;
+}
+
+/* Lists */
+dl, ul {
+	margin-top: 3px;
+	list-style: none;
+}
+
+dt, dd, li {
+	list-style: none;
+	line-height: 15px;
+	padding: 0 0 0 10px;
+}
+
+dl, ul.listitems-with-bottom-padding li {
+         padding-bottom: 10px;
+}
+
+dt{
+	font-weight:600;
+}
+
+dd{
+	margin-bottom:1em;
+}
+
+li li {
+	margin-left: 20px;
+	margin-bottom: 2px;
+	list-style: circle;
+	padding: 0;
+}
+
+ol{
+	margin-left:20px;
+}
+
+ol li{
+		list-style: decimal;
+		margin-bottom: 10px;
+}
+
+.hidden{
+	visibility:hidden;
+}
+
+/* Code */
+.p-string {color:olive;}
+.p-keyword {color:navy; font-weight:bold;}
+
+
+.pagetitle {color:#646464;}

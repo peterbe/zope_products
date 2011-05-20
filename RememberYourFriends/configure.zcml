@@ -1,0 +1,7 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+	   xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:i18n="http://namespaces.simplistix.co.uk/translations"
+	   package="Products.RememberYourFriends"
+           i18n_domain="ryf">
+  
+</configure>  

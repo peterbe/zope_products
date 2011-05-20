@@ -1,0 +1,31 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body">
+<h2>Ta bort byst bild</h2>
+
+<div class="toprightbox">
+  <a href="BustManagement"
+   >G&aring; tillbaka till alla bilder</a>
+</div>
+
+<form action="../manage_deleteBust">
+
+
+<tal:item replace="structure python:here.getPhoto().tag(display='thumbnail', style='float:right;margin:10px;margin-right:20px')" />
+
+<input type="hidden" name="id" value="" tal:attributes="value here/getId" />
+<dl>
+
+  <dt><label for="title">Ta bort?:</label></dt>
+  <dd><input type="submit" value="Ja!" />
+      &nbsp;
+      <input type="button" value="Nej" onclick="location.href='./BustManagement'"/>
+  </dd>
+
+
+
+</dl>
+</form> 
+
+</div>
+</html> 
+

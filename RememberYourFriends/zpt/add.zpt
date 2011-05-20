@@ -1,0 +1,7 @@
+<tal:comment replace="nothing">
+show the change-reminders page but with params
+</tal:comment>
+
+<form tal:define="template nocall:here/change-reminders"
+      tal:replace="structure python:template(here, request, showcurrentreminders=False)">
+</form>      

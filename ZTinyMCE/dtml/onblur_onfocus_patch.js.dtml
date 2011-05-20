@@ -1,0 +1,2 @@
+<dtml-call "doCache(hours=0)"><dtml-call "RESPONSE.setHeader('Content-type','application/x-javascript')">
+// this hack is deprecated

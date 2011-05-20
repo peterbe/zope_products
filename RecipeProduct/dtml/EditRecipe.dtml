@@ -1,0 +1,115 @@
+<dtml-var standard_html_header>
+
+<table border=0 cellpadding=6>
+<tr>
+<td valign="top" rowspan="2">
+
+  <form action="<dtml-var absolute_url>">
+  <input type="submit" value="Titta på receptet">
+  </form>
+
+  <form action="AdminRecipePhotos">
+  <input type="submit" value="Lägg till och ta bort bilder">
+  </form>
+  
+  <dtml-in getPhotos>
+     <a href="<dtml-var absolute_url>"><dtml-var "_['sequence-item'].tag(display='thumbnail', border=1)"><br></a>
+     <br><br>
+     
+  </dtml-in>
+  
+
+</td>
+<td colspan="2">
+<form action="editRecipe" method="post">
+
+<input name="title" value="<dtml-var getTitle>" size="40"><br>
+<input name="datum:date" value="<dtml-var "datum.strftime('%Y/%m/%d %H:%M:%S')">" size="20"></td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td valign="top">
+
+
+<!--<div class="smalltext"><dtml-var getAuthor></div>-->
+
+
+<table border=0>
+<tr>
+<td valign="top">
+<h3>Ingredienser</h3>
+<textarea cols=35 rows=12 name="ingredients"><dtml-var "getIngredients()"></textarea>
+
+<br>
+
+<table>
+	<tr>	
+	<td valign="top"><p><strong>Svårighetsgrad</strong></p></td>
+	<td valign="top">
+	<select name="difficultylevel">
+	<option value=""></option>
+	<dtml-in difficultylevels>
+	<option <dtml-if "_['sequence-item']==difficultylevel">SELECTED</dtml-if>><dtml-var sequence-item></option>
+	</dtml-in>
+	</select>
+	</td>
+	</tr>
+	<tr>
+	<td valign="top"><p><strong>Kategori(er)</strong></p></td>
+	<td valign="top">
+
+	<select name="categories:list" multiple size="<dtml-var "_.min(5, _.len(getCategoryOptions()))">">
+	<dtml-in "getCategoryOptions(selectablesonly=1)">
+	<option <dtml-if "_['sequence-item'] in categories">SELECTED</dtml-if>><dtml-var sequence-item></option>
+	</dtml-in>
+	</select>
+
+
+	</td>
+	</tr>
+</table>	
+
+</td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td valign="top">
+<h3>Hur man gör</h3>
+<textarea cols=55 rows=15 name="instructions"><dtml-var "getInstructions()"></textarea>
+</td>
+</tr>
+<tr><td colspan="3" align="right">
+
+
+
+
+</td></tr>
+</table>
+
+<table>
+<tr><td>
+<h3><dtml-var "getAuthor(only='firstname')">'s kommentar</h3>
+<textarea name="comment" cols="50" rows="10"><dtml-var "getComment()"></textarea>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td align="center">
+<input type="submit" value="Spara ändringarna">
+</td></tr>
+</table>
+
+</form>
+
+</td>
+</tr>
+</table>
+
+<p>&nbsp;</p>
+<h3>Kommentarer på detta recept</h3>
+
+<table>
+<tr>
+<dtml-call "REQUEST.set('DeletableComments',1)">
+<td valign="top"><dtml-var "show_recipe_comments(_,_.None, REQUEST=REQUEST, commenttoid='')"></td>
+</tr>
+</table>
+
+
+
+<dtml-var standard_html_footer>

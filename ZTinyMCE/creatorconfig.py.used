@@ -1,0 +1,28 @@
+projectname = "ZTinyMCE"
+
+author = "<peter@fry-it.com>"
+
+versionnr='0.0.1'
+
+modules = (
+   dict(
+     modulename='TinyMCE', 
+     
+     classname='TinyMCE', 
+     
+     baseclassname='SimpleItem, PropertyManager',                                   
+     addformmethodname='manage_addZTinyMCEForm',
+     addmethodname='manage_addZTinyMCE',
+     iconname='tinymce_icon.gif', # eg. homepage_icon.gif
+     
+     # Misc
+     create_root_methods=False,
+
+     
+   ),
+   
+)   
+   
+   
+
+

@@ -1,0 +1,117 @@
+<dtml-var standard_html_header>
+
+<script type="text/javascript">
+var newWindow = null;
+
+function closeWin(){
+if (newWindow != null){
+if(!newWindow.closed)
+newWindow.close();
+}
+}
+
+function popUpWin(url, type, strWidth, strHeight){
+closeWin();
+if (type == "fullScreen"){
+strWidth =
+screen.availWidth - 10;
+strHeight = screen.availHeight - 160;
+}
+
+var tools="";
+if (type == "standard" || type == "fullScreen")
+tools = "resizable,toolbar=yes,location=yes,scrollbars=yes,menubar=yes,width="+strWidth+",height="+strHeight+",top=0,left=0";
+if (type == "console") tools = "resizable,toolbar=no,location=no,scrollbars=no,width="+strWidth+",height="+strHeight+",left=0,top=0";
+newWindow = window.open(url, 'newWin', tools);
+newWindow.focus();
+}
+</script>
+
+
+
+<table border=0 cellpadding=6>
+<tr>
+<td valign="top" rowspan="2">
+  <dtml-in getPhotos>
+     <a href="<dtml-var absolute_url>"><dtml-var "_['sequence-item'].tag(display='thumbnail', border=1)"><br></a>
+     <br><br>
+
+  </dtml-in>  
+</td>
+<td colspan="2"><h2><dtml-var getTitle></h2>
+<p><dtml-var showDate></p></td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td valign="top">
+
+
+<div class="smalltext"><a href="<dtml-var "getAuthor(only='object').absolute_url()">"><dtml-var getAuthor></a></div>
+
+
+<table border=0>
+<tr>
+<td valign="top">
+<h3>Ingredienser</h3>
+<dtml-var "showText(getIngredients())">
+
+<br><br>
+<table>
+    <dtml-if difficultylevel>
+	<tr>	
+	<td valign="top"><p><strong>Svårighetsgrad</strong></p></td>
+	<td valign="top">
+	<dtml-var difficultylevel>
+	</td>
+	</tr> 
+	</dtml-if>
+	<dtml-if categories>
+	<tr>
+	<td valign="top"><p><strong><dtml-if "_.len(categories)==1">Kategori<dtml-else>Kategorier</dtml-if></strong></p></td>
+	<td valign="top">
+	<dtml-var "showHyperlinkedCategories(categories)">
+	</td>
+	</tr>
+	</dtml-if>
+</table>
+</td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td valign="top">
+<h3>Hur man gör</h3>
+<dtml-var "showText(getInstructions())">
+</td>
+</tr>
+</table>
+
+<dtml-if "getComment()">
+<h3><dtml-var "getAuthor(only='firstname')">s kommentar</h3>
+<dtml-var "showText(getComment())">
+</dtml-if>
+
+
+</td>
+</tr>
+</table>
+
+<a href="print" style="font-size:80%"
+onclick="popUpWin(this.href,'standard',750,550);return false;"
+onkeypress="popUpWin(this.href,'standard',750,550);return false;">Utskriftsvänligt format</a>
+
+<p>&nbsp;</p>
+<h3>Kommentarer på detta recept</h3>
+
+<table>
+<tr>
+<td valign="top">
+<dtml-comment><dtml-var recipe_comment_form></dtml-comment>
+<em style="font-size:80%">kommentar f&ouml;r tillf&auml;llet
+st&auml;ngt</em>
+</td>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td valign="top"><dtml-var "show_recipe_comments(_,_.None, REQUEST=REQUEST, commenttoid='')"></td>
+</tr>
+</table>
+
+
+<dtml-var standard_html_footer>
+

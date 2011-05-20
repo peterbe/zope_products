@@ -1,0 +1,28 @@
+<dtml-var standard_html_header>
+
+<table>
+<tr><td valign="top">
+
+<h2><dtml-var "getTitle()">s recept</h2>
+<p>
+<dtml-call "REQUEST.set('authorids', getId())">
+<dtml-var recipe_menu>
+</p>
+
+</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td valign="top">
+Kontakta <dtml-var getFirstname> på <dtml-var "encodeEmailString(getEmail())">
+
+<dtml-if "getComment() != ''">
+<h4>Författarens egna ruta</h4>
+<table width="400"><tr><td>
+<dtml-var "showText(getComment())">
+</td></tr></table>
+</dtml-if>
+
+</td>
+</tr>
+</table>
+
+<dtml-var standard_html_footer>

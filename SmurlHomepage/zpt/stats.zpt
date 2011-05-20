@@ -1,0 +1,35 @@
+<br tal:replace="python:here.doCache(24)" /><html metal:use-macro="here/standard_header/macros/standard">
+
+<div metal:fill-slot="sidebar">
+<h2>Homepage</h2>
+<p><a href=".">Return to the Home page</a></p>
+
+<br />
+<br />
+<br />
+  
+</div>
+
+
+
+<div metal:fill-slot="content">
+<h2>Statistics</h2>
+<tal:block tal:define="firstsmurl here/getFirstSmurl; 
+                       latestsmurl here/getLastSmurl;
+                       allcount here/countAllSmurls">
+
+<p>So far, <b tal:content="allcount"></b> Smurls have been created since
+<b tal:content="python:firstsmurl.getCreateDate().strftime('%d %B %Y')"></b> which means that there have been
+roughly <b tal:content="python:round(allcount/(latestsmurl.getCreateDate()-firstsmurl.getCreateDate()),1)"></b> Smurls per day.
+</p>
+
+<p tal:define="count_pagetitled context/countPageTitledSmurls; count_pagetitled_attempts python:context.countPageTitledSmurls(include_failures=1)">
+   Of all <br tal:replace="allcount" />, the page title has been fetched for <b tal:content="count_pagetitled">XX</b> Smurls
+   (<span tal:replace="python:round(100*float(count_pagetitled)/allcount,1)"></span>% of all). 
+   If include all the failed page title fetches, then <b tal:content="count_pagetitled_attempts"></b> Smurls have been check in total.
+   (<span tal:replace="python:round(100-100*float(count_pagetitled)/count_pagetitled_attempts,1)"></span>% fails)
+</p>   
+
+</tal:block>
+</div>
+</html>

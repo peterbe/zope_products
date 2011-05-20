@@ -1,0 +1,145 @@
+<metal:block define-macro="standard"><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="ryf">
+<head>
+	<title metal:define-slot="titletag" tal:content="here/getHTMLTitle">Title</title>
+        <meta http-equiv="Content-Type" 
+              tal:attributes="content python:here.getContentType(here.UNICODE_ENCODING)" />
+
+	<meta name="Description" content="Reminds you to keep in touch" />
+	<meta name="Author" content="Peter Bengtsson, www.peterbe.com" />
+	<meta name="generator" content="Zope (zope.org)" />
+	<link rel="stylesheet" type="text/css" tal:attributes="href python:here.getMiscAlias('/misc_/RememberYourFriends/screen.css')" media="screen" />
+	<link rel="Shortcut Icon" type="image/x-icon" tal:attributes="href string:${here/getRootURL}/favicon.ico" />
+	<style metal:define-slot="extracss" tal:omit-tag=""></style>
+	<script type="text/javascript" tal:attributes="src python:here.getMiscAlias('/misc_/RememberYourFriends/jquery-latest.pack.js')"></script>
+	<script type="text/javascript" tal:attributes="src python:here.getMiscAlias('/misc_/RememberYourFriends/common.js')"></script>
+        <script metal:define-slot="extrajs" tal:omit-tag=""></script>
+	</head>
+<body>
+<div id="container">
+<div id="header"><a name="top"></a><h1><a href="/"><b>RememberYourFriends.com</b><br /><small i18n:translate="">Reminds you to keep in touch</small></a></h1>
+</div>
+
+<div id="success" 
+  tal:condition="options/success|request/success|nothing"
+  tal:content="options/success|request/success">
+</div>
+
+
+<div id="sidebar">
+<metal:sidebar metal:define-slot="sidebar">
+
+<div id="loggedin"
+ tal:content="structure here/show_not_logged_in_template"></div>
+<tal:comment replace="nothing">
+<tal:block condition="not:here/isLoggedIn">
+<h2 i18n:translate="">Not logged in</h2>
+<p i18n:translate="">You can log in.<br />
+<a href="about">more info</a></p>
+</tal:block>
+
+<tal:block condition="here/isLoggedIn">
+<h2 i18n:translate="">Logged in</h2>
+<p tal:define="user here/getLoggedinUser;
+               count_reminders here/countReminders"
+   ><span i18n:translate="">You have</span>
+    <strong tal:condition="python:count_reminders==0"
+     i18n:translate=""
+     >no reminders</strong>
+    <strong tal:condition="python:count_reminders==1"
+     i18n:translate=""
+     >one reminder</strong>
+    <strong tal:condition="python:count_reminders>1"
+            tal:content="string:$count_reminders reminders"
+            i18n:translate=""
+     >many reminder</strong>
+    set up. <br />
+    
+    <a tal:condition="python:request.URL.find('change-reminders')==-1"
+       href="change-reminders"
+       i18n:translate="">Add or remove reminders</a>
+     
+</p>
+
+</tal:block>
+</tal:comment>
+
+<br />
+
+
+
+<h2 i18n:translate="">About RememberYourFriends.com</h2>
+
+<p><strong tal:content="string:${here/countTotalUsers} users"></strong> have set up
+a total of<br /> <strong tal:content="string:${here/countTotalReminders} friends"></strong> to be reminded of.<br />
+About <strong tal:content="string:${here/countTotalSentReminders} reminders"></strong> have been sent out so far. 
+<br />
+<a href="stats">Stats</a>, <a href="faq">FAQ</a>, 
+<a href="peter">Created by Peter</a></p>
+<br />
+
+
+<h2 i18n:translate="">The Family</h2>
+<ul>
+
+	<li><a href="http://www.peterbe.com" title="Peter Bengtsson's personal website">Peterbe.com</a></li>
+	<li><a href="http://www.fry-it.com" title="Fry-IT Ltd - UK based IT company">Fry-IT</a></li>
+	<li><a href="http://www.issuetrackerproduct.com" title="A user-friendly issue tracker web application for Zope">IssueTrackerProduct</a></li>
+	<li><a href="http://crosstips.org" title="helps you solve your crossword puzzles">Crosstips</a></li>
+        <li><a href="http://smurl.name" title="Make long URLs small">Smurl.name</a></li>
+	<li><a href="http://www.zope.org" title="Zope - The web platform used for this application">Zope.org</a></li>
+</ul>
+<br />
+
+<tal:comment replace="nothing">
+<h2>Serious business</h2>
+<div align="center">
+<a href="http://www.clicksor.com/new_aa_site.php?srid=4235861" target="_blank">
+<img src="http://www.clicksor.com/publisher/images/ad/125x125_4.gif" border="0" alt="Clicksor.com" /></a>
+</div>
+</tal:comment>
+
+
+<div>&nbsp;</div>
+
+</metal:sidebar>
+</div>
+
+<div id="content">
+
+	<div class="storycontent" metal:define-slot="body">
+	
+
+	</div>
+	<br />
+	<br />
+	
+</div>
+
+
+
+<!-- begin footer -->
+<div id="footer">
+
+<p>
+	<a href="http://www.peterbe.com">&copy <br tal:replace="python:here.ZopeTime().strftime('%Y')" /> Peter Bengtsson</a>
+</p>
+</div>
+</div>
+
+<tal:block condition="here/enableGoogleAnalytics">
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-94373-3";
+urchinTracker();
+</script>
+</tal:block>
+
+</body>
+</html>
+</metal:block>

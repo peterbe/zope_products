@@ -1,0 +1,16 @@
+<dtml-var manage_page_header>
+
+<dtml-var "manage_form_title(this(), _,
+           form_title='Add Smurl Folder',
+	   )">
+
+<form action="manage_addSmurlFolder" method="get">
+<dl>
+  <dt><label for="id">Id:</label></dt>
+  <dd><input type="text" name="id" id="id" value="smurl" /></dd>
+</dl>
+
+<input type="submit" value=" Add " />
+</form>
+
+<dtml-var manage_page_footer>

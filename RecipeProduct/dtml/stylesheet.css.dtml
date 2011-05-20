@@ -1,0 +1,40 @@
+<dtml-call "doCache(48)"><dtml-call "RESPONSE.setHeader('Content-type','text/css')">
+
+body {
+/*  margin-top:0em; */
+  background-color:#FFFFFF;
+  font-family: Verdana, Arial, sans-serif;
+}
+
+
+h1 h2 h3 {
+  font-family: Arial, sans-serif, verdana;
+}
+
+.copyright {
+  font-family: Arial, Verdana;
+  font-size: 60%;
+  color: #999999;
+}
+
+.smalltext {
+  font-family: Arial, Verdana;
+  font-size: 80%;
+  color: #666666;
+}
+
+.showtext {
+  line-height: 1.3em;
+  font-size:90%;
+}
+
+.attention {
+  font-weight: bold;
+  color: red;
+}
+
+.breadcrumbtext {
+  font-family:Arial, Verdana, sans-serif;
+  font-size:80%;
+}
+

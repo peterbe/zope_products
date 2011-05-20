@@ -1,0 +1,28 @@
+<dtml-if "REQUEST.has_key('changeAuthor')">
+
+
+<a name="changeauthor"></a>
+<table cellpadding=10 border=1><tr><td>
+<h4>Välj författare</h4>
+<dtml-in "getAuthors()">
+<a href="<dtml-var absolute_url>/AuthorAdmin"><dtml-var getTitle></a>
+<dtml-unless sequence-end><br></dtml-unless>
+
+
+</dtml-in>
+<br><br>
+<form action=""><input type="submit" value="Avbryt"></form>
+</td></tr></table>
+
+
+<dtml-else>
+
+
+<dtml-let url="getChefpointURL()">
+<a name="b"></a>
+<a href="<dtml-var url>" title="För chefen"><img src="/misc_/RecipeProduct/chef.gif" border=0 
+alt="För chefen"></a>
+</dtml-let>
+
+
+</dtml-if>

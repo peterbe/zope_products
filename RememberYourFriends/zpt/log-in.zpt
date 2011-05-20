@@ -1,0 +1,81 @@
+<html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf">
+<script type="text/javascript" metal:fill-slot="extrajs">
+function insertAfter(newElement, targetElement) {
+   var parent = targetElement.parentNode;
+   if (parent.lastChild == targetElement) {
+      parent.appendChild(newElement);
+   } else {
+      parent.insertBefore(newElement, targetElement.nextSibling);
+   }
+}
+
+function checkLoginForm(f) {
+  if (!document.getElementById) return true;
+  var passkey = f.passkey.value;
+  if (!passkey.length) {
+    var w = document.createElement('em');
+    w.appendChild(document.createTextNode(' Uh? '));
+    f.passkey.parentNode.insertBefore(w, f.passkey);
+    return false;
+  }
+  var wait=document.createElement('img');
+  wait.src="/misc_/RememberYourFriends/pleasewait.gif";
+  wait.alt="Please wait...";
+  document.getElementById('pleasewait').appendChild(wait);
+  return true;
+}
+</script>
+<div metal:fill-slot="body">
+
+<h3 i18n:translate="">Log in</h3>
+
+<p i18n:translate="">If you can't remember your passkey, all you have to do is to dig out one
+of your <strong>previously sent reminders from this site</strong> which will contain a link
+to allow you to log in.</p>
+
+<form action="loginPasskey" method="post" onsubmit="return checkLoginForm(this)">
+<input type="hidden" name="remember_passkey" value="1" />
+<table tal:define="errors python:request.get('submiterrors', {})">
+  <tr>
+    <td><strong i18n:translate="">Passkey:</strong></td>
+    <td><input type="password" name="passkey" size="10" value="" />
+        <span class="error" tal:condition="errors/passkey|nothing" tal:content="errors/passkey"></span>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><input type="submit" value="Log in" i18n:attributes="value" />
+        <div id="pleasewait"></div>
+    </td>
+  </tr>
+</table>
+
+</form>
+
+<br />
+
+<h3 i18n:translate="">Passkey reminder</h3>
+
+<form action="sendPasskeyReminder">
+<table tal:define="errors python:request.get('submiterrors', {})">
+  <tr>
+    <td><strong i18n:translate="">Your email:</strong></td>
+    <td><input name="email" size="25" tal:attributes="value python:request.get('email','')" />
+        <span class="error" tal:condition="errors/email|nothing" tal:content="errors/email"></span>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><input type="submit" value="Send reminder" i18n:attributes="value" />
+        <div id="pleasewaitemail"></div>
+    </td>
+  </tr>
+</table>
+</form>
+
+</div>
+</html>

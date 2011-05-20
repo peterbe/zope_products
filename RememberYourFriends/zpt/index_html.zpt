@@ -1,0 +1,141 @@
+<br tal:replace="python:here.doCache(12)" /><html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf">
+<script type="text/javascript" metal:fill-slot="extrajs"
+ tal:attributes="src python:here.getMiscAlias('/misc_/RememberYourFriends/home.js')"></script>
+<style type="text/css" metal:fill-slot="extracss">
+.unfocused{color:rgb(160,160,160)}
+.focused{color:black;}
+</style>
+<div metal:fill-slot="body">
+
+<h2 i18n:translate="">What RememberYourFriends.com is all about</h2>
+
+<p i18n:translate=""><strong>Do you have many friends that you want to email every now and then
+but have difficulties remembering to do that?</strong></p>
+
+<div id="moreintroduction" tal:attributes="class python:test(not request.get('readmore'), 'h')">
+<p i18n:translate="">Perhaps you have a good friend who has moved to a different city or country but you
+want to maintain the contact and your only hope for now is to email this friend every
+now and then to show your commitment. Or you're a business and you want to remind 
+your key customers of new products or stuff every 6 months.</p>
+
+<p i18n:translate="">This site helps you maintaining these friendships by sending a periodic reminder
+to you via email based on how often you want to be reminded about certain friends.<br />
+Once you have signed up you will only use this site to add or remove reminders. All
+communication is done via email.</p>
+</div>
+<div id="readmoreintroduction" tal:condition="not:request/readmore|nothing">
+<p><a href="?readmore=1" onclick="return readmore()" i18n:translate="">Read more &raquo;</a>
+</p>
+
+</div>
+
+<br />
+
+<div id="formorlog">
+<p>
+<a href="ryf-email.png"
+   i18n:attributes="title"
+   title="Received reminder for 'Mamma'"
+><img src="ryf-email-small.png"
+ class="screenshot"
+ i18n:attributes="alt"
+ alt="Received reminder for 'Mamma'" border="1" /></a>
+&nbsp;
+<a href="change-reminder.png"
+   title="Change reminder details"
+><img src="change-reminder-small.png"
+ class="screenshot"
+ alt="Change reminder details" border="1" /></a>
+&nbsp;
+<a href="settings.png"
+   title="Change your settings (start)"
+   i18n:attributes="title"
+><img src="settings-small.png"
+ class="screenshot"
+ alt="Change your settings (start)" border="1" i18n:attributes="alt" /></a>
+</p>
+
+<form action="SignUp" method="post" onsubmit="return validateSignup(this)"
+ tal:define="errors python:request.get('submiterrors', {})">
+
+<strong i18n:translate="">Your email address:</strong>
+<input name="email" size="35"
+ tal:attributes="value python:request.get('email','')" />
+<span class="error" tal:condition="errors/email|nothing" tal:content="errors/email"></span>
+<br />
+<p i18n:translate="">Add some friends right now...</p>
+<span class="error" tal:condition="errors/friends|nothing" tal:content="errors/friends"></span>
+<table>
+  <tr>
+    <!--<th align="left">Friend's name or email or both</th>-->
+    <th align="left" i18n:translate="">Friend</th>
+    <th i18n:translate="">How often</th>
+  </tr>
+  <tr tal:repeat="i python:range(5)">
+    <td><input name="friends.name:records" value="" size="30"
+         tal:attributes="id string:name$i;
+                         value python:request.get('friendname%s'%i,'');
+                         class python:test(request.has_key('friendname%s'%i), 'focused','unfocused')"
+         class="unfocused"/></td>
+    <td tal:replace="nothing"><input name="friends.email:records" value="" size="30" /></td>
+    <td>
+      <select name="friends.periodicity:records" class="unfocused"
+         tal:define="default_preval python:request.get('friendperiodicity%s'%i, here.DEFAULT_PERIODICITY)"
+	 tal:attributes="id string:periodicity$i;
+                         class python:test(request.has_key('friendperiodicity%s'%i),'focused','unfocused')">
+        
+        <option tal:condition="python:request.has_key('friendperiodicity%s'%i)"
+          tal:attributes="value python:request.get('friendperiodicity%s'%i)"
+          tal:content="python:here.translatePeriodicityOption(request.get('friendperiodicity%s'%i))"
+          >
+          
+        </option>
+        <option tal:condition="python:request.has_key('friendperiodicity%s'%i)"
+                tal:repeat="option here/getPeriodicityOptions"
+                tal:attributes="value option/value"
+                tal:content="option/label"></option>        
+        <option tal:condition="not:python:request.has_key('friendperiodicity%s'%i)"
+                tal:repeat="option here/getPeriodicityOptions"
+                tal:attributes="value option/value;
+                                selected python:test(path('repeat/option/index')==i);
+				"
+                tal:content="option/label"
+                i18n:translate=""></option>
+      </select>
+    </td>
+  </tr>
+</table>
+<input type="submit" value="Sign up now" i18n:attributes="value" />
+
+<!--
+<p><span class="nb">*</span> Not required. Only for your own benefit later.
+</p>
+-->
+
+</form>
+
+<p i18n:translate="spam_guarantee"><strong>Spam guarantee:</strong>
+Your email (or your friends email) will <strong>never</strong> 
+be sold or used for spamming.
+Read more <a href="i-hate-spam">about the spam guarantee</a> or
+<a href="peter">about the creator RememberYourFriends.com</a>.
+</p>
+
+<p><strong>New!</strong><br/>
+I have a new site now called <a href="http://crosstips.org/"
+title="Crosstips - helps you solve crossword puzzles">Crosstips</a> which 
+is a site for people getting stuck on crossword puzzles.
+</p>
+
+</div>
+
+
+
+
+
+</div>
+</html>

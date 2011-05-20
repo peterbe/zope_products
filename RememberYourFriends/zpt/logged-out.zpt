@@ -1,0 +1,23 @@
+<html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf">
+<div metal:fill-slot="body">
+
+<h3 i18n:translate="">Logged out</h3>
+
+<p i18n:translate="">If you want to log in again, you can on <a href="log-in">the log in page</a>. 
+If you can't remember your passkey, you can wait till you get the next reminder which will 
+contain a link that logs you in.
+</p>
+
+
+
+<div class="advert"></div>
+
+
+
+
+</div>
+</html>

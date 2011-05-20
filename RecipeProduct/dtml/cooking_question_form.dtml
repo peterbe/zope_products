@@ -1,0 +1,26 @@
+<form action="<dtml-if actionurl><dtml-var actionurl><dtml-else>manage_addCookingQuestion</dtml-if>" method="post">
+<dtml-if edit_cooking_question_id>
+<input type="hidden" name="id" value="<dtml-var edit_cooking_question_id>">
+</dtml-if>
+<table>
+<tr>
+  <td><strong>Kort beskrivning av frågan</strong></td>
+</tr>
+<tr>
+  <td><input name="title" size="40" value="<dtml-var "REQUEST.get('title','')">">
+      <span class="smalltext">T.ex: När man tillagar ris</span></td>
+</tr>
+<tr>
+  <td><strong>Hela frågan</strong></td>
+</tr>
+<tr>
+  <td>
+  <textarea name="question" cols="45" rows="10"><dtml-var "REQUEST.get('question','')"></textarea>
+  </td>
+</tr>
+<tr>
+  <td align="right"><input type="submit" value="Spara och publicera frågan nu"></td>
+</tr>
+</table>
+
+</form>

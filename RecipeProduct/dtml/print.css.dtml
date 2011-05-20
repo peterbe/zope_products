@@ -1,0 +1,34 @@
+<dtml-call "RESPONSE.setHeader('Content-type','text/css')">
+
+body {
+  background-color:#FFFFFF;
+  font-family: sans-serif, Arial,Verdana ;
+}
+
+img#logo {
+  float:left;
+  padding-left:20px;
+}
+
+#head {
+  text-align:center;
+}
+
+#top {
+}
+
+#leftbit {
+  margin-left:15px;
+  width:37%;
+  float:left;
+}
+
+#rightbit {
+  margin-left:40%;
+}
+
+.copyright {
+  font-family: Arial, Verdana;
+  font-size: 80%;
+  color: #999999;
+}

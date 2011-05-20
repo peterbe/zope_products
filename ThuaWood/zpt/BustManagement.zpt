@@ -1,0 +1,48 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body">
+
+<div class="toprightbox">
+  <a tal:attributes="href string:manage_addProduct/ThuaWood/addBustForm"
+  ><img tal:attributes="src string:/misc_/${here/ProjectName}/add_button.png" alt="Add" border="0" /></a>
+  <a tal:attributes="href string:manage_addProduct/ThuaWood/addBustForm"
+   >L&auml;gg till ny byst bild</a>
+</div>
+
+
+<div tal:define="items python:list(here.getBusts(sort='bobobase_modification_time', reverse=True))">
+
+<h3>Lista p&aring; alla bystar
+(<br tal:replace="python:len(items)" />)
+</h3>
+
+
+
+  <div tal:repeat="item items">
+    <img tal:define="thumbnail item/getThumbnail"
+         tal:replace="structure python:thumbnail.tag(style='float:left;margin-right:5px;margin-bottom:5px')" />
+    <b>Namn: <span tal:replace="item/getTitle"></span></b>
+     [<a tal:attributes="href string:${item/absolute_url_path}/editBustForm">edit</a> |
+      <a tal:attributes="href item/absolute_url_path">view</a> | 
+     <!-- <a tal:attributes="href string:${item/aq_parent/absolute_url_path}/renameFileForm?id=${item/getId}">rename</a> | -->
+      <a tal:attributes="href string:${item/absolute_url_path}/deleteBustForm">delete</a>]
+     <br />
+      URL: <small style="color:green" tal:content="item/absolute_url_path"></small>
+     <br />
+     <i>Beskrivning: <span tal:replace="item/getDescription"></span></i><br />
+      <tal:comment replace="nothing">
+       <span style="color:green" tal:condition="item/isPublished"
+         tal:content="string:Publiserad"></span>
+       <span style="color:red" tal:condition="not:item/isPublished"
+         tal:content="string:Inte &auml; publiserad"></span>
+      </tal:comment>
+     
+     <div class="clearfix"></div>
+  
+  </div>
+  
+  <em tal:condition="not:items">Inga &auml;nnu :(</em>
+
+</div>
+
+</div>
+</html>

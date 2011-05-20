@@ -1,0 +1,28 @@
+<html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf">
+
+<div metal:fill-slot="body">
+
+<h2 tal:content="options/errortitle|default">Error</h2>
+
+<div id="message">
+  <p tal:content="structure options/errormessage|default">
+  An error occurred with the submitted data. Please go back and try to
+  correct the misstake.
+  </p>
+  
+  <form action="/" align="center"
+   tal:attributes="action python:test(request.HTTP_REFERER and request.HTTP_REFERER.startswith(here.getRootURL()), request.HTTP_REFERER, '/')"
+  >
+  <input type="submit" value="Go back" onclick="history.go(-1)"
+    i18n:attributes="value"
+   />
+  </form>
+  
+</div>
+
+</div>
+</html>

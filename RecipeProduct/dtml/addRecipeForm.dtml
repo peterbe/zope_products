@@ -1,0 +1,38 @@
+<HTML> 
+<HEAD><TITLE>Add Recipe</TITLE>
+<link rel="stylesheet" type="text/css" href="/manage_page_style.css">
+</HEAD> 
+<BODY BGCOLOR="#FFFFFF" LINK="#000099" VLINK="#555555"> 
+<H2>Add Recipe</H2> 
+<form action="manage_addRecipe">
+<dtml-if GoToURL>
+ <input type=hidden name=GoToURL value="<dtml-var GoToURL>">
+</dtml-if>
+<table border=0> 
+<tr><th><em>Id:</em></th> 
+    <td><input type=text name=id value=""></td> 
+</tr>
+
+<tr><th>Author:</th>
+    <td><dtml-var getTitle></td> 
+</tr>
+
+<tr><th>Title:</th>
+    <td><input type=text name=title size="40" value=""></td> 
+</tr>
+
+<tr>
+    <td colspan=2>
+    <p>Ingredients</p>
+    <textarea cols=40 rows=10 name=ingredients></textarea></td> 
+</tr> 
+<tr>
+    <td colspan=2>
+    <p>Instructions</p>
+    <textarea cols=40 rows=10 name=instructions></textarea></td> 
+</tr> 
+
+
+<tr><td></td><td><input type=submit value=" Add "></td></tr> 
+</table></form> 
+</body></html> 

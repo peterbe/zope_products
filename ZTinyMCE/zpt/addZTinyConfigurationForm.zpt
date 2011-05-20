@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Add form created by FriedZopeProductCreator 0.4 -->
+<head>
+  <title>Add TinyMCE Configuration</title>
+  <link rel="stylesheet" type="text/css" href="/manage_page_style.css">
+  <style type="text/css">
+    label { font-weight:bold; font-family:sans-serif,Arial; }
+  </style>
+</head>
+<body>
+<h2>Add TinyMCE Configuration</h2>
+<form action="manage_addZTinyConfiguration">
+
+<dl>
+
+  <dt><label for="id">Id:</label></dt>
+  <dd><input name="id" size="30" value="tinymce.conf" /></dd>
+
+  <dt><label for="title">Title:</label></dt>
+  <dd><input name="title" size="30" value="My TinyMCE configuration" /></dd>
+  
+  <dt><label for="optimize">Optimize:</label></dt>
+  <dd><input type="checkbox" name="optimize" id="optimize" value="1" checked="checked" /></dd>
+  
+<textarea name="configuration" style="display:none">//Sample stuff to get you started
+mode : "textareas",
+theme : "simple"</textarea>
+</dl>
+<br />
+<input type="submit" value=" Add " />
+<input type="submit" name="addandedit" value="Add and Edit" />
+</form> 
+
+<p><b>Help:</b><br />
+A TinyMCE Configuration is a little object that works together with a <code>ZTinyMCE</code>
+instance to render the TinyMCE widget. You can have one ZTinyMCE instance (one is enough)
+and several TinyMCE configurations depending on how you want to use TinyMCE.<br />
+The configuration is simply a chunk JavaScript code that sets the option for the widget 
+you want to employ.
+</p>
+
+</body>
+</html> 
+

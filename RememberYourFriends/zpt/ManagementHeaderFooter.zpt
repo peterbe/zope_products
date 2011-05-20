@@ -1,0 +1,55 @@
+<metal:block define-macro="standard"><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title metal:define-slot="titletag" tal:content="string:${here/getHTMLTitle} - Management">Title</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="Shortcut Icon" type="image/x-icon" tal:attributes="href string:${here/getRootURL}/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="screen.css" media="screen"
+	 tal:attributes="href string:${here/getRootURL}/screen.css" />
+        <style type="text/css">
+        #content{width:700px}
+        </style>
+	<style metal:define-slot="extracss" tal:omit-tag=""></style>
+        
+	<script type="text/javascript" src="/misc_/RememberYourFriends/common.js"></script>
+	<script type="text/javascript" src="/misc_/RememberYourFriends/tw-sack.js"></script>
+        <script metal:define-slot="extrajs" tal:omit-tag=""></script>
+	</head>
+<body>
+<div id="container">
+<div id="header"><a name="top"></a><h1><a href="/"><b>RememberYourFriends.com</b><br />
+<small>MANAGEMENT</small></a></h1>
+</div>
+
+<div id="success" 
+  tal:condition="options/success|request/success|nothing"
+  tal:content="options/success|request/success">
+</div>
+
+
+<div id="content">
+
+	<div class="storycontent" metal:define-slot="body">
+	
+
+	</div>
+	<br />
+	<br />
+	
+</div>
+
+
+
+<!-- begin footer -->
+<div id="footer">
+
+<p>
+	<a tal:attributes="href here/getRootURL">EXIT</a>
+</p>
+</div>
+</div>
+
+
+</body>
+</html>
+</metal:block>

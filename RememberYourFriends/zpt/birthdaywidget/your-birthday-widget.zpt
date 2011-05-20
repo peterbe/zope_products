@@ -1,0 +1,52 @@
+<html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf">
+
+<style type="text/css" metal:fill-slot="extracss">
+.suggestion_list {
+  background: white;
+  border: 1px solid;
+  padding: 4px;
+}
+
+.suggestion_list ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.suggestion_list a {
+  text-decoration: none;
+  color: navy;
+}
+
+.suggestion_list .selected {
+  background: navy;
+  color: white;
+}
+
+.suggestion_list .selected a {
+  color: white;
+}
+
+#autosuggest {
+  display: none;
+}
+</style>
+
+<div metal:fill-slot="body">
+<h2 i18n:translate="">Your birthday widget</h2>
+
+<tal:block tal:condition="not:here/isLoggedIn">
+<tal:item replace="python:here.http_redirect('log-in', came_from=request.URL)" />
+</tal:block>
+
+<p i18n:translate="">Copy and paste this code snippet into your website:</p>
+
+<code tal:content="here/getYourBirthdayWidgetHTMLCode"></code>
+
+
+</div>
+</html>

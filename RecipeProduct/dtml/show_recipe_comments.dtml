@@ -1,0 +1,46 @@
+<dtml-in "getRecipeComments(filter=commenttoid, reverse=0)">
+
+	<dtml-if sequence-start>
+	<table cellpadding=6 border=0>
+	</dtml-if>
+	<tr style="background-color:#F4F4F4;"><td>
+	<a name="<dtml-var getId>"></a>
+	<table>
+	  <tr>
+	    <td><strong class="showtext"><dtml-var showNameAndEmail></strong><br>
+		<span class="smalltext"><a href="?ct=<dtml-var getId>#commentform">&#171;&#171; Svara på detta</a></span></td>
+		<td class="smalltext" align="left"></td>
+	  </tr>
+	  <tr>
+	    <td colspan="2"><p class="showtext"><dtml-var showComment></p></td>
+	  </tr>
+	</table>
+	
+	<dtml-var "show_recipe_comments(_,_.None, REQUEST=REQUEST, commenttoid=getId())">
+	
+	<dtml-if DeletableComments>
+	<form action="deleteComment">
+	<input type="hidden" name="commentids" value="<dtml-var id>">
+	<input type="submit" value="Ta bort"></form>
+	</dtml-if>
+	<dtml-if "SESSION.get('RecipeCommentSessionKey','')==getSessionKey()">
+	<form action="" method="post">
+	<input type="hidden" name="editcomment" value="<dtml-var id>">
+	<input type="submit" value="Ändra din kommentar"></form>
+	</dtml-if>
+	</td></tr>
+	
+	<dtml-if "commenttoid == ''">
+	<tr><td>&nbsp;</td></tr>
+	</dtml-if>
+	<dtml-if sequence-end>
+	</table>
+	</dtml-if>
+
+<dtml-else>
+
+    <dtml-if "commenttoid == ''">
+	<em class="smalltext">Inga kommentarer ännu</em>
+	</dtml-if>
+	
+</dtml-in>

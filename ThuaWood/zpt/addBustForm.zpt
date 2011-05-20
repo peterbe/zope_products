@@ -1,0 +1,28 @@
+<html metal:use-macro="here/getManagementHeader">
+<div metal:fill-slot="body">
+<h2>Skapa byst bild</h2>
+<form action="manage_addBust" method="post" enctype="multipart/form-data">
+
+<input type="hidden" name="id" value="" />
+<dl>
+
+  <dt><label for="title">Namn:</label></dt>
+  <dd><input name="title:latin1:ustring" size="30" value="" /></dd>
+
+  <dt><label for="bigphoto">Foto:</label></dt>
+  <dd><input type="file" name="bigphoto" size="30" /></dd>
+
+  <dt><label for="littleimage">Minibild:</label></dt>
+  <dd><input type="file" name="littleimage" size="30" /></dd>
+
+  <dt><label for="description">Beskrivning:</label></dt>
+  <dd><textarea name="description:latin1:utext" cols="60" rows="8"></textarea></dd>
+
+</dl>
+<br />
+<input type="submit" value=" L&auml;gg till! " />
+</form> 
+
+</div>
+</html> 
+

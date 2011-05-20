@@ -1,0 +1,95 @@
+<html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf">
+<script type="text/javascript" metal:fill-slot="extrajs" 
+tal:attributes="src python:here.getMiscAlias('/misc_/RememberYourFriends/settings.js')"></script>
+<div metal:fill-slot="body">
+
+<h2 i18n:translate="">Settings</h2>
+
+<tal:block tal:condition="not:here/isLoggedIn">
+<tal:item replace="python:here.http_redirect('log-in', came_from=request.URL)" />
+</tal:block>
+
+<form action="saveSettings" method="get"
+ tal:condition="here/isLoggedIn"
+ >
+<div tal:define="user here/getLoggedinUserFull">
+
+<h3 i18n:translate="">Type of emails to send to you</h3>
+<p tal:define="preval request/html_emails|user/html_emails">
+<input type="radio" name="html_emails:int" value="1"
+ tal:attributes="checked python:test(preval)" /> 
+ <i18n:block translate="">HTML emails look better than</i18n:block>
+ <input type="radio" name="html_emails:int" value="0"
+  tal:attributes="checked python:test(not preval)" /> 
+ <i18n:block translate=""> plain text emails do but
+ the advantage with plain text is that they are simple.</i18n:block>
+</p> 
+ 
+<h3 i18n:translate="">Who are you anyway?</h3>
+<p>
+<i18n:block translate="">Well, my first name is</i18n:block>
+<input name="first_name" tal:attributes="value request/first_name|user/first_name" /><br />
+<i18n:block translate="">and my last name is</i18n:block>
+<input name="last_name" tal:attributes="value request/last_name|user/last_name" />.<br />
+<i18n:block translate="">I am a</i18n:block>
+<select name="sex" tal:define="preval request/sex|user/sex">
+<option value="">&nbsp;</option>
+<option value="male" tal:attributes="selected python:test(preval=='male')" i18n:translate="">man</option>
+<option value="female" tal:attributes="selected python:test(preval=='female')" i18n:translate="">woman</option>
+</select> 
+<i18n:block translate="">and you'll find my own website on</i18n:block>
+http://<input name="website" tal:condition="request/website|user/website" size="35"
+tal:attributes="value python:request.get('website',user.website).replace('http://','')" 
+/><input name="website" tal:condition="not:request/website|user/website" size="35" value="" /> which I'm proud of.
+</p>
+
+
+<p><i18n:block translate="">Currently I live in</i18n:block>
+<select name="country" tal:define="preval request/country|user/country">
+<option value="">&nbsp;</option>
+<option tal:repeat="country here/mostCommonCountryOptions"
+        tal:attributes="selected python:test(preval==country)"
+        tal:content="country"></option>
+<option value="">------------------------</option>
+<option tal:repeat="country here/allCountryOptions"
+        tal:attributes="selected python:test(preval==country)"
+        tal:content="country"></option>
+</select> 
+<i18n:block translate="">and I was born on the</i18n:block>
+<select name="birthday:int" tal:define="preval request/birthday|user/birthday">
+<option value="0">&nbsp;</option>
+<option tal:repeat="i python:range(1, 32)"
+        tal:attributes="selected python:test(i==preval)"
+        tal:content="i"></option>
+</select>
+<i18n:block translate="">of</i18n:block>
+<select name="birthmonth:int" tal:define="preval request/birthmonth|user/birthmonth">
+<option value="0">&nbsp;</option>
+<option tal:repeat="i python:range(1, 13)"
+        tal:attributes="value i;selected python:test(i==preval)"
+        tal:content="python:here.ZopeTime('2005/%s/01'%i).strftime('%B')"></option>
+</select>
+
+<select name="birthyear:int" tal:define="preval request/birthyear|user/birthyear">
+<option value="0">&nbsp;</option>
+<option tal:repeat="i python:range(2000, 1900, -1)"
+        tal:attributes="selected python:test(i==preval)"
+        tal:content="i"></option>
+</select>
+
+</p>
+
+</div> 
+
+<br />
+<p align="center">
+<input type="submit" value="Save all of the above stuff" i18n:attributes="value" />
+</p>
+</form>
+
+</div>
+</html>

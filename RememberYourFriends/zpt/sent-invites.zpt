@@ -1,0 +1,66 @@
+<html metal:use-macro="here/getHeader"
+ xmlns:tal="http://xml.zope.org/namespaces/tal"
+ xmlns:metal="http://xml.zope.org/namespaces/metal"
+ xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+ i18n:domain="ryf">
+<style type="text/css" metal:fill-slot="extracss">
+table#invites { border-collapse: collapse; }
+#invites thead tr td { font-weight:bold; padding:2px 5px; }
+#invites tbody tr td { padding:2px 5px; }
+#invites tr td {border-bottom:1px solid #ccc; }
+
+</style>
+<div metal:fill-slot="body">
+<h2 i18n:translate="">Sent invites</h2>
+
+<tal:block tal:condition="not:here/isLoggedIn">
+<tal:item replace="python:here.http_redirect('log-in', came_from=request.URL)" />
+</tal:block>
+
+<tal:block tal:condition="here/isLoggedIn">
+  
+<div tal:define="invites python:here.getSentInvitations(order_by='add_date')">
+
+<p tal:condition="invites" i18n:translate="">You have sent invites to the following people:</p>
+<table tal:condition="invites" id="invites">
+  <thead>
+    <tr>
+      <td i18n:translate="">Friend</td>
+      <td i18n:translate="">Date</td>
+      <td i18n:translate="">Clicked?</td>
+      <td i18n:translate="">Signed up?</td>
+    </tr>
+  </thead>
+  <tbody tal:repeat="invite invites">
+    <tr>
+      <td>
+        <a tal:attributes="href string:mailto:${invite/email}"
+           tal:content="python:test(invite.name, invite.name, invite.email)"></a>
+      </td>
+      <td tal:content="invite/add_date_formatted"></td>
+      <td align="center" tal:condition="invite/clicked_link" class="yes"  i18n:translate="">yes</td>
+      <td align="center" tal:condition="not:invite/clicked_link" class="no" i18n:translate="">no</td>
+      <td align="center" tal:condition="invite/signed_up" class="yes" i18n:translate="">yes</td>
+      <td align="center" tal:condition="not:invite/signed_up" class="no" i18n:translate="">no
+        <a tal:condition="python:invite.age_days>0"
+	   tal:attributes="href string:send-invite?email=${invite/email}&amp;name=${invite/name}"
+           style="font-size:80%"
+	    i18n:translate="">send another invite</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p tal:condition="invites">
+<br /><br />
+<strong><a href="send-invite" i18n:translate="">Send another invitation</a></strong>
+</p>
+
+<p tal:condition="not:invites"><em><a href="send-invite" i18n:translate="">No invites sent yet</a></em></p>
+
+</div>
+</tal:block>
+
+
+</div>
+</html>

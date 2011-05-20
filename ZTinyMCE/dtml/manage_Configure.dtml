@@ -1,0 +1,75 @@
+<dtml-var manage_page_header>
+<dtml-with "_(management_view='Management')">
+<dtml-var manage_tabs>
+</dtml-with>
+<dtml-if Principia-Version>
+<p> <em>You are currently working in version 
+  <dtml-var Principia-Version>
+  </em> </p>
+</dtml-if Principia-Version>
+
+
+<form action="manage_saveConfiguration" method="post">
+<div class="form-label">
+  <label for="title">Title:</label>
+  <input id="title" name="title" value="<dtml-var title>" size="45" />
+</div>
+<dtml-if wl_isLocked>
+<div  style="background-color:#efefef;width:500px;height:250px;">
+<pre><dtml-var getConfiguration html_quote></pre>
+</div>
+<dtml-else>
+<textarea name="configuration" cols="110" rows="22"
+><dtml-var getConfiguration html_quote></textarea>
+</dtml-if>
+<br />
+
+<p>
+<input type="checkbox" name="optimize:int" value="1"
+ <dtml-if "doOptimize()">checked="checked"</dtml-if> /> Optimize all output
+</p>
+
+<dtml-if wl_isLocked>
+<em>Locked by WebDAV</em>
+<dtml-else>
+<input type="submit" value="Save" />
+  <dtml-if configuration_warning>
+    <p style="color:red">
+      <strong>Warning</strong><br />
+      <span><dtml-var configuration_warning></span>
+    </p>
+  </dtml-if>
+
+</dtml-if>
+
+
+</form>
+
+
+<p>To edit these configurations you need to know a bit about how TinyMCE works and the
+best resource for help is the <a href="http://tinymce.moxiecode.com/documentation.php">Documentation of TinyMCE</a>.<br />
+Best tip on getting started with TinyMCE configuration is: <a href="http://wiki.moxiecode.com/examples/tinymce/">List of examples</a>
+</p>
+
+<a name="onbluronfocuspatch"></a>
+<p><b>Want to fire events on <code>blur</code> and <code>focus</code>?</b><br />
+You'll need to add one line to the configuration that looks like this:</p>
+<pre>
+init_instance_callback: "myCustomInitInstance"
+</pre>
+<p>Then outside of the configuration you need to write some Javascript that is called which is your
+chance to attach events to <code>blur</code> and <code>focus</code>.</p>
+
+<pre>
+function myCustomInitInstance(editor) {
+  tinymce.dom.Event.add(editor.getWin(), 'focus', myOnFocusFunction);
+  tinymce.dom.Event.add(editor.getWin(), 'blur', myOnBlurFunction);
+}
+function myOnBlurFunction(event) {
+  console.log('blur!');
+}
+</pre>
+</p>
+
+<br />&nbsp;
+<dtml-var manage_page_footer>

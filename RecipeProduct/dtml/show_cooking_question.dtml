@@ -1,0 +1,39 @@
+<table cellpadding=6 style="background-color:#DDEDFE;" <dtml-if tablewidth>width="<dtml-var tablewidth>"</dtml-if>>
+<tr><td><p>
+<a href="<dtml-var absolute_url>"><img src="/misc_/RecipeProduct/qmark.gif" border=0 width="16" height="16"></a>
+<dtml-if has_title>
+  <strong><dtml-var getTitle></strong></p><p>
+</dtml-if>
+<dtml-unless noauthor>
+<p>Av: <a href="<dtml-var "getAuthor(only='object').absolute_url()">"><dtml-var "getAuthor(only='firstname')"></a>
+</p>
+</dtml-unless>
+<dtml-var "showText(getText())"></p>
+
+<dtml-if edit_option>
+  <table><tr><td valign="top">
+    <form action="AdminQandAs">
+      <input type="hidden" name="edit_cooking_question_id" value="<dtml-var id>">
+      <input type="submit" value="Redigera fråga">
+    </form>
+  </td><td valign="top">
+    <form action="manage_delCookingQuestion">
+      <input type="hidden" name="id" value="<dtml-var id>">
+      <input type="submit" value="Ta bort fråga">
+    </form>
+  </td></tr></table>
+</dtml-if>
+</td></tr>
+<dtml-if answer_option>
+<tr style="background-color:#FFFFFF;">
+  <td>
+  <form action="<dtml-var absolute_url>">
+  <input type="hidden" name="first_answer_option" value="1">
+  <input type="submit" value="Vill du svara på denna frågan?">
+  </form>
+  </td>
+</tr>
+</dtml-if>
+</table>
+
+<br>

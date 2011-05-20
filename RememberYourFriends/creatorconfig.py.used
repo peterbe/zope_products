@@ -1,0 +1,33 @@
+projectname = "RememberYourFriends"
+
+author = "<mail@peterbe.com>"
+
+versionnr='0.1' # alternatively 0.0.1 
+
+modules = (
+   dict(
+     modulename='Homepage',
+     
+     classname='Homepage', 
+     
+     baseclassname='HomepageBase', #  options (HomepageBase, HomepageBaseCatalogAware,
+                                   #           HomepageBTreeBase, HomepageOrderedBase, 
+                                   #       SimpleItemBase, SimpleItemBaseCatalogAware)
+                                   
+     addformmethodname='manage_addHomepageForm',
+     
+     addmethodname='manage_addHomepage',
+     
+     iconname='rememberyourfriends_icon.gif', 
+     
+     # Misc
+     create_root_methods=True,
+
+     
+   ),
+   
+)   
+   
+   
+
+

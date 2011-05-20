@@ -1,0 +1,49 @@
+<dtml-var standard_html_header>
+
+<h2>Frågor och svar</h2>
+
+ <p><a href="<dtml-var absolute_url>/AuthorAdmin">Återgå till din sida</a></p>
+
+<table>
+<tr><td valign="top">
+<h3><img src="/misc_/RecipeProduct/qmarkbig.gif">Dina frågor</h3>
+
+<dtml-in "getQuestions(sort='publishdate')">
+  <dtml-if "REQUEST.get('edit_cooking_question_id','')==id">
+  
+    <dtml-if has_title>
+      <dtml-call "REQUEST.set('title',getTitle())">
+    </dtml-if>  
+    <dtml-call "REQUEST.set('question', getText())">
+    <dtml-call "REQUEST.set('actionurl', 'manage_editCookingQuestion')">
+    
+    <dtml-var cooking_question_form>
+    
+    <dtml-call "REQUEST.set('question', '')">    
+    <dtml-if has_title>
+      <dtml-call "REQUEST.set('title','')">
+    </dtml-if>  
+    
+  <dtml-else>
+  <dtml-var "show_cooking_question(_, _.None, edit_option=1, edit_cooking_question_id=id, noauthor=1, tablewidth=350)">
+  </dtml-if>
+<dtml-else>
+  <em class="smalltext">Du har ännu inga frågor ställda</em>
+</dtml-in>
+
+<h3>Ställ en ny fråga</h3>
+
+<dtml-var cooking_question_form>
+
+</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td valign="top">
+
+<h3><img src="/misc_/RecipeProduct/emarkbig.gif">Dina svar på frågor</h3>
+
+snart
+
+</td>
+</tr>
+</table>
+
+<dtml-var standard_html_footer>
