@@ -87,6 +87,7 @@ BANNED_MULTI_MATCHES = (
   ('loginbmo','.php'), # http://wegreener.com/loginbmo16/pot.php
   ('/www','.php'), # http://p15.gorzow.pl/www28bom/rsac.php
   ('bom','.php'), # http://abastuman.ge/www7bom/rsac.php
+  ('http://','.ru/'), # http://za12.ru/UcmGOgwzjC
   ('makeSmurl','url'), # http://smurl.name/makeSmurl?url=http%3A//smurl.name/makeSmurl%3Furl%3Dhttp%253A//smurl.name/makeSmurl%253Furl%253Dhttp%2...
 )
 

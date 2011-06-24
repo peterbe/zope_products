@@ -45,7 +45,7 @@ def sgmlDiff(a, b):
             out.append('<ins class="diff">'+''.join(b[e[3]:e[4]]) + "</ins>")
         elif e[0] == "equal":
             out.append(''.join(b[e[3]:e[4]]))
-        else: 
+        else:
             raise "OpcodesError", "Unrecognized %r"%e[0]
 
     return "".join(out)
@@ -71,7 +71,7 @@ class CheckoutableTemplatesBase(Base):
     def __init__(self):
         """ no doc string """
         pass
-    
+
     def getCTFiles(self, zope, filter=None):
         """ returns which templates are checkoutable.
         The 'filter' parameter can be used to:
@@ -86,15 +86,15 @@ class CheckoutableTemplatesBase(Base):
         # read config file
 
         fileitems, finder = CTFiles._readAllConfigs()
-        
+
         fileitems = self._appendMoreInfo2Items(fileitems)
 
         if zope is None:
             return fileitems
-        
+
         if filter is not None:
             filter = filter.lower().replace(' ','').strip()
-        
+
         checked = []
         if filter == 'deployed':
             # only those where objectid exists as zope object
@@ -109,26 +109,26 @@ class CheckoutableTemplatesBase(Base):
                 if hasattr(base, fileitem['objectid']):
                     checked.append(fileitem)
         elif filter == 'undeployed':
-            # only those where objectid does not exists 
+            # only those where objectid does not exists
             # as zope object.
             for fileitem in fileitems:
                 if not hasattr(zope, fileitem['objectid']):
                     checked.append(fileitem)
         elif filter == 'undeployedhere':
-            # only those where objectid does not exists 
+            # only those where objectid does not exists
             # here without acquisition.
             base = getattr(zope, 'aq_base', zope)
             for fileitem in fileitems:
                 if not hasattr(base, fileitem['objectid']):
-                    checked.append(fileitem)            
+                    checked.append(fileitem)
         else:
             checked = fileitems
-            
+
         base = getattr(zope, 'aq_base', zope)
         # Inspect if 'base' has a this_package_home attribute,
         # and if so, filter 'checked' based on that.
-        
-        
+
+
         if hasattr(base, 'this_package_home'):
             req_basepath = base.this_package_home
 
@@ -140,7 +140,7 @@ class CheckoutableTemplatesBase(Base):
                 if item['basepath'].find(req_basepath) > -1:
                     doublechecked.append(item)
             checked = doublechecked
-        
+
 
         return checked
 
@@ -151,7 +151,7 @@ class CheckoutableTemplatesBase(Base):
             newd = fileitem
             ikey = 'filetypeicon'
             if fileitem['filetype'].lower()=='dtml':
-                
+
                 newd[ikey] = '''<img src="/misc_/OFSP/dtmlmethod.gif"
                                     alt="DTML Method" border="0" />'''
                 extension = '.dtml'
@@ -172,7 +172,7 @@ class CheckoutableTemplatesBase(Base):
             fullpath = os.path.join(basepath, relpath)
             newd['fullpath'] = fullpath
 
-            
+
             relpath = fileitem['relpath']
             sep = relpath[max(relpath.rfind('\\'), relpath.rfind('/'))]
 
@@ -181,7 +181,7 @@ class CheckoutableTemplatesBase(Base):
                 objectid = objectidlist[0]
             else:
                 objectid = '.'.join(objectidlist[1:])
-                
+
             if os.path.splitext(objectid)[1] not in ('.dtml','.zpt'):
                 objectid += extension
             newd['objectid'] = objectid
@@ -195,19 +195,19 @@ class CheckoutableTemplatesBase(Base):
         if type(identifiers)==type('s'):
             identifiers = [identifiers]
         base = getattr(zope, 'aq_base', zope)
-        
+
         for identifier in identifiers:
             fileitem = self.getFileitemFromIdentifier(identifier)
             if hasattr(base, fileitem['objectid']):
                 return 1
-        return 0            
-            
+        return 0
+
     def doCheckout(self, zope, identifiers):
         """ create template objects """
         objects_created=[]
         if type(identifiers)==type('s'):
             identifiers = [identifiers]
-        
+
         for identifier in identifiers:
             fileitem = self.getFileitemFromIdentifier(identifier)
             id = fileitem['objectid']
@@ -223,24 +223,24 @@ class CheckoutableTemplatesBase(Base):
                 objects_created.append(obj)
             else:
                 raise "UnrecognizedFiletype", fileitem['filetype']
-            
+
         return objects_created
-            
+
     def _createDTMLMethod(self, zope, id, code, title=''):
         """ create a DTML object in zope """
-        with = zope.manage_addProduct['OFSP']
-        with.addDTMLMethod(id, title)
+        with_ = zope.manage_addProduct['OFSP']
+        with_.addDTMLMethod(id, title)
         dtmlmethod = getattr(zope, id)
         dtmlmethod.manage_edit(code, title)
         return dtmlmethod
-    
+
     def _createPageTemplate(self, zope, id, code, title=''):
         """ create a PageTemplate object in zope """
-        with = zope.manage_addProduct['PageTemplates']
-        with.manage_addPageTemplate(id, title, code)
+        with_ = zope.manage_addProduct['PageTemplates']
+        with_.manage_addPageTemplate(id, title, code)
         pagetemplate = getattr(zope, id)
         return pagetemplate
-    
+
     def doRetract(self, zope, identifiers):
         """ delete some zope objects """
         if type(identifiers)==type('s'):
@@ -252,8 +252,8 @@ class CheckoutableTemplatesBase(Base):
         objectids_copy = objectids[:]
         zope.manage_delObjects(objectids)
         return objectids_copy
-        
-                           
+
+
     def getSourcecode(self, identifier):
         " read file and return source code "
         fullpath = self.getFullpathFromIdentifier(identifier)
@@ -281,14 +281,14 @@ class CheckoutableTemplatesBase(Base):
             css = '<style type="text/css">%s</style>\n\n'%SC_stylesheet
             code = '<div class="code_default">%s</div>'%code
             return css + code
-        
+
         else:
             code = html_quote(code)
             code = newline_to_br(code)
             code = code.replace('\t','&nbsp;'*4)
             return "<code>%s</code>"%code
 
-        
+
     def showDifference(self, zope, identifier, objectid):
         """ return a nice formatted difference string """
         code_source = self.getSourcecode(identifier)
@@ -298,7 +298,7 @@ class CheckoutableTemplatesBase(Base):
         #difference = diff(html_quote(code_source), html_quote(code_object))
         difference = diff(code_object, code_source)
         return difference # this is a HTML <table>
-    
+
     def _niceDifference(self, difference):
         """ return a nice explaination of the difference """
         #difference = newline_to_br(difference)
@@ -322,9 +322,9 @@ class CheckoutableTemplatesBase(Base):
             if fileitem['identifier'] in identifiers:
                 return 1
         return 0
-    
+
     def getFileitemFromIdentifier(self, identifier):
-        """ search through all files and match identifier, 
+        """ search through all files and match identifier,
         then return fileitem (dict) of the found one.
         """
         for fileitem in self.getCTFiles(None):
@@ -332,7 +332,7 @@ class CheckoutableTemplatesBase(Base):
                 return fileitem
         else:
             return None
-        
+
     def getFullpathFromIdentifier(self, identifier):
         """ get the full path from an identifier """
         found = self.getFileitemFromIdentifier(identifier)
@@ -342,11 +342,11 @@ class CheckoutableTemplatesBase(Base):
                 fullpath += '.dtml'
             elif found['filetype'] == 'ZPT' and os.path.splitext(fullpath)[1] not in ('.zpt','.pt'):
                 fullpath += '.zpt'
-            
+
             return fullpath
         else:
             return None
-                
+
 
     def doWriteback(self, zope, identifiers, makebackupcopy=1):
         """ From the identifier, find the equivalent Zope object
@@ -384,12 +384,12 @@ class CheckoutableTemplatesBase(Base):
 
                 # remember that we wrote this back
                 objects.append([object, identifier])
-                
+
         return objects
 
     def canWriteback(self):
         """ true if CAN_WRITEBACK  """
         return CAN_WRITEBACK
-            
+
 
 CheckoutableTemplatesBase._secInfo.apply(CheckoutableTemplatesBase)
