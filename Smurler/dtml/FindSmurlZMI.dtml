@@ -8,7 +8,7 @@
 <dtml-var "manage_form_title(this(), _,
            form_title='Find Smurl',
            )">
-           
+
 <dtml-if "REQUEST.get('name')">
 <script type="text/javascript">
 function toggleAll(on) {
@@ -19,7 +19,7 @@ function toggleAll(on) {
   }
 }
 </script>
-<form action="deleteSmurls">
+<form action="deleteSmurls" method="post">
 <dtml-let smurls="findSmurls(REQUEST.get('name'))">
 <dtml-in smurls sort="create_date">
 
@@ -30,7 +30,7 @@ function toggleAll(on) {
 	<td colspan="4"><small>&lt;-- toggle all</small></td>
       </tr>
   </dtml-if>
-  
+
       <tr>
         <td><input type="checkbox" name="ids:list" value="<dtml-var getId>" /></td>
         <td><strong><dtml-var getId></strong></td>
@@ -51,19 +51,19 @@ function toggleAll(on) {
 	  <dtml-else>
              <dtml-var getPageTitle html_quote>
 	  </dtml-if>
-	
+
 	<dtml-else>&nbsp;</dtml-if>
 	</td>
       </tr>
-      
+
   <dtml-if sequence-end>
     </table>
     <input type="submit" value="Delete selected" />
   </dtml-if>
-  
+
   <dtml-else>
   <p><em>None found</em></p>
-  
+
 </dtml-in>
 </dtml-let>
 </form>
@@ -80,4 +80,3 @@ Smurl ID or URL: <input name="name" size="80" value="<dtml-var "REQUEST.get('nam
 
 
 <dtml-var manage_page_footer>
-
