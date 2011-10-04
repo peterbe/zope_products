@@ -6,7 +6,7 @@ $(function() {
   $(document.body).bind('mouseover', function() {
     $('input[name="today"]', 'form').val(new Date().getFullYear());
     $(document.body).unbind('mouseover');
-    
+
     $('#today').hide();
     $('#yoursmurls').load("your_smurls");
   });
@@ -22,12 +22,12 @@ $(function() {
 </script>
 </metal:script>
 <div class="storycontent" metal:fill-slot="content">
-	
+
 <tal:block tal:condition="options/small_url|request/small_url|nothing">
 	<dl tal:define="small_url options/small_url|request/small_url; url options/url|request/url">
 		<dt><p>The following URL:</dt>
 		<dd tal:content="structure python:here.showLongURL(url, maxlength=70)"></dd>
-		
+
 		<dt><p>became <b tal:content="python:len(url)-len(small_url)"></b> characters shorter as:</dt>
 		<dd><b><a href="" tal:attributes="href small_url" tal:content="small_url"></a></b></dd>
 	</dl>
@@ -47,7 +47,7 @@ Isn't <a tal:attributes="href here/absolute_url" tal:content="here/absolute_url"
 <tal:block tal:condition="not:options/small_url|request/small_url|nothing">
 
 	<form action="makeSmurl" method="get" id="makesmurl">
-        <p style="color:red" 
+        <p style="color:red"
             tal:condition="options/submiterror|request/submiterror|nothing"
            tal:content="options/submiterror|request/submiterror">
         </p>
@@ -55,31 +55,36 @@ Isn't <a tal:attributes="href here/absolute_url" tal:content="here/absolute_url"
 	  <p><b>Enter a looong URL:</b><br />
 	  <input name="url" size="45" tal:attributes="value request/url|nothing"/>
 	  <input type="submit" value="Make it Smurl!" />
-          
-          <div id="today" align="left" 
+
+          <div id="password" align="left">
+          Password:
+          <input name="password" type="password" value=""/>
+          </div>
+
+          <div id="today" align="left"
                tal:attributes="style python:test(here.get_cookie('notsmurlsb'), 'display:none')">
           To prove that you're not a spambot type in today's year:
           <input name="today" value=""/>
           <small>(e.g. <br tal:replace="python:here.ZopeTime().strftime('%Y')"/>)</small>
           </div>
-          
-        </div>	  
-        
+
+        </div>
+
 	</form>
-	
+
 	<p>&nbsp;</p>
         <div id="yoursmurls">
         </div>
-	
-	
-	
+
+
+
 </tal:block>
 
-	 	
-	
+
+
 <br />&nbsp;
 <br />&nbsp;
-	
+
 </div>
 
 </html>

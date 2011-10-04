@@ -1,0 +1,7 @@
+This product would not be possible without the contributions of others,
+including the following:
+
+- Zope Corporation for creating Zope and making it open source.
+- Andrew Lahser for the first Photo product, which inspired this one.
+
+...and others that helped with bugs and such listed in CHANGES.txt.

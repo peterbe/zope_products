@@ -1,0 +1,89 @@
+<dtml-var name="manage_page_header"> <dtml-comment> 
+<style type="text/css">
+<!--
+@import "/manage_page_style.css";
+-->
+</style>
+</dtml-comment>
+<dtml-var expr="manage_form_title(this(), _,form_title='Add Photo',)">
+<form action="manage_addPhoto" method="POST" enctype="multipart/form-data">
+  <table>
+    <tr> 
+      <th align="right" class="form-label">Id:</th>
+      <td> 
+        <input type="text" name="id" class="form-element">
+        <small class="form-text">(Leave blank to use image filename.)</small></td>
+    </tr>
+    <tr> 
+      <th align="right" class="form-label">Title:</th>
+      <td> 
+        <input type="text" name="title" size="30" class="form-element">
+      </td>
+    </tr>
+    <tr> 
+      <th align="right" class="form-label">Image File:</th>
+      <td> 
+        <input type="file" name="file" size="30" class="form-element">
+      </td>
+    </tr>
+    <dtml-with "this().propertysheets.get('photoconf')">
+    <tr> 
+      <th class="form-label" align="right">Store:</th>
+      <td> 
+        <select name="store" class="form-element">
+          <option value="Image"
+			<dtml-if store><dtml-if "store == 'Image'">selected</dtml-if></dtml-if>>Image 
+          (ZODB)</option>
+          <option value="ExtImage"
+			<dtml-if store><dtml-if "store == 'ExtImage'">selected</dtml-if></dtml-if>>ExtImage 
+          (File System)</option>
+        </select>
+      </td>
+    </tr>
+    <tr> 
+      <th class="form-label" align="right">Engine:</th>
+      <td> 
+        <select name="engine" class="form-element">
+          <option value="ImageMagick"
+			<dtml-if engine><dtml-if "engine == 'ImageMagick'">selected</dtml-if></dtml-if>>ImageMagick</option>
+          <option value="PIL"
+			<dtml-if engine><dtml-if "engine == 'PIL'">selected</dtml-if></dtml-if>>PIL</option>
+        </select>
+      </td>
+    </tr>
+    <tr> 
+      <th align="right">Quality:</th>
+      <td> 
+        <select name="quality:int" class="form-element">
+          <dtml-in expr="_.range(100)">
+          <option value="&dtml-sequence-number;"
+		  <dtml-if quality><dtml-if "quality == _['sequence-number']">selected</dtml-if><dtml-else>
+		  <dtml-if "75 == _['sequence-number']">selected</dtml-if></dtml-if>> 
+          <dtml-var sequence-number>
+          </option>
+          </dtml-in>
+        </select>
+      </td>
+    </tr>
+    <tr> 
+      <th align="right">Pregenerate Displays:</th>
+      <td> 
+        <input type="checkbox" name="pregen:boolean" value="checkbox" <dtml-if pregen>checked</dtml-if>>
+      </td>
+    </tr>
+    <tr> 
+      <th align="right">Display Cache Timeout:</th>
+      <td> 
+        <input type="text" name="timeout" size="10" value="<dtml-var timeout missing=0>">
+        minutes (0 = never)</td>
+    </tr>
+    </dtml-with>
+    <tr> 
+      <td></td>
+      <td> 
+        <input type="submit" value=" Add ">
+      </td>
+    </tr>
+  </table>
+</form>
+<dtml-var name="manage_page_footer">

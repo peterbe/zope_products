@@ -1,0 +1,13 @@
+
+* Photo was developed and tested with Zope 2.4.0.  It should work with
+  the latest 2.3 version as well.
+
+* Photo requires the PIL (Python Imaging Library) module available at
+  http://www.pythonware.com/products/pil/ or ImageMagick, available at
+  http://www.imagemagick.org/ to render display sizes.  If you use
+  ImageMagick on Windows, be sure the directory for ImageMagick
+  is in your PATH before Windows, or Zope will try to use the convert.exe
+  from Windows, not ImageMagick.
+
+* To use the ExtImage store option, you must have ExtFile/Image installed
+  and configured.

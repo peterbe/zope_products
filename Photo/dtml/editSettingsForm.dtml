@@ -1,0 +1,81 @@
+<dtml-var manage_page_header> 
+<dtml-comment>
+<style type="text/css">
+<!--
+@import "/manage_page_style.css";
+-->
+</style>
+</dtml-comment>
+<dtml-with "_(management_view='Settings')">
+<dtml-var manage_tabs>
+</dtml-with>
+<dtml-if Principia-Version>
+<p> <em>You are currently working in version 
+  <dtml-var Principia-Version>
+  </em> </p>
+</dtml-if Principia-Version>
+<p class="form-help">Photo settings allow you to configure the various settings 
+  that effect the rendering of the photo. 
+  <dtml-with "propertysheets.get('photoconf')">
+<form action="<dtml-var URL1>">
+  <table>
+    <tr> 
+      <th class="form-label" align="right">Store:</th>
+      <td> 
+        <input type="hidden" name="store" value="&dtml-store;">
+        <dtml-if "store == 'Image'">
+        Image (ZODB) 
+        </dtml-if>
+        <dtml-if "store == 'ExtImage'">
+        ExtImage (File System) 
+        </dtml-if>
+      </td>
+    </tr>
+    <tr> 
+      <th class="form-label" align="right">Engine:</th>
+      <td> 
+        <p> 
+          <select name="engine" class="form-element">
+            <option value="ImageMagick"
+			<dtml-if engine><dtml-if "engine == 'ImageMagick'">selected</dtml-if></dtml-if>>ImageMagick</option>
+            <option value="PIL"
+			<dtml-if engine><dtml-if "engine == 'PIL'">selected</dtml-if></dtml-if>>PIL</option>
+          </select>
+        </p>
+      </td>
+    </tr>
+    <tr> 
+      <th align="right">Quality:</th>
+      <td> 
+        <select name="quality:int" class="form-element">
+          <dtml-in expr="_.range(100)">
+          <option value="&dtml-sequence-number;"
+		  <dtml-if "quality == _['sequence-number']">selected</dtml-if>> 
+          <dtml-var sequence-number>
+          </option>
+          </dtml-in>
+        </select>
+      </td>
+    </tr>
+    <tr> 
+      <th align="right">Pregenerate Displays:</th>
+      <td> 
+        <input type="checkbox" name="pregen:boolean" value="1" <dtml-if pregen>checked</dtml-if>>
+      </td>
+    </tr>
+    <tr> 
+      <th align="right">Display Cache Timeout:</th>
+      <td> 
+        <input type="text" name="timeout" size="10" value="&dtml-timeout;">
+        minutes (0 = never)</td>
+    </tr>
+    <tr> 
+      <td></td>
+      <td> 
+        <input type="submit" value="Save Changes" name="manage_editSettings:method">
+      </td>
+    </tr>
+  </table>
+</form>
+</dtml-with>
+<dtml-var manage_page_footer>

@@ -136,6 +136,9 @@ class SmurlHomepage(SmurlFolder, HomepageBase):
         if not url:
             return self.index_html(self, self.REQUEST)
 
+        if not self.REQUEST.get('password') == os.environ.get('SMURL_PASSWORD', ''):
+            raise BadRequest("Wrong password")
+
         # Spambot quiz
         if not self.get_cookie('notsmurlsb'):
             today = self.REQUEST.get('today','')

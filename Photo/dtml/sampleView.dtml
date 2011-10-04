@@ -1,0 +1,80 @@
+ <dtml-var standard_html_header> 
+<table border="0" cellpadding="0" cellspacing="0" width="75%" align="center">
+  <tr> 
+    <td align="left" width="25%" valign="top"> 
+      <dtml-try>
+      &lt;&nbsp; 
+      <dtml-with prevPhoto only>
+      <a href="&dtml-absolute_url;/view"><small> 
+      <dtml-var title_or_id>
+      </small></a> 
+      </dtml-with>
+      <dtml-except>
+      &nbsp; 
+      </dtml-try>
+    </td>
+    <td align="center" width="50%"> 
+      <h3> 
+        <dtml-var title_or_id>
+      </h3>
+    </td>
+    <td align="right" width="25%" valign="top"> 
+      <dtml-try>
+      <dtml-with nextPhoto only>
+      <a href="&dtml-absolute_url;/view"><small> 
+      <dtml-var title_or_id>
+      </small></a> 
+      </dtml-with>
+      &nbsp;&gt; 
+      <dtml-except>
+      &nbsp; 
+      </dtml-try>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="3"> 
+      <table border="0" cellspacing="0" cellpadding="0" width="50%" align="center">
+        <tr> 
+          <td align="center" colspan="<dtml-var "_.len(displayIds())">"> 
+            <dtml-var "tag(display=REQUEST.get('display', 'small'), border=1, cookie=1)">
+          </td>
+        </tr>
+        <tr> 
+          <dtml-in displayLinks>
+          <td align="center"><small>
+            <dtml-var sequence-item>
+            </small></td>
+          </dtml-in>
+        </tr>
+        <tr> 
+          <td align="center" colspan="<dtml-var "_.len(displayIds())">"> <small><a href="&dtml-absolute_url;?display=">Download
+            full-size image</a></small></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="3">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td colspan="3"> 
+      <table border="1" cellspacing="2" cellpadding="4" width="80%" align="center">
+        <dtml-in propertyItems>
+        <dtml-let prop="_['sequence-key']">
+        <dtml-unless expr="prop == 'title' or prop == 'engine'">
+        <tr> 
+          <th align="right" width="25%" valign="top"> 
+            <dtml-var prop capitalize spacify>
+          </th>
+          <td align="left" width="75%" valign="top"> 
+            <dtml-var sequence-item null="&nbsp;">
+          </td>
+        </tr>
+        </dtml-unless>
+		</dtml-let>
+        </dtml-in>
+      </table>
+    </td>
+  </tr>
+</table>
+<dtml-var standard_html_footer>

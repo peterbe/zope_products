@@ -1,0 +1,142 @@
+* Release 1.2.3 (Stable) - Dec. 20, 2001
+
+  - Fixed: bug preventing Add Photo form from displaying when
+    adding a Photo outside of a Photo Folder.  Thanks to Timothy
+    Wilson for reporting this.
+    
+  - Fixed: img tag alt attributes were not HTML quoted.  Thanks
+    to Michael Bernstein for reporting this.
+    
+  - Changed: upgrading returns more useful information; the
+    objects that were upgraded.
+  
+  - Fixed: Photo now supports the SYNC_ZODB option of ExtImage,
+    where the image files are stored in subdirectories that
+    correspond to the Zope path.  Each display is stored in a
+    subdirectory named after the Photo object's id.  Thanks to
+    Emmanuel Viennet for reporting the lack of support for this
+    feature.
+
+  - Fixed: ExtImage display files weren't removed (or marked with
+    .undo) when they were purged or expired.
+    
+  - Fixed: New ExtImage files were created when updating the image
+    data of an existing Photo.  This would leave stale files that
+    were not tied to a Photo object.
+
+* Release 1.2.2 (Stable) - Nov. 8, 2001
+
+  - Removed: a script is no longer available for upgrading from
+    the old Photo product.  Too many things are different.
+  - Added: option to generate displays on-the-fly instead of
+    when the photo is added.
+  - Added: timeout (in minutes) for displays to remain generated.
+    This is somewhat experimental, because of the unknown practical
+    effects on how the ZODB will grow with these updates.
+    When a display is viewed, if more than half of timeout
+    has passed since the display's mod time, the mod time is
+    updated to the current time and the other displays are flushed
+    if their mod time's are greater than timeout.
+    If timeout is 0, the displays are never removed.
+  - Added: Purge All action in displays will remove all generated
+    displays.  If any displays are "checked", they will not be
+    removed and their mod times will be reset.
+  - Added: Clean Up action in displays will remove all generated
+    displays that have expired.  If any displays are "checked",
+    they will not be removed and their mod times will be reset.
+  - Changed: moved Upgrade.py to the Extensions directory so it
+    no longer needs to be copied to do an upgrade.  Thanks to
+    Robert Rottermann for the tip.
+
+* Release 1.2.1 (Stable) - Oct. 26, 2001
+
+  - Added: creating a display size of 0 width x 0 height
+    will render a display with the same dimensions of the
+    original photo, but will be processed by the engine.
+    This is useful for storing high quality originals, but
+    having a "same size" photo that has been compressed for
+    faster viewing online.
+  - Added: compression quality setting.  This is a number from
+    1 (worst) to 100 (best) that is passed to the engine and
+    determines the compression quality used for rendered displays.
+    The default is 75.
+  - Added: External Method for easier upgrading of all Photo and
+    Photo Folder objects.  See UPGRADE.txt for details.
+  - Added: FAQ.txt for FAQs
+
+* Release 1.2.0 (Stable) - Oct. 19, 2001
+
+  - Fixed: support for WebDAV and FTP only partially worked.
+    It should now work with Zope 2.3.2+ and Zope 2.4+ to the
+    extent that Zope itself supports WebDAV/FTP in these
+    versions.
+  - Changed: separated Photo settings from Photo properties
+    to prevent name clashing with user-defined properties and
+    in preparation of adding more settings to future versions.
+    See UPGRADE.txt to update old Photo objects.
+  - Changed: management interface modified to reflect separation
+    of Photo settings vs. properties.
+  - Fixed: new Photos uploaded via WebDAV/FTP were not acquiring
+    the Photo Folder's settings/properties.
+  - Changed: ImageMagick is now the default rendering engine
+    instead of PIL.  Even though it is a fair amount slower,
+    it produces much better images and is generally easier to
+    install.
+
+* Release 1.1.0 (Development) - Oct. 12, 2001
+
+  - Added: support for WebDAV and FTP
+  - Added: Image types uploaded to a Photo Folder are created
+    as Photo objects instead of the default Zope Image object.
+
+* Release 1.0.0 (Stable) - Oct. 12, 2001
+
+  - Fixed: minor bug in tag() when display is not specified.
+    Thanks Robert Rottermann.
+      
+* Release 0.9.2 (Development) - Sep. 2, 2001
+
+  - Fixed: support for ImageMagick on Win32 was broken.
+  - Fixed: PIL is no longer required, so silently ignore
+    ImportError when it's not installed.
+  - Fixed: typo in manage_addDisplay security declaration.
+
+* Release 0.9.1 (Development) - Aug. 29, 2001
+
+  - Fixed: editing properties in the Edit tab kills the
+    original image.
+  - Added: new method manage_regenDisplays makes it
+    easier to regenerate all displays.
+
+* Release 0.9.0 (Development) - Aug. 29, 2001
+
+  - Added: support was added for ExtImage so that photo files
+    can be stored in the file system instead of the ZODB.
+  - Added: you can now use ImageMagick to render images as
+    well as PIL.  ImageMagick rendering is done by running
+    'convert' as a subprocess, not via a Python module, so
+    this may or may not work for you.  IM is much slower, but
+    produces smoother images.
+  - Added: exttag() method returns an HTML img tag for
+    serving the photos outside of Zope (eg, via Apache). Only
+    useful with ExtImage storage.
+  - Changed: Photo object is now a simple object, not a subclass
+    of Image.  This allows for supporting ExtImage.  The original
+    image is now stored as an attribute like all of the displays.
+    See UPGRADE.txt for upgrading prior photos.
+  - Added: default 'engine' property on Photo Folders gives
+    new photo objects the default rendering engine (PIL or
+    ImageMagick) on the add form.
+  - Added: default 'store' property on Photo Folders gives
+    new Photo objects the default storage (Image - ZODB, or
+    ExtImage - File System) on the add form.
+  - Added: a Regenerate All button in the displays tab
+    will update all of the displays.  This is useful after
+    you change the rendering engine.
+  - Fixed: manage_editPhoto did not update photo, only properties.
+  - Changed: cookie now defaults to 0 (off).  cookie=0 seemed to be
+    used more often than cookie=1.
+
+* Release 0.8.0 (Development) - Aug. 23, 2001
+
+  - Initial public release.

@@ -1,0 +1,78 @@
+Upgrading from 0.9.x and above to 1.2.3
+
+  Photo comes with an External Method called Upgrade.py.  To upgrade your Photo
+  and Photo Folder objects, create an External Method in your Zope root as
+  follows.
+
+    Id: upgrade
+    Module Name: Photo.Upgrade
+    Function Name: upgrade
+
+  When you run this method, all of your Photo and Photo Folder objects will be
+  upgraded.  You can then delete the External Method.
+
+Upgrading from Photo 0.8.0 to 0.9.0
+
+  In order to support different image storages (specifically, ExtImage), the way
+  in which the original image is stored has changed.  This means Photo objects
+  created under version 0.8.0 are not compatible with 0.9.0.  To upgrade, you
+  can follow the instructions below on upgrading from Andrew Lahser's Photo
+  Product, substituting the following Python Script::
+
+    """Convert 0.8.0 Photo objects to 0.9.0 Photo objects."""
+
+    REQUEST = context.REQUEST
+
+    # Upgrade Photo Folder
+    context.manage_addProperty('engine', 'image_engines', 'selection')
+    context.manage_addProperty('store', 'image_stores', 'selection')
+    context.manage_changeProperties(engine = 'PIL', store = 'Image')
+
+    # Upgrade Photos
+    for photo in context.objectItems(['Photo']):
+        # Convert old photo object to new.
+        photoid = photo[0]
+        photo = photo[1]
+        context.manage_delObjects([photoid,], REQUEST=REQUEST)
+        id = context.manage_addProduct['Photo'].manage_addPhoto(
+                 photoid, photo.title, photo.data,
+                 store='Image', engine='PIL', REQUEST=REQUEST)
+        newphoto = getattr(context, id)
+
+        # Add old properties to new photo.
+        for prop in photo.propertyMap():
+            try: newphoto.manage_addProperty(prop['id'], None, prop['type'])
+            except: pass
+
+        # Assign old property values to new photo.
+        propmap = {}
+        for id, value in photo.propertyItems():
+            propmap[id] = value
+        try: newphoto.manage_changeProperties(propmap)
+        except: pass
+
+        # Clear new Photo displays.
+        displayids = newphoto.displayIds(exclude=None)
+        newphoto.manage_delDisplays(displayids)
+
+        # Create old display sizes.
+        for display in photo.displayMap(exclude=None):
+            id = display['id']
+            width = display['width']
+            height = display['height']
+            newphoto.manage_addDisplay(id, width, height)
+
+    return 'Done.'
+
+Upgrading from Andrew Lahser's Photo Product
+
+  Unfortunately, the new Photo product is now quite a bit different than the old
+  Photo product.  Because of this, there is no direct way to upgrade old Photo
+  objects.  It would be possible to create a script, but since there are several
+  additional options in the new product, it would be better to recreate the
+  photos from scratch.
+
+  Since Photo now supports WebDAV/FTP, you can create a Photo Folder, set the
+  settings as desired, and transfer the Photos to the Photo Folder.  This will
+  create Photo objects with the default settings from your Photo Folder instead
+  of creating Zope Image objects that would need to be converted.

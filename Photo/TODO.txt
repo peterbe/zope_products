@@ -1,0 +1,9 @@
+TODO, in no particular order:
+
+  * Research extracting meta data from photos, such as date/time, exposure
+    information, camera type, etc.
+  * Add online Zope help.
+  * Come up with some better icons, at least for Photo Folder.
+  * Option for not resizing photos above their original size.
+  * File system syncronization to keep Photo objects up to date with
+    corresponding image files in the file system.

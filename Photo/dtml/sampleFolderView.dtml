@@ -1,0 +1,43 @@
+ <dtml-var name="standard_html_header"> 
+<h2> 
+  <dtml-var name="title_or_id">
+</h2>
+<dtml-if description>
+<p> 
+  <dtml-var description newline_to_br>
+</p>
+</dtml-if>
+<ul>
+  <dtml-in expr="objectValues('Photo Folder')" sort="id">
+  <dtml-unless private>
+  <li><b><a href="&dtml.url-sequence-item;"> 
+    <dtml-var name="title_or_id">
+    </a></b> ( 
+    <dtml-var numPhotos>
+    photos) 
+    <dtml-if description>
+    <br>
+    <dtml-var description newline_to_br>
+    <br>
+    <br>
+    </dtml-if>
+  </li>
+  </dtml-unless>
+  </dtml-in>
+</ul>
+<table width="80%" border="0" align="CENTER" cellspacing="0" cellpadding="5">
+  <dtml-in expr="_.range(_.math.ceil(_.len(objectIds(['Photo'])) / 4.0))">
+  <dtml-let start="_['sequence-item'] * 4 + 1">
+  <tr> 
+    <dtml-in expr="objectValues(['Photo'])" sort="id" size="4" orphan="0" start="start">
+    <td align="CENTER"><a href="&dtml.url-sequence-item;/view"> 
+      <dtml-var expr="tag(display='thumbnail', border=0, cookie=0)">
+      <br>
+      <dtml-var name="title_or_id">
+      </a></td>
+    </dtml-in>
+  </tr>
+  </dtml-let>
+  </dtml-in>
+</table>
+<dtml-var name="standard_html_footer">

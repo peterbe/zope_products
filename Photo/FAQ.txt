@@ -1,0 +1,37 @@
+Photo FAQ
+---------
+
+1) Will you add property 'xyz' to the default Photo properites?
+
+   In short, no.  I purposefully left the properties to the minimum required
+   id and title because everyone will want a different set of properties.
+   I've gotten numerous requests for equally numerous different default
+   properties.
+
+   The Photo Folder object is designed to provide containing Photo objects
+   with whatever default properties you want.  It works like this:
+
+   1) Add a Photo Folder object.
+   2) Go to the 'Photo Properties' tab and add the properties you want each
+   photo to have.
+   3) Go to the 'Displays' tab and add/remove/modify the display sizes you
+   want each photo to have.
+   4) When you add photos to this Photo Folder, each one will automatically
+   get the specified properties and generate the specified display sizes.
+
+2) How do I add a Photo Folder/Photo object from DTML/Python Script?
+
+   See the source for all of the optional parameters, but here are the
+   basics:
+
+   Photo Folder:
+
+     <dtml-call expr="manage_addProduct['Photo'].manage_addPhotoFolder(id, title)">
+
+     context.manage_addProduct['Photo'].manage_addPhotoFolder(id, title)
+
+   Photo:
+
+     <dtml-call expr="manage_addProduct['Photo'].manage_addPhoto(id, title, file)">
+
+     context.manage_addProduct['Photo'].manage_addPhoto(id, title, file)

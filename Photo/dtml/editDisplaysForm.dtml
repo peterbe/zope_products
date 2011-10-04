@@ -1,0 +1,108 @@
+<dtml-var name="manage_page_header"> <dtml-comment> 
+<style type="text/css">
+<!--
+@import "/manage_page_style.css";
+-->
+</style>
+</dtml-comment>
+<dtml-with "_(management_view='Displays')">
+<dtml-var name="manage_tabs">
+</dtml-with>
+<dtml-if displayMap>
+<form action="<dtml-var URL1>" method="POST">
+  <p class="form-help"> The following displays are defined for this Photo. To 
+    change display sizes, edit the values and click "Save Changes".</p>
+  <table border="0" cellspacing="2" cellpadding="4">
+    <tr> 
+      <th align="left" valign="top">&nbsp;</th>
+      <th align="left" valign="top">&nbsp;</th>
+      <th align="center" valign="top" colspan="2">Desired</th>
+      <th align="center" valign="top">Actual</th>
+      <th align="center" valign="top">Size</th>
+      <th align="center" valign="top">Age</th>
+    </tr>
+    <tr> 
+      <th align="left" valign="top">&nbsp;</th>
+      <th align="center" valign="top">Display</th>
+      <th align="center" valign="top">Width</th>
+      <th align="center" valign="top">Height</th>
+      <th align="center" valign="top"> W&nbsp;x&nbsp;H</th>
+      <th align="center" valign="top">(bytes)</th>
+      <th align="center" valign="top">(minutes)</th>
+    </tr>
+    <dtml-in displayMap mapping>
+    <tr> 
+      <td align="center"> 
+        <input type="hidden" name="displays.id:records" value="&dtml-id;">
+        <input type="checkbox" name="ids:list" value="&dtml-id;" class="form-element">
+      </td>
+      <th align="left" class="form-label"> 
+        <dtml-var id>
+      </th>
+      <td align="center"> 
+        <input type="text" name="displays.width:int:records" value="&dtml-width;" size="6" class="form-element">
+      </td>
+      <td align="center"> 
+        <input type="text" name="displays.height:int:records" value="&dtml-height;" size="6" class="form-element">
+      </td>
+      <dtml-if bytes>
+      <td align="center" class="form-text"> 
+        <dtml-var photo_width>
+        x 
+        <dtml-var photo_height>
+      </td>
+      <td align="right" class="form-text"> 
+        <dtml-var bytes thousands_commas>
+        &nbsp;&nbsp; </td>
+      <td align="right" class="form-text"> 
+        <dtml-var age>
+        &nbsp;&nbsp; </td>
+      <dtml-else>
+      <td align="center" class="form-text" colspan="3"> Not generated. </td>
+      </dtml-if>
+    </tr>
+    </dtml-in>
+    <tr> 
+      <td>&nbsp;</td>
+      <td colspan="6"> 
+        <input type="submit" name="manage_editDisplays:method" value=" Save Changes " class="form-element">
+        <input type="submit" name="manage_delDisplays:method" value=" Delete " class="form-element">
+        <br>
+        <br>
+        <input type="submit" name="manage_regenDisplays:method" value=" Regenerate All " class="form-element">
+        <input type="submit" name="manage_purgeDisplays:method" value=" Purge All " class="form-element">
+        <input type="submit" name="manage_cleanDisplays:method" value=" Clean Up " class="form-element">
+      </td>
+    </tr>
+  </table>
+</form>
+<dtml-else>
+<p class="form-text"> There are no displays defined for this Photo.</p>
+</dtml-if>
+<form action="<dtml-var URL1>" method="POST">
+  <p class="form-help"> To add a display, enter a name, width, and height, then 
+    click the &quot;Add&quot; button.</p>
+  <table>
+    <tr> 
+      <th align="left" valign="top">Display</th>
+      <th align="left" valign="top">Width</th>
+      <th align="left" valign="top">Height</th>
+      <th>&nbsp;</th>
+    </tr>
+    <tr> 
+      <td align="left" valign="top"> 
+        <input type="text" name="id" size="20" class="form-element">
+      </td>
+      <td align="left" valign="top"> 
+        <input type="text" name="width:int" size="5" class="form-element">
+      </td>
+      <td align="left" valign="top"> 
+        <input type="text" name="height:int" size="5" class="form-element">
+      </td>
+      <td align="right" valign="top"> 
+        <input type="submit" name="manage_addDisplay:method" value=" Add " class="form-element">
+      </td>
+    </tr>
+  </table>
+</form>
+<dtml-var name="manage_page_footer">

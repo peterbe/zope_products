@@ -1,0 +1,167 @@
+<dtml-var name="manage_page_header"> <dtml-comment> 
+<style type="text/css">
+<!--
+@import "/manage_page_style.css";
+-->
+</style>
+</dtml-comment>
+<dtml-var name="manage_tabs">
+<form action="manage_editPhoto" method="post" enctype="multipart/form-data">
+  <table valign="baseline">
+    <tr> 
+      <th align="right" class="form-label" valign="top">Title</th>
+      <td valign="top"> 
+        <input type="text" name="title" size="30" value="&dtml-title;" class="form-element">
+      </td>
+    </tr>
+    <tr> 
+      <th align="right" valign="top" class="form-label">Image File</th>
+      <td> 
+        <input type="file" name="file" class="form-element">
+        <br>
+        <table cellpadding="4" cellspacing="0">
+          <tr> 
+            <td align="center"><a href="manage_viewPhoto"><img src="&dtml-getId;?display=thumbnail" border="0"></a><br>
+              <span class="form-text"> 
+              <dtml-var name="width">
+              x 
+              <dtml-var name="height">
+              (WxH)<br>
+              <dtml-var size thousands_commas>
+              bytes </span></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <dtml-in propertyMap mapping>
+    <dtml-unless "id == 'title'">
+    <tr> 
+      <td align="right" valign="top"> 
+        <div class="form-label"> <label for="cb-<dtml-var id>"> 
+          <dtml-var "propertyLabel(id)" spacify capitalize>
+          </label> </div>
+      </td>
+      <td align="left" valign="top"> 
+        <dtml-if "'w' in _['sequence-item'].get('mode', 'awd')">
+        <dtml-if "type == 'int'">
+        <input type="text" name="<dtml-var id>:<dtml-var 
+   type>" size="35" value="<dtml-if "hasProperty(id)"><dtml-var 
+   "'%s' % getProperty(id)" html_quote></dtml-if>">
+        <dtml-elif "type == 'long'">
+        <input type="text" name="<dtml-var id>:<dtml-var type>" size="35"
+   value="<dtml-if "hasProperty(id)"><dtml-var 
+   "('%s' % getProperty(id))[:-1]" html_quote></dtml-if>">
+        <dtml-elif "type in ('float', 'date')">
+        <input type="text" name="<dtml-var id>:<dtml-var type>" size="35"
+   value="<dtml-var "getProperty(id)" html_quote>">
+        <dtml-elif "type=='string'">
+        <input type="text" name="<dtml-var id>:string" size="35"
+   value="<dtml-var "getProperty(id)" html_quote>">
+        <dtml-elif "type=='boolean'">
+        <input type="checkbox" name="<dtml-var id>:boolean" size="35"
+   <dtml-if "getProperty(id)">CHECKED</dtml-if>>
+        <dtml-elif "type=='tokens'">
+        <input type="text" name="<dtml-var id>:tokens" size="35"
+   value="<dtml-in "getProperty(id)"><dtml-var sequence-item html_quote> </dtml-in>">
+        <dtml-elif "type=='text'">
+        <textarea name="<dtml-var id>:text" rows="6" cols="35"><dtml-var 
+   "getProperty(id)" html_quote></textarea>
+        <dtml-elif "type=='lines'">
+        <textarea name="<dtml-var id>:lines" rows="6" cols="35"><dtml-in
+  "getProperty(id)"><dtml-var sequence-item html_quote><dtml-if
+   sequence-end><dtml-else><dtml-var "'\n'"></dtml-if></dtml-in></textarea>
+        <dtml-elif "type=='selection'">
+        <dtml-if "hasProperty(select_variable)">
+        <div class="form-element"> 
+          <select name="<dtml-var id>">
+            <dtml-in "getProperty(select_variable)">
+            <option
+          <dtml-if "_['sequence-item']==getProperty(id)">SELECTED</dtml-if>
+          > 
+            <dtml-var sequence-item html_quote>
+            </option>
+            </dtml-in>
+          </select>
+        </div>
+        <dtml-elif "_.has_key(select_variable)">
+        <div class="form-element"> 
+          <select name="<dtml-var id>">
+            <dtml-in "_[select_variable]">
+            <option
+          <dtml-if "_['sequence-item']==getProperty(id)">SELECTED</dtml-if>
+          > 
+            <dtml-var sequence-item html_quote>
+            </option>
+            </dtml-in>
+          </select>
+        </div>
+        <dtml-else>
+        <div class="form-text"> No value for 
+          <dtml-var select_variable>
+          . </div>
+        </dtml-if>
+        <dtml-elif "type=='multiple selection'">
+        <dtml-if "hasProperty(select_variable)">
+        <div class="form-element"> 
+          <select name="<dtml-var id>:list" multiple
+      size="<dtml-var "_.min(7, _.len(getProperty(select_variable)))">">
+            <dtml-in "getProperty(select_variable)">
+            <option<dtml-if 
+         "getProperty(id) and (_['sequence-item'] in getProperty(id))"
+         > SELECTED</dtml-if
+         >> 
+            <dtml-var sequence-item html_quote>
+            </option>
+            </dtml-in>
+          </select>
+        </div>
+        <dtml-elif "_.has_key(select_variable)">
+        <div class="form-element"> 
+          <select name="<dtml-var id>:list" multiple
+      size="<dtml-var "_.min(7, _.len(_[select_variable]))">">
+            <dtml-in "_[select_variable]">
+            <option<dtml-if 
+         "getProperty(id) and (_['sequence-item'] in getProperty(id))"
+         > SELECTED</dtml-if
+         >> 
+            <dtml-var sequence-item html_quote>
+            </option>
+            </dtml-in>
+          </select>
+        </div>
+        <dtml-else>
+        <div class="form-text"> No value for 
+          <dtml-var select_variable>
+          . </div>
+        </dtml-if>
+        <dtml-else>
+        <em>Unknown property type</em> 
+        </dtml-if>
+        <dtml-else>
+        <table border="1">
+          <tr> 
+            <td> 
+              <dtml-var "getProperty(id)" html_quote>
+            </td>
+          </tr>
+        </table>
+        </dtml-if>
+      </td>
+    </tr>
+    </dtml-unless>
+    </dtml-in>
+    <tr> 
+      <td>&nbsp;</td>
+      <td> 
+        <input type="submit" value="Save Changes" class="form-element" name="submit">
+      </td>
+    </tr>
+  </table>
+</form>
+
+<br><br>
+<div style="font-size:9px">
+&lt;img src="<dtml-var absolute_url_path>?display=thumbnail" alt="<dtml-var title>" border="1" class="floatright" /&gt;
+</div>
+
+<dtml-var name="manage_page_footer">
